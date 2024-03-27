@@ -69,18 +69,18 @@
                         </TextBlock.RenderTransform>
                     </TextBlock>
                     <Button
-                        x:Name="button4"
+                        x:Name="User_mode_button"
                         Height="35"
                         Margin="332,211,332,0"
                         VerticalAlignment="Top"
-                        Click="button4_Click"
+                        Click="User_mode_button_click"
                         Content="User mode" />
                     <Button
-                        x:Name="button4_Copy"
+                        x:Name="Technician_mode_button"
                         Height="35"
                         Margin="332,285,333,0"
                         VerticalAlignment="Top"
-                        Click="button4_Copy_Click"
+                        Click="Technician_mode_button_Click"
                         Content="Technician mode" />
                 </Grid>
             </TabItem>
@@ -712,7 +712,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Name="MCU_Programing" Header="MCU Programing">
+            <TabItem Name="MCU_Programing" Header="MCU Programing" Visibility="Hidden">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*" />

@@ -21,7 +21,7 @@ namespace GUI_REAL
             InitializeComponent();
         }
 
-        private void button4_Click(object sender, RoutedEventArgs e)
+        private void User_mode_button_click(object sender, RoutedEventArgs e)
         {
             aaa.Visibility= Visibility.Visible;
             Check_commands_lable.Visibility = Visibility.Hidden;
@@ -32,7 +32,7 @@ namespace GUI_REAL
             Path.Visibility = Visibility.Hidden;
         }
 
-        private void button4_Copy_Click(object sender, RoutedEventArgs e)
+        private void Technician_mode_button_Click(object sender, RoutedEventArgs e)
         {
             aaa.Visibility = Visibility.Visible;
             Path.Visibility = Visibility.Visible;

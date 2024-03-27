@@ -1,0 +1,2117 @@
+﻿<Window
+    x:Class="GUI_REAL.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GUI_REAL"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid>
+        <TabControl x:Name="tabControl">
+
+            <TabItem Name="all_tabs" Header="Home">
+                <Grid Background="White">
+                    <TextBlock
+                        x:Name="textBlock"
+                        Height="83"
+                        VerticalAlignment="Top"
+                        Background="White"
+                        FontSize="36"
+                        FontWeight="Bold"
+                        Text="Welcome to automate tester."
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="Height" />
+                    <TextBlock
+                        x:Name="textBlock_Copy"
+                        Width="793"
+                        Height="83"
+                        Margin="0,74,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="White"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="Version: 0.1.0V"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="Height" />
+                    <Image
+                        x:Name="image"
+                        Width="321"
+                        Height="138"
+                        Margin="0,0,10,10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Source="/enercon.png"
+                        d:LayoutOverrides="HorizontalAlignment" />
+                    <TextBlock
+                        x:Name="textBlock_Copy1"
+                        Width="150"
+                        Height="46"
+                        Margin="0,135,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Background="White"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        RenderTransformOrigin="0.5,0.5"
+                        Text="Choose mode"
+                        TextWrapping="Wrap">
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform />
+                                <SkewTransform AngleX="0" />
+                                <RotateTransform />
+                                <TranslateTransform X="0" />
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+                    <Button
+                        x:Name="button4"
+                        Height="35"
+                        Margin="332,211,332,0"
+                        VerticalAlignment="Top"
+                        Click="button4_Click"
+                        Content="User mode" />
+                    <Button
+                        x:Name="button4_Copy"
+                        Height="35"
+                        Margin="332,285,333,0"
+                        VerticalAlignment="Top"
+                        Click="button4_Copy_Click"
+                        Content="Technician mode" />
+                </Grid>
+            </TabItem>
+            <TabItem
+                Name="aaa"
+                Header="ATR/ATP test"
+                Visibility="Hidden">
+                <Grid Background="White">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24*" />
+                        <RowDefinition Height="146*" />
+                        <RowDefinition Height="65*" />
+                        <RowDefinition Height="44*" />
+
+                        <RowDefinition Height="107*" />
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="143*" />
+                        <ColumnDefinition Width="254*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        x:Name="textBlock2"
+                        Margin="10,0,59,0"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Text="ATR and ATP test"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        x:Name="textBlock1"
+                        Grid.Row="1"
+                        Width="107"
+                        Height="21"
+                        Margin="19,5,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Product"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBox
+                        x:Name="textBox1"
+                        Grid.Row="1"
+                        Grid.RowSpan="3"
+                        Grid.Column="1"
+                        Margin="10,5,10,10"
+                        Background="#FFE8FFFD"
+                        BorderBrush="White"
+                        SelectionBrush="#FFF9F9F9"
+                        Text="Output log"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="TopMargin, BottomMargin" />
+                    <ComboBox
+                        x:Name="comboBox"
+                        Grid.Row="1"
+                        Width="107"
+                        Height="22"
+                        Margin="19,31,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <DataGrid
+                        x:Name="dataGrid"
+                        Grid.Row="3"
+                        Grid.RowSpan="2"
+                        Width="12"
+                        Margin="19,2,0,52"
+                        HorizontalAlignment="Left"
+                        Background="#FFE8E8E8"
+                        Visibility="Hidden"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy"
+                        Grid.Row="1"
+                        Width="87"
+                        Height="21"
+                        Margin="19,82,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Flow"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <ComboBox
+                        x:Name="comboBox_Copy"
+                        Grid.Row="1"
+                        Width="107"
+                        Height="22"
+                        Margin="19,108,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy1"
+                        Grid.Row="1"
+                        Width="107"
+                        Margin="154,79,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Enter serial"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin" />
+                    <TextBox
+                        x:Name="textBox"
+                        Grid.Row="1"
+                        Width="95"
+                        Height="28"
+                        Margin="154,105,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="789"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <Button
+                        x:Name="button"
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Width="95"
+                        Margin="-14,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFE8FFE8"
+                        Content="Add"
+                        Visibility="Hidden"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <Button
+                        x:Name="button_Copy1"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Width="95"
+                        Height="20"
+                        Margin="-14,24,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFFFEEEE"
+                        Content="Delete all"
+                        Visibility="Hidden"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy2"
+                        Grid.Row="2"
+                        Width="89"
+                        Height="21"
+                        Margin="19,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Temperature"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBox
+                        x:Name="textBox_Copy_1"
+                        Grid.Row="2"
+                        Width="39"
+                        Height="21"
+                        Margin="19,34,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="25"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <Button
+                        x:Name="button_Copy2"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Width="95"
+                        Height="36"
+                        Margin="10,0,0,10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Background="#FFAFFFBB"
+                        Content="Start"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <Button
+                        x:Name="button_Copy3"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Width="95"
+                        Height="36"
+                        Margin="0,0,10,10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Background="#FFFFA69D"
+                        Content="Stop"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy3"
+                        Grid.Row="4"
+                        Width="77"
+                        Height="21"
+                        Margin="19,63,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Total UUTs:"
+                        TextWrapping="Wrap"
+                        Visibility="Hidden"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBox
+                        x:Name="textBox_Copy1"
+                        Grid.Row="4"
+                        Width="12"
+                        Height="21"
+                        Margin="19,89,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="3"
+                        TextWrapping="Wrap"
+                        Visibility="Hidden"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <Button
+                        x:Name="button_Copy4"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Width="95"
+                        Height="21"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Background="#FFECFFFD"
+                        Content="Clear log"
+                        d:LayoutOverrides="VerticalAlignment, LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy5"
+                        Grid.Row="1"
+                        Width="83"
+                        Height="21"
+                        Margin="154,5,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Enter name"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="VerticalAlignment, LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBox
+                        x:Name="textBox_Copy3"
+                        Grid.Row="1"
+                        Width="95"
+                        Height="22"
+                        Margin="154,31,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="T.G"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <Button
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Width="95"
+                        Height="21"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFECFFFD"
+                        Content="Open folder"
+                        d:LayoutOverrides="HorizontalAlignment, VerticalAlignment, LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <Button
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Width="0"
+                        Height="28"
+                        Margin="103,-13,405,92"
+                        Background="#FFFFF1F1"
+                        Content="Delete selected"
+                        Visibility="Hidden"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy6"
+                        Grid.Row="2"
+                        Width="122"
+                        Height="21"
+                        Margin="154,10,10,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Useing chamber"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox"
+                        Grid.Row="2"
+                        Width="67"
+                        Height="18"
+                        Margin="194,33,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content="" />
+
+
+                </Grid>
+
+            </TabItem>
+
+
+            <!-- <TabItem Header="Add flow">
+           <Grid Background="White">
+               <Grid.RowDefinitions>
+                   <RowDefinition Height="27*" />
+                   <RowDefinition Height="140*" />
+                   <RowDefinition Height="67*" />
+                   <RowDefinition Height="80*" />
+
+                   <RowDefinition Height="120*" />
+
+               </Grid.RowDefinitions>
+               <Grid.ColumnDefinitions>
+                   <ColumnDefinition Width="104*" />
+                   <ColumnDefinition Width="352*"/>
+                   <ColumnDefinition Width="737*" />
+               </Grid.ColumnDefinitions>
+               <TextBlock
+                   Margin="10,0,21,0"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Text="Create new ATP flow"
+                   TextWrapping="Wrap" Grid.ColumnSpan="2" />
+               <TextBlock
+                   Grid.Row="1"
+                   Height="21"
+                   Margin="19,5,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="16"
+                   Text="Product Name"
+                   TextWrapping="Wrap"
+                   d:LayoutOverrides="TopMargin, BottomMargin" />
+               <DataGrid
+                   Grid.Row="1"
+                   Grid.RowSpan="3"
+                   Grid.Column="2"
+                   Margin="10,10,10,10"
+                   Background="#FFE8E8E8" />
+               <TextBlock
+                   Grid.Row="1"
+                   Height="21"
+                   Margin="19,82,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="16"
+                   Text="Flow name"
+                   TextWrapping="Wrap"
+                   d:LayoutOverrides="TopMargin, BottomMargin" />
+               <Button
+                   Grid.Row="2"
+                   Width="89"
+                   Height="33"
+                   Margin="49,12,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Background="#FFE8FFE8"
+                   Content="Add" Grid.Column="1" d:LayoutOverrides="HorizontalAlignment" />
+               <TextBox
+                   Grid.Row="1"
+                   Width="83"
+                   Height="22"
+                   Margin="19,26,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Text="M6029-1"
+                   TextWrapping="Wrap" />
+               <Button
+                   x:Name="button_Copy5"
+                   Grid.Row="2"
+                   Width="95"
+                   Height="33"
+                   Margin="19,12,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Background="#FFECFFFD"
+                   Content="Open folder" />
+               <Button
+                   x:Name="button1"
+                   Grid.Row="3"
+                   Margin="43,24,64,23"
+                   Background="#FFFFF1F1"
+                   Content="Delete selected"
+                   d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Grid.Column="1" />
+               <TextBox
+                   x:Name="textBox_Copy2"
+                   Grid.Row="1"
+                   Width="83"
+                   Height="22"
+                   Margin="19,103,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   TextWrapping="Wrap" />
+               <Button
+                   Grid.Row="1"
+                   Width="89"
+                   Height="22"
+                   Margin="49,26,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Background="White"
+                   Content="Search"
+                   d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Grid.Column="1" />
+
+           </Grid>
+       </TabItem>-->
+            <TabItem
+                Name="Add_test_equipment_and_commands"
+                Header="Add test equipment  and commands"
+                Visibility="Hidden">
+                <Grid Background="White">
+                    <TextBlock
+                        x:Name="textBlock3"
+                        Margin="10,20,637,335"
+                        Text="Open instrumens file"
+                        TextWrapping="Wrap" />
+                    <Button
+                        x:Name="button2"
+                        Margin="10,51,684,300"
+                        Content="Browse" />
+                    <TextBlock
+                        x:Name="textBlock3_Copy"
+                        Margin="10,127,637,228"
+                        Text="Open commands file"
+                        TextWrapping="Wrap" />
+                    <Button
+                        x:Name="button2_Copy"
+                        Margin="10,158,684,193"
+                        Content="Browse" />
+                    <TextBlock
+                        x:Name="textBlock3_Copy1"
+                        Margin="10,258,637,97"
+                        Text="Open flows file"
+                        TextWrapping="Wrap" />
+                    <Button
+                        x:Name="button2_Copy1"
+                        Margin="10,289,684,62"
+                        Content="Browse" />
+                </Grid>
+            </TabItem>
+            <TabItem
+                Name="Check_commands_lable"
+                Header="Check commands model"
+                Visibility="Hidden">
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10px" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10px" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10px" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10px" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Width="217"
+                        Height="16"
+                        Margin="17,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Text="Enter instrument name (Lable)"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Width="84"
+                        Height="18"
+                        Margin="17,0,0,25"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        RenderTransformOrigin="0.5,0.501"
+                        Text="Enter command"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="Height" />
+                    <ComboBox
+                        x:Name="comboBox_Instrument"
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Width="227"
+                        Height="25"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" />
+                    <ComboBox
+                        x:Name="comboBox_command"
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Width="228"
+                        Margin="0,13,0,19"
+                        HorizontalAlignment="Center" />
+                    <Button
+                        Grid.Row="6"
+                        Grid.Column="2"
+                        Width="106"
+                        Margin="24,9,0,8"
+                        HorizontalAlignment="Left"
+                        Content="Send"
+                        RenderTransformOrigin="0.492,0.358" />
+                    <TextBox
+                        Grid.Row="5"
+                        Grid.RowSpan="2"
+                        Grid.Column="3"
+                        Margin="20,13,18,14"
+                        Text="Output"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        Width="28"
+                        Height="20"
+                        Margin="19,27,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        RenderTransformOrigin="0.929,0.095"
+                        Text="COM"
+                        TextWrapping="Wrap"
+                        Visibility="Hidden" />
+                    <ComboBox
+                        Grid.Row="3"
+                        Grid.Column="3"
+                        Margin="19,19,85,18"
+                        Visibility="Hidden"
+                        d:LayoutOverrides="VerticalAlignment" />
+                    <TextBlock
+                        x:Name="textBlock_arg1"
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        Height="31"
+                        Margin="17,3,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        TextWrapping="Wrap"><Run Text="Arg 1" /><LineBreak /><Run /></TextBlock>
+                    <TextBox
+                        x:Name="textBox_arg1"
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        Margin="105,5,95,24"
+                        Text="Arg 1"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" />
+                    <TextBlock
+                        x:Name="textBlock_arg2"
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        Height="22"
+                        Margin="17,14,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        TextWrapping="Wrap"><Run Text="Arg 2" /><LineBreak /><Run /><LineBreak /><Run /></TextBlock>
+                    <TextBox
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        Margin="105,10,95,21"
+                        Text="Arg 2&#xD;&#xA;"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" />
+                    <Button
+                        x:Name="button_Refresh_COM"
+                        Grid.Row="3"
+                        Grid.Column="3"
+                        Margin="184,19,34,18"
+                        Background="#FFB1EFFF"
+                        BorderBrush="#FF636363"
+                        Content="Refresh"
+                        Foreground="Black"
+                        RenderTransformOrigin="0.688,-0.486"
+                        Visibility="Hidden"
+                        d:LayoutOverrides="VerticalAlignment" />
+                    <Button
+                        x:Name="button_clear_output"
+                        Grid.Row="7"
+                        Grid.Column="3"
+                        Margin="21,14,129,14"
+                        Content="Clear" />
+                    <TextBlock
+                        x:Name="Title_Command_to_instrument"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Width="233"
+                        Margin="17,12,0,10"
+                        HorizontalAlignment="Left"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="VerticalAlignment"><Run
+                            FontFamily="Aptos"
+                            FontSize="14.666666666666666"
+                            Text="Command to instrument" /></TextBlock>
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="3"
+                        Width="99"
+                        Height="22"
+                        Margin="19,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        RenderTransformOrigin="0.5,0.501"
+                        Text="Output window"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="VerticalAlignment" />
+                    <TextBox
+                        Grid.Row="2"
+                        Grid.RowSpan="2"
+                        Grid.Column="3"
+                        Margin="21,22,17,5"
+                        Text="SCPI command"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        Width="99"
+                        Height="22"
+                        Margin="19,0,0,33"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        RenderTransformOrigin="0.5,0.501"
+                        Text="SCPI command"
+                        TextWrapping="Wrap" />
+                    <Button
+                        x:Name="button_clear_output_Copy"
+                        Grid.Row="4"
+                        Grid.Column="3"
+                        Margin="21,1,129,27"
+                        Content="Clear" />
+
+                </Grid>
+            </TabItem>
+            <TabItem Name="MCU_Programing" Header="MCU Programing">
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*" />
+                        <RowDefinition Height="14*" />
+                        <RowDefinition Height="159*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        x:Name="textBlock_Copy2"
+                        Width="351"
+                        Margin="1,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="White"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="Burn and erase the micro controller"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBlock
+                        x:Name="textBlock6"
+                        Grid.Row="1"
+                        Width="112"
+                        Margin="10,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="Choose file to burn"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="Height" />
+                    <TextBox
+                        x:Name="textBox3"
+                        Grid.Row="2"
+                        Width="120"
+                        Margin="10,3,664,295"
+                        Text="TextBox"
+                        TextWrapping="Wrap" />
+                    <Button
+                        x:Name="button5"
+                        Grid.Row="2"
+                        Width="52"
+                        Margin="147,3,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content="Browse" />
+                    <Button
+                        x:Name="button5_Copy"
+                        Grid.Row="2"
+                        Width="81"
+                        Margin="10,43,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFC8F1C0"
+                        Content="Programming" />
+                    <TextBlock
+                        x:Name="textBlock6_Copy"
+                        Grid.Row="2"
+                        Width="219"
+                        Margin="10,101,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="Press for software or hardware reset"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="VerticalAlignment" />
+                    <Button
+                        x:Name="button5_Copy1"
+                        Grid.Row="2"
+                        Width="81"
+                        Margin="10,139,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFD1EFF5"
+                        Content="software reset" />
+                    <Button
+                        x:Name="button5_Copy2"
+                        Grid.Row="2"
+                        Width="93"
+                        Margin="109,139,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFDFB4EF"
+                        Content="Hardware reset" />
+                    <Button
+                        x:Name="button5_Copy3"
+                        Grid.Row="2"
+                        Width="52"
+                        Margin="10,250,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFEC8080"
+                        Content="erase" />
+                    <TextBlock
+                        x:Name="textBlock6_Copy1"
+                        Grid.Row="2"
+                        Width="219"
+                        Margin="10,229,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="Full erase"
+                        TextWrapping="Wrap" />
+                    <TextBox
+                        x:Name="textBox4"
+                        Grid.Row="2"
+                        Width="279"
+                        Margin="491,73,0,73"
+                        HorizontalAlignment="Left"
+                        Text="Output"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="Height" />
+                    <Button
+                        x:Name="button5_Copy4"
+                        Grid.Row="2"
+                        Width="52"
+                        Margin="718,260,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFCECECE"
+                        Content="Clear" />
+                    <TextBlock
+                        x:Name="textBlock6_Copy2"
+                        Grid.Row="2"
+                        Width="68"
+                        Height="20"
+                        Margin="636,260,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="Clear log"
+                        TextWrapping="Wrap" />
+                </Grid>
+            </TabItem>
+            <TabItem
+                Name="Realys_board_command_generate"
+                Header="Realys board command generate"
+                Visibility="Hidden">
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="36*" />
+                        <RowDefinition Height="33*" />
+                        <RowDefinition Height="337*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        x:Name="Title_Command_to_instrument_Copy"
+                        Width="233"
+                        Margin="5,5,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="HorizontalAlignment, LeftMargin, RightMargin, TopMargin, BottomMargin"><Run FontSize="14.666666666666666" Text="Relays board command generate" /></TextBlock>
+
+                    <CheckBox
+                        x:Name="checkBox_Copy"
+                        Grid.Row="1"
+                        Width="18"
+                        Margin="85,4,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy8"
+                        Grid.Row="1"
+                        Width="58"
+                        Height="21"
+                        Margin="4,2,0,10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 1"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy1"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,-3,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy9"
+                        Grid.Row="2"
+                        Width="58"
+                        Height="21"
+                        Margin="4,-5,0,321"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 2"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy2"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,23,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy10"
+                        Grid.Row="2"
+                        Width="58"
+                        Height="21"
+                        Margin="4,21,0,295"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 3"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy3"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,49,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy11"
+                        Grid.Row="2"
+                        Width="58"
+                        Height="21"
+                        Margin="4,47,0,269"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 4"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy4"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,74,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy12"
+                        Grid.Row="2"
+                        Width="58"
+                        Height="21"
+                        Margin="4,72,0,244"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 5"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy5"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,100,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy13"
+                        Grid.Row="2"
+                        Width="58"
+                        Height="21"
+                        Margin="4,98,0,218"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 6"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy6"
+                        Grid.Row="2"
+                        Width="18"
+                        Margin="85,126,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy14"
+                        Grid.Row="2"
+                        Width="58"
+                        Height="21"
+                        Margin="4,124,0,192"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 7"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy7"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,152,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy15"
+                        Grid.Row="2"
+                        Width="58"
+                        Height="21"
+                        Margin="4,150,0,166"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 8"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy8"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,174,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy16"
+                        Grid.Row="2"
+                        Width="58"
+                        Height="21"
+                        Margin="4,172,0,144"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 9"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy9"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,200,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy17"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="4,198,0,118"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 10"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy10"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,226,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy18"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="4,224,0,92"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 11"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy11"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,249,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy19"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="4,247,0,69"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 12"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy12"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,273,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy20"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="4,271,0,45"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 13"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy13"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="85,299,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy21"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="4,297,0,19"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 14"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy14"
+                        Grid.Row="1"
+                        Width="18"
+                        Margin="226,4,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy4"
+                        Grid.Row="1"
+                        Width="64"
+                        Height="21"
+                        Margin="146,2,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 15"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy15"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,-3,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy7"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,-5,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 16"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy16"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,23,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy22"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,21,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 17"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy17"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,49,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy23"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,47,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 18"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy18"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,74,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy24"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,72,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 19"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy19"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,100,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy25"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,98,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 20"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy20"
+                        Grid.Row="2"
+                        Width="18"
+                        Margin="226,126,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy26"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,124,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 21"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy21"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,152,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy27"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,150,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 22"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy22"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,174,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy28"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,172,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 23"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy23"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,200,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy29"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,198,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 24"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy24"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,226,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy30"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,224,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 25"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy25"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,249,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy31"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,247,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 26"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy26"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,273,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy32"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,271,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 27"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy27"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="226,299,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy33"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="146,297,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 28"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy28"
+                        Grid.Row="1"
+                        Width="18"
+                        Margin="361,3,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy34"
+                        Grid.Row="1"
+                        Width="64"
+                        Height="21"
+                        Margin="280,1,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 29"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy29"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,-4,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy35"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,-6,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 30"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy30"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,22,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy36"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,20,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 31"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy31"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,48,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy37"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,46,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 32"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy32"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,73,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy38"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,71,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 33"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy33"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,99,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy39"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,97,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 34"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy34"
+                        Grid.Row="2"
+                        Width="18"
+                        Margin="361,125,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy40"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,123,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 35"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy35"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,151,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy41"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,149,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 36"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy36"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,173,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy42"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,171,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 37"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy37"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,199,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy43"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,197,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 38"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy38"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,225,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy44"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,223,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 39"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy39"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,248,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy45"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,246,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 40"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy40"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,272,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy46"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,270,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 41"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy41"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="361,298,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy47"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="280,296,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 42"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy42"
+                        Grid.Row="1"
+                        Width="18"
+                        Margin="502,3,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy48"
+                        Grid.Row="1"
+                        Width="64"
+                        Height="21"
+                        Margin="422,1,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 43"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy43"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="502,-4,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy49"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="422,-6,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 44"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy44"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="502,22,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy50"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="422,20,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 45"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy45"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="502,48,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy51"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="422,46,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 46"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy46"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="502,73,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy52"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="422,71,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 47"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        x:Name="checkBox_Copy47"
+                        Grid.Row="2"
+                        Width="18"
+                        Height="18"
+                        Margin="502,99,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content=""
+                        RenderTransformOrigin="0.537,0.411" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy53"
+                        Grid.Row="2"
+                        Width="64"
+                        Height="21"
+                        Margin="422,97,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        Text="Relay 48"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy54"
+                        Grid.Row="2"
+                        Width="175"
+                        Margin="422,157,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Text="Generate command:"
+                        TextWrapping="Wrap" />
+                    <TextBox
+                        x:Name="textBox2"
+                        Grid.Row="2"
+                        Width="175"
+                        Margin="422,226,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="TextBox"
+                        TextWrapping="Wrap" />
+                    <Button
+                        x:Name="button1"
+                        Grid.Row="2"
+                        Margin="422,193,0,123"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFC5ECA1"
+                        Content="Generate" />
+                </Grid>
+            </TabItem>
+            <TabItem
+                Name="UART_Communication"
+                Header="UART Communication"
+                Visibility="Hidden">
+                <Grid Background="White">
+                    <TextBlock
+                        Height="21"
+                        Margin="10,70,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="14"
+                        Text="UART commands path"
+                        TextWrapping="Wrap" />
+                    <TextBox
+                        Width="127"
+                        Margin="163,70,0,295"
+                        HorizontalAlignment="Left"
+                        Text="TextBox"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Height="21"
+                        Margin="10,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="20"
+                        Text="UART commands "
+                        TextWrapping="Wrap" />
+                    <Button
+                        x:Name="button3"
+                        Margin="10,350,699,10"
+                        Background="#FFB6FFB3"
+                        Content="Send" />
+                    <TextBlock
+                        Height="21"
+                        Margin="10,114,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="14"
+                        Text="Choose command"
+                        TextWrapping="Wrap" />
+                    <ComboBox
+                        x:Name="comboBox1"
+                        Width="120"
+                        Height="18"
+                        Margin="10,140,664,228" />
+                    <TextBlock
+                        x:Name="textBlock4"
+                        Margin="10,225,519,79"
+                        Background="#FFF1FDF4"
+                        Text="Data"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="10,183,0,182"
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        Text="Enter data"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        x:Name="textBlock5"
+                        Margin="444,70,29,41"
+                        Background="#FFF9FBEE"
+                        Text="Output"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="VerticalAlignment" />
+                    <Button
+                        x:Name="button3_Copy"
+                        Margin="680,350,29,10"
+                        Background="#FFD4D4D4"
+                        Content="Clear log" />
+                    <TextBlock
+                        Height="21"
+                        Margin="444,44,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="14"
+                        Text="UUT output"
+                        TextWrapping="Wrap" />
+                </Grid>
+            </TabItem>
+            <TabItem
+                Name="Path"
+                Header="Set Path location"
+                Visibility="Hidden">
+                <Grid Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="43" />
+                        <RowDefinition Height="21" />
+                        <RowDefinition Height="23" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="37" />
+                        <RowDefinition Height="37" />
+                        <RowDefinition Height="37" />
+                        <RowDefinition Height="37" />
+                        <RowDefinition Height="37" />
+                        <RowDefinition Height="85*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        x:Name="Set_Path_Selector"
+                        Width="163"
+                        Margin="10,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="22"
+                        Text="Set path selector"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="HorizontalAlignment, LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBlock
+                        x:Name="STL_Enter_password"
+                        Grid.Row="1"
+                        Width="81"
+                        Margin="10,1,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="Enter password"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="HorizontalAlignment, LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <PasswordBox
+                        x:Name="STL_Enter_password_input"
+                        Grid.Row="2"
+                        Width="74"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBlock
+                        x:Name="STL_Enter_Model_Path"
+                        Grid.Row="4"
+                        Width="92"
+                        Margin="10,10,0,11"
+                        HorizontalAlignment="Left"
+                        Text="Models "
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <Button
+                        x:Name="SPL_button_Submit"
+                        Grid.Row="3"
+                        Width="59"
+                        Margin="10,10,0,11"
+                        HorizontalAlignment="Left"
+                        Content="Submit"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBox
+                        x:Name="STL_Enter_Model_Path_Text_Box"
+                        Grid.Row="4"
+                        Margin="102,10,48,11"
+                        Text="TextBox"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        x:Name="STL_Enter_Command_Path"
+                        Grid.Row="5"
+                        Width="92"
+                        Margin="10,10,0,11"
+                        HorizontalAlignment="Left"
+                        Text="Command "
+                        TextWrapping="Wrap" />
+                    <TextBox
+                        x:Name="STL_Enter_Command_Path_Text_Box"
+                        Grid.Row="5"
+                        Margin="102,10,48,11"
+                        Text="TextBox"
+                        TextWrapping="Wrap" />
+                    <Button
+                        x:Name="SPL_button_Lock"
+                        Grid.Row="3"
+                        Width="59"
+                        Margin="102,10,0,11"
+                        HorizontalAlignment="Left"
+                        Content="Lock" />
+                    <TextBlock
+                        x:Name="STL_Enter_Log_Path"
+                        Grid.Row="6"
+                        Width="92"
+                        Margin="10,10,0,11"
+                        HorizontalAlignment="Left"
+                        Text="Log "
+                        TextWrapping="Wrap" />
+                    <TextBox
+                        x:Name="STL_Enter_Lock_Path_Text_Box"
+                        Grid.Row="6"
+                        Margin="102,10,48,11"
+                        Text="TextBox"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        x:Name="STL_Enter_ATRP_Path_Copy"
+                        Grid.Row="7"
+                        Width="92"
+                        Margin="10,10,0,11"
+                        HorizontalAlignment="Left"
+                        Text="ATR/P  "
+                        TextWrapping="Wrap" />
+                    <TextBox
+                        x:Name="STL_Enter_ATRP_Path_Text_Box"
+                        Grid.Row="7"
+                        Margin="102,10,48,11"
+                        Text="TextBox"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        x:Name="STL_Enter_UART_Command_Path"
+                        Grid.Row="8"
+                        Width="92"
+                        Margin="10,11,0,10"
+                        HorizontalAlignment="Left"
+                        Text="UART command"
+                        TextWrapping="Wrap" />
+                    <TextBox
+                        x:Name="STL_Enter_UART_Command_Path_Text_Box"
+                        Grid.Row="8"
+                        Margin="102,10,48,11"
+                        Text="TextBox"
+                        TextWrapping="Wrap" />
+                </Grid>
+            </TabItem>
+
+
+
+
+        </TabControl>
+    </Grid>
+</Window>

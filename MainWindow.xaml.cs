@@ -30,9 +30,9 @@ namespace GUI_REAL
     {
         Instrument temp_instrument = new Instrument();
         List<Instrument> Instruments_Names_List = new List<Instrument>();
-       
+
         string[] UUT_amount = new string[] { "ST_Link", "JLINK" };
-        string[] Programing_hardware = new string[] { "1", "2","3","4" };
+        string[] Programing_hardware = new string[] { "1", "2", "3", "4" };
 
 
         string User_mode;
@@ -76,7 +76,7 @@ namespace GUI_REAL
         private void Init_Programing()
         {
 
-          
+
             Programing_choose_hardware.ItemsSource = Programing_hardware;
             how_many_uut_combobox.ItemsSource = UUT_amount;
 
@@ -189,7 +189,7 @@ namespace GUI_REAL
         private void Programing_choose_hardware_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            
+
 
 
         }
@@ -198,17 +198,17 @@ namespace GUI_REAL
         {
 
             string STM32_Programer_CLI_Path = "H:\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe";
-              string Elf_File_To_Flash = file_to_program_textBox.Text;
-               STM32_Programer_CLI test= new STM32_Programer_CLI (STM32_Programer_CLI_Path, Elf_File_To_Flash);
-              programere_output_textbox.Text= test.Flash_STM32();
+            string Elf_File_To_Flash = file_to_program_textBox.Text;
+            STM32_Programer_CLI test = new STM32_Programer_CLI(STM32_Programer_CLI_Path, Elf_File_To_Flash);
+            programere_output_textbox.Text = test.Flash_STM32();
         }
 
         private void stlink_erase_button_Click(object sender, RoutedEventArgs e)
         {
             string STM32_Programer_CLI_Path = "H:\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe";
             STM32_Programer_CLI test = new STM32_Programer_CLI(STM32_Programer_CLI_Path);
-            
-            programere_output_textbox.Text = test.Delete_STM32(); 
+
+            programere_output_textbox.Text = test.Delete_STM32();
         }
 
         private void programere_output_textbox_TextChanged(object sender, TextChangedEventArgs e)
@@ -265,8 +265,14 @@ namespace GUI_REAL
 
         private void JLINK_erase_button_Click(object sender, RoutedEventArgs e)
         {
-            JLINK test = new JLINK("STM32G431RB", "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", 1, "4000");
+            JLINK test = new JLINK("STM32G431RB", "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", 1, file_to_program_textBox.Text, "4000");
             test.Erase();
         }
+
+        private void JLINK_program_button_Click(object sender, RoutedEventArgs e)
+        {
+            JLINK test = new JLINK("STM32G431RB", "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", 1, file_to_program_textBox.Text, "4000");
+            test.Program();
+        }
     }
-} 
+}

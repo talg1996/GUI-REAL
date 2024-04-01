@@ -888,7 +888,7 @@
                         Grid.Row="2"
                         Margin="10,283,0,0"
                         Background="#FFC8F9C9"
-                        Content="Program" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="56" />
+                        Content="Program" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="56" Click="JLINK_program_button_Click" />
                     <Button
                         x:Name="JLINK_erase_button"
                         Grid.Row="2"

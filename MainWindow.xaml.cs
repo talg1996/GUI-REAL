@@ -30,7 +30,11 @@ namespace GUI_REAL
     {
         Instrument temp_instrument = new Instrument();
         List<Instrument> Instruments_Names_List = new List<Instrument>();
-        List<string> Programing_hardware = new List<string>();
+       
+        string[] UUT_amount = new string[] { "ST_Link", "JLINK" };
+        string[] Programing_hardware = new string[] { "1", "2","3","4" };
+
+
         string User_mode;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -72,9 +76,10 @@ namespace GUI_REAL
         private void Init_Programing()
         {
 
-            Programing_hardware.Add("ST_Link");
-            Programing_hardware.Add("JLINK");
+          
             Programing_choose_hardware.ItemsSource = Programing_hardware;
+            how_many_uut_combobox.ItemsSource = UUT_amount;
+
         }
 
         private void Update_Instrument_List(string Instruments_path_file, List<Instrument> Instruments_Names_List)
@@ -256,6 +261,12 @@ namespace GUI_REAL
 
 
             }
+        }
+
+        private void JLINK_erase_button_Click(object sender, RoutedEventArgs e)
+        {
+            JLINK test = new JLINK("STM32G431RB", "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", 1, "4000");
+            test.Erase();
         }
     }
 } 

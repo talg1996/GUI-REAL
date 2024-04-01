@@ -84,10 +84,7 @@
                         Content="Technician mode" />
                 </Grid>
             </TabItem>
-            <TabItem
-                Name="aaa"
-                Header="ATR/ATP test"
-                >
+            <TabItem Name="aaa" Header="ATR/ATP test">
                 <Grid Background="White">
 
                     <Grid.RowDefinitions>
@@ -712,7 +709,10 @@
                 </Grid>
             </TabItem>
             <TabItem Name="MCU_Programing" Header="MCU Programing">
-                <Grid Background="White" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*" />
                         <RowDefinition Height="14*" />
@@ -745,7 +745,8 @@
                         Grid.Row="2"
                         Margin="10,3,383,253"
                         Text="TextBox"
-                        TextWrapping="Wrap" d:LayoutOverrides="HorizontalAlignment" />
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="HorizontalAlignment" />
                     <Button
                         x:Name="file_to_program_textBox_button"
                         Grid.Row="2"
@@ -753,7 +754,8 @@
                         Margin="399,7,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="Browse" Click="file_to_program_textBox_button_Click" />
+                        Click="file_to_program_textBox_button_Click"
+                        Content="Browse" />
                     <Button
                         x:Name="stlink_programming_button"
                         Grid.Row="2"
@@ -762,7 +764,10 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFC8F1C0"
-                        Content="Programming" d:LayoutOverrides="Height" Click="stlink_programming_button_Click" />
+                        Click="stlink_programming_button_Click"
+                        Content="Programming"
+                        Visibility="Hidden"
+                        d:LayoutOverrides="Height" />
                     <TextBlock
                         x:Name="stlink_software_text"
                         Grid.Row="2"
@@ -771,7 +776,8 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Press for software or hardware reset"
-                        TextWrapping="Wrap" />
+                        TextWrapping="Wrap"
+                        Visibility="Hidden" />
                     <Button
                         x:Name="stlink_software_reset_button"
                         Grid.Row="2"
@@ -780,7 +786,9 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFD1EFF5"
-                        Content="software reset" Click="stlink_software_reset_button_Click" />
+                        Click="stlink_software_reset_button_Click"
+                        Content="software reset"
+                        Visibility="Hidden" />
                     <Button
                         x:Name="stlink_hardware_reset_button"
                         Grid.Row="2"
@@ -789,7 +797,9 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFDFB4EF"
-                        Content="Hardware reset" Click="stlink_hardware_reset_button_Click" />
+                        Click="stlink_hardware_reset_button_Click"
+                        Content="Hardware reset"
+                        Visibility="Hidden" />
                     <Button
                         x:Name="stlink_erase_button"
                         Grid.Row="2"
@@ -798,7 +808,9 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFEC8080"
-                        Content="erase" Click="stlink_erase_button_Click" />
+                        Click="stlink_erase_button_Click"
+                        Content="erase"
+                        Visibility="Hidden" />
                     <TextBlock
                         x:Name="stlink_full_erase_text"
                         Grid.Row="2"
@@ -807,7 +819,8 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Full erase"
-                        TextWrapping="Wrap" />
+                        TextWrapping="Wrap"
+                        Visibility="Hidden" />
                     <TextBox
                         x:Name="programere_output_textbox"
                         Grid.Row="2"
@@ -815,16 +828,19 @@
                         Margin="491,73,0,73"
                         HorizontalAlignment="Left"
                         Text="Output"
+                        TextChanged="programere_output_textbox_TextChanged"
                         TextWrapping="Wrap"
-                        d:LayoutOverrides="Height" TextChanged="programere_output_textbox_TextChanged" />
+                        d:LayoutOverrides="Height" />
                     <Button
                         x:Name="button5_Copy4"
                         Grid.Row="2"
                         Width="52"
                         Margin="718,260,0,0"
                         HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Background="#FFCECECE"
-                        Content="Clear" VerticalAlignment="Top" Click="button5_Copy4_Click" />
+                        Click="button5_Copy4_Click"
+                        Content="Clear" />
                     <TextBlock
                         x:Name="textBlock6_Copy2"
                         Grid.Row="2"
@@ -835,8 +851,57 @@
                         VerticalAlignment="Top"
                         Text="Clear log"
                         TextWrapping="Wrap" />
-                    <ComboBox x:Name="Programing_choose_hardware" Margin="10,73,0,0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" SelectionChanged="Programing_choose_hardware_SelectionChanged" SelectedIndex="0"/>
-                    <Button x:Name="Refresh" Content="Button" Margin="134,74,623,206" Grid.Row="2" Click="button1_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <ComboBox
+                        x:Name="Programing_choose_hardware"
+                        Grid.Row="2"
+                        Width="110"
+                        Margin="10,93,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        SelectedIndex="0"
+                        SelectionChanged="Programing_choose_hardware_SelectionChanged" />
+                    <Button
+                        x:Name="Refresh"
+                        Grid.Row="2"
+                        Margin="137,94,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Click="button1_Click"
+                        Content="Button" />
+                    <TextBlock
+                        x:Name="how_many_uut_textBlock"
+                        Grid.Row="2"
+                        Width="110"
+                        Margin="10,135,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="How many UUTs?"
+                        TextWrapping="Wrap" />
+                    <ComboBox
+                        x:Name="how_many_uut_combobox"
+                        Grid.Row="2"
+                        Margin="134,132,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top" Height="24" Width="71" />
+                    <Button
+                        x:Name="JLINK_program_button"
+                        Grid.Row="2"
+                        Margin="10,283,0,0"
+                        Background="#FFC8F9C9"
+                        Content="Program" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="56" />
+                    <Button
+                        x:Name="JLINK_erase_button"
+                        Grid.Row="2"
+                        Margin="99,283,0,0"
+                        Background="#FFF9CCC8"
+                        Content="Erase" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="49" Click="JLINK_erase_button_Click" />
+                    <TextBlock x:Name="MCU_NmaetextBlock" Margin="10,186,670,100" Grid.Row="2" TextWrapping="Wrap" Text="MCU name" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <TextBox
+                        x:Name="uut_name_textBox"
+                        Grid.Row="2"
+                        Margin="94,185,0,0"
+                        Text="TextBox"
+                        TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" />
                 </Grid>
             </TabItem>
             <TabItem Name="Realys_board_command_generate" Header="Realys board command generate">
@@ -2106,7 +2171,11 @@
                         TextWrapping="Wrap" />
                 </Grid>
             </TabItem>
-            <Border BorderBrush="Black" BorderThickness="1" Height="7" Width="20"/>
+            <Border
+                Width="20"
+                Height="7"
+                BorderBrush="Black"
+                BorderThickness="1" />
 
 
 
@@ -2115,11 +2184,11 @@
         <TextBlock
             x:Name="textBlock6_Copy3"
             Width="112"
-            Margin="10,157,0,0"
+            Margin="10,180,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="Hardware"
             TextWrapping="Wrap"
-    d:LayoutOverrides="VerticalAlignment" />
+            d:LayoutOverrides="VerticalAlignment" />
     </Grid>
 </Window>

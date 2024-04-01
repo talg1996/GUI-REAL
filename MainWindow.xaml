@@ -87,7 +87,7 @@
             <TabItem
                 Name="aaa"
                 Header="ATR/ATP test"
-                Visibility="Hidden">
+                >
                 <Grid Background="White">
 
                     <Grid.RowDefinitions>
@@ -374,7 +374,6 @@
                 </Grid>
 
             </TabItem>
-
 
             <!-- <TabItem Header="Add flow">
            <Grid Background="White">
@@ -712,8 +711,8 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Name="MCU_Programing" Header="MCU Programing" Visibility="Hidden">
-                <Grid Background="White">
+            <TabItem Name="MCU_Programing" Header="MCU Programing">
+                <Grid Background="White" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*" />
                         <RowDefinition Height="14*" />
@@ -742,75 +741,73 @@
                         TextWrapping="Wrap"
                         d:LayoutOverrides="Height" />
                     <TextBox
-                        x:Name="textBox3"
+                        x:Name="file_to_program_textBox"
                         Grid.Row="2"
-                        Width="120"
-                        Margin="10,3,664,295"
+                        Margin="10,3,383,253"
                         Text="TextBox"
-                        TextWrapping="Wrap" />
+                        TextWrapping="Wrap" d:LayoutOverrides="HorizontalAlignment" />
                     <Button
-                        x:Name="button5"
+                        x:Name="file_to_program_textBox_button"
                         Grid.Row="2"
                         Width="52"
-                        Margin="147,3,0,0"
+                        Margin="399,7,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="Browse" />
+                        Content="Browse" Click="file_to_program_textBox_button_Click" />
                     <Button
-                        x:Name="button5_Copy"
+                        x:Name="stlink_programming_button"
                         Grid.Row="2"
                         Width="81"
-                        Margin="10,43,0,0"
+                        Margin="10,120,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFC8F1C0"
-                        Content="Programming" />
+                        Content="Programming" d:LayoutOverrides="Height" Visibility="Hidden" />
                     <TextBlock
-                        x:Name="textBlock6_Copy"
+                        x:Name="stlink_software_text"
                         Grid.Row="2"
                         Width="219"
-                        Margin="10,101,0,0"
+                        Margin="10,148,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Press for software or hardware reset"
-                        TextWrapping="Wrap"
-                        d:LayoutOverrides="VerticalAlignment" />
+                        TextWrapping="Wrap" Visibility="Hidden" />
                     <Button
-                        x:Name="button5_Copy1"
+                        x:Name="stlink_software_reset_button"
                         Grid.Row="2"
                         Width="81"
-                        Margin="10,139,0,0"
+                        Margin="13,179,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFD1EFF5"
-                        Content="software reset" />
+                        Content="software reset" Visibility="Hidden" />
                     <Button
-                        x:Name="button5_Copy2"
+                        x:Name="stlink_hardware_reset_button"
                         Grid.Row="2"
                         Width="93"
-                        Margin="109,139,0,0"
+                        Margin="112,179,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFDFB4EF"
-                        Content="Hardware reset" />
+                        Content="Hardware reset" Visibility="Hidden" />
                     <Button
-                        x:Name="button5_Copy3"
+                        x:Name="stlink_erase_button"
                         Grid.Row="2"
                         Width="52"
                         Margin="10,250,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFEC8080"
-                        Content="erase" />
+                        Content="erase" Visibility="Hidden" />
                     <TextBlock
-                        x:Name="textBlock6_Copy1"
+                        x:Name="stlink_full_erase_text"
                         Grid.Row="2"
                         Width="219"
                         Margin="10,229,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Full erase"
-                        TextWrapping="Wrap" />
+                        TextWrapping="Wrap" Visibility="Hidden" />
                     <TextBox
                         x:Name="textBox4"
                         Grid.Row="2"
@@ -839,12 +836,10 @@
                         VerticalAlignment="Top"
                         Text="Clear log"
                         TextWrapping="Wrap" />
+                    <ComboBox x:Name="Programing_choose_hardware" Margin="10,73,0,0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" SelectionChanged="Programing_choose_hardware_SelectionChanged"/>
                 </Grid>
             </TabItem>
-            <TabItem
-                Name="Realys_board_command_generate"
-                Header="Realys board command generate"
-                Visibility="Hidden">
+            <TabItem Name="Realys_board_command_generate" Header="Realys board command generate">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="36*" />
@@ -863,7 +858,7 @@
                         d:LayoutOverrides="HorizontalAlignment, LeftMargin, RightMargin, TopMargin, BottomMargin"><Run FontSize="14.666666666666666" Text="Relays board command generate" /></TextBlock>
 
                     <CheckBox
-                        x:Name="checkBox_Copy"
+                        x:Name="checkBox_relay1"
                         Grid.Row="1"
                         Width="18"
                         Margin="85,4,0,0"
@@ -883,11 +878,11 @@
                         Text="Relay 1"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy1"
+                        x:Name="checkBox_relay2"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
-                        Margin="85,-3,0,0"
+                        Margin="85,-2,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content=""
@@ -904,7 +899,7 @@
                         Text="Relay 2"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy2"
+                        x:Name="checkBox_relay3"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -925,7 +920,7 @@
                         Text="Relay 3"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy3"
+                        x:Name="checkBox_relay4"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -946,7 +941,7 @@
                         Text="Relay 4"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy4"
+                        x:Name="checkBox_relay5"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -967,7 +962,7 @@
                         Text="Relay 5"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy5"
+                        x:Name="checkBox_relay6"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -988,7 +983,7 @@
                         Text="Relay 6"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy6"
+                        x:Name="checkBox_relay7"
                         Grid.Row="2"
                         Width="18"
                         Margin="85,126,0,0"
@@ -1008,7 +1003,7 @@
                         Text="Relay 7"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy7"
+                        x:Name="checkBox_relay8"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1884,12 +1879,15 @@
                         Text="TextBox"
                         TextWrapping="Wrap" />
                     <Button
-                        x:Name="button1"
+                        x:Name="button_generate_multi_relay"
                         Grid.Row="2"
-                        Margin="422,193,0,123"
+                        Width="88"
+                        Height="28"
+                        Margin="422,193,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFC5ECA1"
+                        Click="button_generate_multi_relay_Click"
                         Content="Generate" />
                 </Grid>
             </TabItem>
@@ -2108,10 +2106,20 @@
                         TextWrapping="Wrap" />
                 </Grid>
             </TabItem>
+            <Border BorderBrush="Black" BorderThickness="1" Height="7" Width="20"/>
 
 
 
 
         </TabControl>
+        <TextBlock
+            x:Name="textBlock6_Copy3"
+            Width="112"
+            Margin="10,157,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Text="Hardware"
+            TextWrapping="Wrap"
+    d:LayoutOverrides="VerticalAlignment" />
     </Grid>
 </Window>

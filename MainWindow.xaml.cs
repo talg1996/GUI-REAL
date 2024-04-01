@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,18 +9,123 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Office.Interop.Excel;
+using Microsoft.Win32;
+using System;
+using System.IO;
+
+
 
 namespace GUI_REAL
 {
+
+
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : System.Windows.Window
     {
+        Instrument temp_instrument = new Instrument();
+        List<Instrument> Instruments_Names_List = new List<Instrument>();
+        List<string> Programing_hardware = new List<string>();
+
+
         public MainWindow()
         {
+
+           
+
+
+          
+            // Lists to store names and command strings from Excel files
+
+            string Instruments_path_file = "H:\\Project\\Instrunets.xlsx";
+           // Update_Instrument_List(Instruments_path_file, Instruments_Names_List);
+
             InitializeComponent();
+            Init();
         }
+
+        private void Init()
+        {
+            Init_Programing();
+        }
+
+        private void Init_Programing()
+        {
+            
+            Programing_hardware.Add("ST_Link");
+            Programing_hardware.Add("JLINK");
+            Programing_choose_hardware.ItemsSource = Programing_hardware;
+        }
+
+        private void Update_Instrument_List(string Instruments_path_file, List<Instrument> Instruments_Names_List)
+        {
+
+            Excel_Row_read_by_index(Instruments_path_file);
+        }
+
+
+        public List<string> Excel_Row_read_by_index(string path)
+        {
+            string[] temp = new string[10];
+            string filePath = path;
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            Workbook wb;
+            Worksheet ws;
+
+            wb = excel.Workbooks.Open(filePath);
+            ws = wb.Worksheets[1];
+
+            // Find the last used row
+            int lastRow = ws.Cells[ws.Rows.Count, 1].End[XlDirection.xlUp].Row;
+
+            // Find the last used column
+            int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
+
+            for(int row=2; row<= lastRow; row++)
+            {
+                for (int column = 1; column < lastColumn; column++)
+                {
+                    temp[column - 1] = ws.Cells[row, column].Value?.ToString();
+                }
+                    try
+                    {
+                        temp_instrument.Name = temp[1];
+                        temp_instrument.Com = temp[2];
+                        temp_instrument.Lan = temp[3];
+                        temp_instrument.Visa_Usb = temp[4];
+                        temp_instrument.Visa_Lan = temp[5];
+                        Instruments_Names_List.Add(temp_instrument);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"error");
+                        wb.Close(false); // Close the workbook without saving changes
+                        excel.Quit();    // Quit the Excel application
+
+                    }
+                
+
+            }
+
+            // Now you have the total rows and columns
+            MessageBox.Show($"Total Rows: {lastRow}");
+            MessageBox.Show($"Total Columns: {lastColumn}");
+            wb.Close(false); // Close the workbook without saving changes
+            excel.Quit();    // Quit the Excel application
+            return new List<string>();
+        }
+        
+
+
+
+
+
+       
+
+
 
         private void User_mode_button_click(object sender, RoutedEventArgs e)
         {
@@ -43,6 +149,42 @@ namespace GUI_REAL
             Add_test_equipment_and_commands.Visibility = Visibility.Visible;
         }
 
-        
+        private void button_generate_multi_relay_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void file_to_program_textBox_button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+                file_to_program_textBox.Text = openFileDialog.FileName;
+            
+        }
+
+        private void Programing_choose_hardware_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch(Programing_choose_hardware.Text)
+            {
+                case "ST_Link":
+                    stlink_software_text.Visibility=Visibility.Visible;
+                    stlink_hardware_reset_button.Visibility=Visibility.Visible;
+                    stlink_erase_button.Visibility=Visibility.Visible;
+                    stlink_software_reset_button.Visibility= Visibility.Visible;    
+                    stlink_full_erase_text.Visibility=Visibility.Visible;   
+                    stlink_software_text.Visibility= Visibility.Visible;
+                    stlink_programming_button.Visibility=Visibility.Visible;
+                    break;
+                case "JLINK":
+                    stlink_software_text.Visibility = Visibility.Hidden;
+                    stlink_hardware_reset_button.Visibility = Visibility.Hidden;
+                    stlink_erase_button.Visibility = Visibility.Hidden;
+                    stlink_software_reset_button.Visibility = Visibility.Hidden;
+                    stlink_full_erase_text.Visibility = Visibility.Hidden;
+                    stlink_software_text.Visibility = Visibility.Hidden;
+                    stlink_programming_button.Visibility = Visibility.Hidden;
+                    break;
+            }
+        }
     }
 }

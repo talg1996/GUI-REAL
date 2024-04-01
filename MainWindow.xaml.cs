@@ -13,6 +13,8 @@ using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using System;
 using System.IO;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 
 
@@ -24,24 +26,39 @@ namespace GUI_REAL
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : System.Windows.Window
+    public partial class MainWindow : System.Windows.Window, INotifyPropertyChanged
     {
         Instrument temp_instrument = new Instrument();
         List<Instrument> Instruments_Names_List = new List<Instrument>();
         List<string> Programing_hardware = new List<string>();
+        string User_mode;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+
+
+
+
 
 
         public MainWindow()
         {
 
-           
 
 
-          
+
+
             // Lists to store names and command strings from Excel files
 
             string Instruments_path_file = "H:\\Project\\Instrunets.xlsx";
-           // Update_Instrument_List(Instruments_path_file, Instruments_Names_List);
+            // Update_Instrument_List(Instruments_path_file, Instruments_Names_List);
 
             InitializeComponent();
             Init();
@@ -54,7 +71,7 @@ namespace GUI_REAL
 
         private void Init_Programing()
         {
-            
+
             Programing_hardware.Add("ST_Link");
             Programing_hardware.Add("JLINK");
             Programing_choose_hardware.ItemsSource = Programing_hardware;
@@ -84,29 +101,29 @@ namespace GUI_REAL
             // Find the last used column
             int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
 
-            for(int row=2; row<= lastRow; row++)
+            for (int row = 2; row <= lastRow; row++)
             {
                 for (int column = 1; column < lastColumn; column++)
                 {
                     temp[column - 1] = ws.Cells[row, column].Value?.ToString();
                 }
-                    try
-                    {
-                        temp_instrument.Name = temp[1];
-                        temp_instrument.Com = temp[2];
-                        temp_instrument.Lan = temp[3];
-                        temp_instrument.Visa_Usb = temp[4];
-                        temp_instrument.Visa_Lan = temp[5];
-                        Instruments_Names_List.Add(temp_instrument);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"error");
-                        wb.Close(false); // Close the workbook without saving changes
-                        excel.Quit();    // Quit the Excel application
+                try
+                {
+                    temp_instrument.Name = temp[1];
+                    temp_instrument.Com = temp[2];
+                    temp_instrument.Lan = temp[3];
+                    temp_instrument.Visa_Usb = temp[4];
+                    temp_instrument.Visa_Lan = temp[5];
+                    Instruments_Names_List.Add(temp_instrument);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"error");
+                    wb.Close(false); // Close the workbook without saving changes
+                    excel.Quit();    // Quit the Excel application
 
-                    }
-                
+                }
+
 
             }
 
@@ -117,41 +134,43 @@ namespace GUI_REAL
             excel.Quit();    // Quit the Excel application
             return new List<string>();
         }
-        
 
 
 
 
 
-       
+
+
 
 
 
         private void User_mode_button_click(object sender, RoutedEventArgs e)
         {
-            aaa.Visibility= Visibility.Visible;
+            User_mode = "User";
+            aaa.Visibility = Visibility.Visible;
             Check_commands_lable.Visibility = Visibility.Hidden;
             MCU_Programing.Visibility = Visibility.Hidden;
             Realys_board_command_generate.Visibility = Visibility.Hidden;
             UART_Communication.Visibility = Visibility.Hidden;
-            Add_test_equipment_and_commands.Visibility = Visibility.Hidden; 
+            Add_test_equipment_and_commands.Visibility = Visibility.Hidden;
             Path.Visibility = Visibility.Hidden;
         }
 
         private void Technician_mode_button_Click(object sender, RoutedEventArgs e)
         {
+            User_mode = "Technician";
             aaa.Visibility = Visibility.Visible;
             Path.Visibility = Visibility.Visible;
-            Check_commands_lable.Visibility= Visibility.Visible;
-            MCU_Programing.Visibility= Visibility.Visible ;
-            Realys_board_command_generate.Visibility= Visibility.Visible ;
-            UART_Communication.Visibility= Visibility.Visible ;
+            Check_commands_lable.Visibility = Visibility.Visible;
+            MCU_Programing.Visibility = Visibility.Visible;
+            Realys_board_command_generate.Visibility = Visibility.Visible;
+            UART_Communication.Visibility = Visibility.Visible;
             Add_test_equipment_and_commands.Visibility = Visibility.Visible;
         }
 
         private void button_generate_multi_relay_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private void file_to_program_textBox_button_Click(object sender, RoutedEventArgs e)
@@ -159,32 +178,84 @@ namespace GUI_REAL
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
                 file_to_program_textBox.Text = openFileDialog.FileName;
-            
+
         }
 
         private void Programing_choose_hardware_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch(Programing_choose_hardware.Text)
+
+            
+
+
+        }
+
+        private void stlink_programming_button_Click(object sender, RoutedEventArgs e)
+        {
+
+            string STM32_Programer_CLI_Path = "H:\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe";
+              string Elf_File_To_Flash = file_to_program_textBox.Text;
+               STM32_Programer_CLI test= new STM32_Programer_CLI (STM32_Programer_CLI_Path, Elf_File_To_Flash);
+              programere_output_textbox.Text= test.Flash_STM32();
+        }
+
+        private void stlink_erase_button_Click(object sender, RoutedEventArgs e)
+        {
+            string STM32_Programer_CLI_Path = "H:\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe";
+            STM32_Programer_CLI test = new STM32_Programer_CLI(STM32_Programer_CLI_Path);
+            
+            programere_output_textbox.Text = test.Delete_STM32(); 
+        }
+
+        private void programere_output_textbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            programere_output_textbox.ScrollToEnd();
+
+        }
+
+        private void stlink_software_reset_button_Click(object sender, RoutedEventArgs e)
+        {
+            string STM32_Programer_CLI_Path = "H:\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe";
+            STM32_Programer_CLI test = new STM32_Programer_CLI(STM32_Programer_CLI_Path);
+            programere_output_textbox.Text = test.Reset_STM32();
+        }
+
+        private void stlink_hardware_reset_button_Click(object sender, RoutedEventArgs e)
+        {
+            string STM32_Programer_CLI_Path = "H:\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe";
+            STM32_Programer_CLI test = new STM32_Programer_CLI(STM32_Programer_CLI_Path);
+            programere_output_textbox.Text = test.Hard_Reset_STM32();
+        }
+
+        private void button5_Copy4_Click(object sender, RoutedEventArgs e)
+        {
+            programere_output_textbox.Text = "";
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            if (Programing_choose_hardware.Text == "ST_Link")
             {
-                case "ST_Link":
-                    stlink_software_text.Visibility=Visibility.Visible;
-                    stlink_hardware_reset_button.Visibility=Visibility.Visible;
-                    stlink_erase_button.Visibility=Visibility.Visible;
-                    stlink_software_reset_button.Visibility= Visibility.Visible;    
-                    stlink_full_erase_text.Visibility=Visibility.Visible;   
-                    stlink_software_text.Visibility= Visibility.Visible;
-                    stlink_programming_button.Visibility=Visibility.Visible;
-                    break;
-                case "JLINK":
-                    stlink_software_text.Visibility = Visibility.Hidden;
-                    stlink_hardware_reset_button.Visibility = Visibility.Hidden;
-                    stlink_erase_button.Visibility = Visibility.Hidden;
-                    stlink_software_reset_button.Visibility = Visibility.Hidden;
-                    stlink_full_erase_text.Visibility = Visibility.Hidden;
-                    stlink_software_text.Visibility = Visibility.Hidden;
-                    stlink_programming_button.Visibility = Visibility.Hidden;
-                    break;
+                stlink_software_text.Visibility = Visibility.Visible;
+                stlink_hardware_reset_button.Visibility = Visibility.Visible;
+                stlink_erase_button.Visibility = Visibility.Visible;
+                stlink_software_reset_button.Visibility = Visibility.Visible;
+                stlink_full_erase_text.Visibility = Visibility.Visible;
+                stlink_software_text.Visibility = Visibility.Visible;
+                stlink_programming_button.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+                stlink_software_text.Visibility = Visibility.Hidden;
+                stlink_hardware_reset_button.Visibility = Visibility.Hidden;
+                stlink_erase_button.Visibility = Visibility.Hidden;
+                stlink_software_reset_button.Visibility = Visibility.Hidden;
+                stlink_full_erase_text.Visibility = Visibility.Hidden;
+                stlink_software_text.Visibility = Visibility.Hidden;
+                stlink_programming_button.Visibility = Visibility.Hidden;
+
+
             }
         }
     }
-}
+} 

@@ -712,7 +712,7 @@
                 <Grid
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Background="White">
+                    Background="White" Height="381">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*" />
                         <RowDefinition Height="14*" />
@@ -859,15 +859,9 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         SelectedIndex="0"
-                        SelectionChanged="Programing_choose_hardware_SelectionChanged" />
-                    <Button
-                        x:Name="Refresh"
-                        Grid.Row="2"
-                        Margin="137,94,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Click="button1_Click"
-                        Content="Button" />
+                        SelectionChanged="Programing_choose_hardware_SelectionChanged"
+                        
+                        />
                     <TextBlock
                         x:Name="how_many_uut_textBlock"
                         Grid.Row="2"
@@ -876,32 +870,41 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="How many UUTs?"
-                        TextWrapping="Wrap" />
+                        TextWrapping="Wrap" Visibility="Hidden" />
                     <ComboBox
                         x:Name="how_many_uut_combobox"
                         Grid.Row="2"
                         Margin="134,132,0,0"
                         HorizontalAlignment="Left"
-                        VerticalAlignment="Top" Height="24" Width="71" />
+                        VerticalAlignment="Top" Height="24" Width="71" SelectionChanged="how_many_uut_combobox_SelectionChanged" Visibility="Hidden" />
                     <Button
                         x:Name="JLINK_program_button"
                         Grid.Row="2"
-                        Margin="10,283,0,0"
+                        Margin="13,220,0,0"
                         Background="#FFC8F9C9"
-                        Content="Program" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="56" Click="JLINK_program_button_Click" />
+                        Content="Program" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="56" Click="JLINK_program_button_Click" Visibility="Hidden" />
                     <Button
                         x:Name="JLINK_erase_button"
                         Grid.Row="2"
-                        Margin="99,283,0,0"
+                        Margin="125,220,0,0"
                         Background="#FFF9CCC8"
-                        Content="Erase" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="49" Click="JLINK_erase_button_Click" />
-                    <TextBlock x:Name="MCU_NmaetextBlock" Margin="10,186,670,100" Grid.Row="2" TextWrapping="Wrap" Text="MCU name" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        Content="Erase" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="49" Click="JLINK_erase_button_Click" Visibility="Hidden" />
+                    <TextBlock x:Name="jlink_MCU_Name_textBlock" Margin="10,186,670,100" Grid.Row="2" TextWrapping="Wrap" Text="MCU name" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
                     <TextBox
-                        x:Name="uut_name_textBox"
+                        x:Name="jlink_uut_name_textBox"
                         Grid.Row="2"
                         Margin="94,185,0,0"
                         Text="TextBox"
-                        TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" />
+                        TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" Visibility="Hidden" />
+                    <TextBlock
+                        x:Name="Programing_choose_hardware_textBlock"
+                        Width="112"
+                        Margin="10,73,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="Hardware"
+                        TextWrapping="Wrap"
+    Grid.Row="2" d:LayoutOverrides="VerticalAlignment" />
                 </Grid>
             </TabItem>
             <TabItem Name="Realys_board_command_generate" Header="Realys board command generate">
@@ -2181,14 +2184,5 @@
 
 
         </TabControl>
-        <TextBlock
-            x:Name="textBlock6_Copy3"
-            Width="112"
-            Margin="10,180,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Text="Hardware"
-            TextWrapping="Wrap"
-            d:LayoutOverrides="VerticalAlignment" />
     </Grid>
 </Window>

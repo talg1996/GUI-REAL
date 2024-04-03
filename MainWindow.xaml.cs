@@ -15,6 +15,8 @@ using System;
 using System.IO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
+
 
 
 
@@ -31,19 +33,15 @@ namespace GUI_REAL
         Instrument temp_instrument = new Instrument();
         List<Instrument> Instruments_Names_List = new List<Instrument>();
 
-        string[] UUT_amount = new string[] { "ST_Link", "JLINK" };
-        string[] Programing_hardware = new string[] { "1", "2", "3", "4" };
-
+        string[] Programing_hardware = new string[] { "ST_Link", "JLINK" };
+        string[] UUT_amount = new string[] { "1", "2", "3", "4" };
+        
 
         string User_mode;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
 
 
@@ -188,9 +186,51 @@ namespace GUI_REAL
 
         private void Programing_choose_hardware_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
+            string hardware_selected = (sender as ComboBox).SelectedItem as string;
+            if (hardware_selected == "ST_Link")
+                {
+                    ///--- Visible STLink CONTROL ---///
+                    stlink_software_text.Visibility = Visibility.Visible;
+                    stlink_hardware_reset_button.Visibility = Visibility.Visible;
+                    stlink_erase_button.Visibility = Visibility.Visible;
+                    stlink_software_reset_button.Visibility = Visibility.Visible;
+                    stlink_full_erase_text.Visibility = Visibility.Visible;
+                    stlink_software_text.Visibility = Visibility.Visible;
+                    stlink_programming_button.Visibility = Visibility.Visible;
+
+                    ///--- Hide JLINK CONTROL ---///
+                    jlink_MCU_Name_textBlock.Visibility = Visibility.Hidden;
+                    JLINK_erase_button.Visibility = Visibility.Hidden;
+                    jlink_uut_name_textBox.Visibility = Visibility.Hidden;
+                    JLINK_program_button.Visibility = Visibility.Hidden;
+                    how_many_uut_combobox.Visibility = Visibility.Hidden;
+                    how_many_uut_textBlock.Visibility = Visibility.Hidden;
+
+                }
+                else
+                {
+                    ///--- Hidden STLink CONTROL ---///
+                    stlink_software_text.Visibility = Visibility.Hidden;
+                    stlink_hardware_reset_button.Visibility = Visibility.Hidden;
+                    stlink_erase_button.Visibility = Visibility.Hidden;
+                    stlink_software_reset_button.Visibility = Visibility.Hidden;
+                    stlink_full_erase_text.Visibility = Visibility.Hidden;
+                    stlink_software_text.Visibility = Visibility.Hidden;
+                    stlink_programming_button.Visibility = Visibility.Hidden;
 
 
+                    ///--- Visible JLINK CONTROL ---///
+                    jlink_MCU_Name_textBlock.Visibility = Visibility.Visible;
+                    JLINK_erase_button.Visibility = Visibility.Visible;
+                    jlink_uut_name_textBox.Visibility = Visibility.Visible;
+                    JLINK_program_button.Visibility = Visibility.Visible;
+                    how_many_uut_combobox.Visibility = Visibility.Visible;
+                    how_many_uut_textBlock.Visibility = Visibility.Visible;
 
+
+                }
+            
 
         }
 
@@ -236,32 +276,7 @@ namespace GUI_REAL
             programere_output_textbox.Text = "";
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            if (Programing_choose_hardware.Text == "ST_Link")
-            {
-                stlink_software_text.Visibility = Visibility.Visible;
-                stlink_hardware_reset_button.Visibility = Visibility.Visible;
-                stlink_erase_button.Visibility = Visibility.Visible;
-                stlink_software_reset_button.Visibility = Visibility.Visible;
-                stlink_full_erase_text.Visibility = Visibility.Visible;
-                stlink_software_text.Visibility = Visibility.Visible;
-                stlink_programming_button.Visibility = Visibility.Visible;
-
-            }
-            else
-            {
-                stlink_software_text.Visibility = Visibility.Hidden;
-                stlink_hardware_reset_button.Visibility = Visibility.Hidden;
-                stlink_erase_button.Visibility = Visibility.Hidden;
-                stlink_software_reset_button.Visibility = Visibility.Hidden;
-                stlink_full_erase_text.Visibility = Visibility.Hidden;
-                stlink_software_text.Visibility = Visibility.Hidden;
-                stlink_programming_button.Visibility = Visibility.Hidden;
-
-
-            }
-        }
+      
 
         private void JLINK_erase_button_Click(object sender, RoutedEventArgs e)
         {
@@ -273,6 +288,11 @@ namespace GUI_REAL
         {
             JLINK test = new JLINK("STM32G431RB", "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", 1, file_to_program_textBox.Text, "4000");
             test.Program();
+        }
+
+        private void how_many_uut_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

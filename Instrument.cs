@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace GUI_REAL
 {
     public struct Instrument
@@ -25,7 +27,7 @@ namespace GUI_REAL
         public string Details()
         {
             string details = $"{Model}\n{Name}\n{Com}\n{Lan}\n{Visa_Usb}\n{Visa_Lan}\n";
-            Console.WriteLine(details);
+            Trace.WriteLine(details);
             return details;
         }
     }

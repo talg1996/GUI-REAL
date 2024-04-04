@@ -146,7 +146,7 @@ namespace GUI_REAL
         }
 
         /// <summary>
-        /// Description: This method sends commands to JLink.exe via cmd and returns the output
+        /// Description: This method sends commands to JLink.exe via cmd and returns the output as a string so it is possible to present it at GUI 
         /// </summary>
         public string cmd_program()
         {
@@ -201,7 +201,7 @@ namespace GUI_REAL
         }
 
         /// <summary>
-        /// Description: This method sends erase command to JLink.exe via cmd and returns the output
+        /// Description: This method sends erase command to JLink.exe via cmd and returns the output as a string so it is possible to present it at GUI 
         /// </summary>
         public string cmd_erase()
         {

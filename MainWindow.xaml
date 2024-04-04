@@ -987,9 +987,9 @@
                     <TextBlock
                         x:Name="textBlock1_Copy9"
                         Grid.Row="2"
-                        Width="58"
+                        Width="64"
                         Height="21"
-                        Margin="4,-5,0,321"
+                        Margin="4,-5,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
@@ -1008,9 +1008,9 @@
                     <TextBlock
                         x:Name="textBlock1_Copy10"
                         Grid.Row="2"
-                        Width="58"
+                        Width="64"
                         Height="21"
-                        Margin="4,21,0,295"
+                        Margin="4,21,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
@@ -1031,7 +1031,7 @@
                         Grid.Row="2"
                         Width="58"
                         Height="21"
-                        Margin="4,47,0,269"
+                        Margin="4,47,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
@@ -1050,9 +1050,9 @@
                     <TextBlock
                         x:Name="textBlock1_Copy12"
                         Grid.Row="2"
-                        Width="58"
+                        Width="64"
                         Height="21"
-                        Margin="4,72,0,244"
+                        Margin="4,72,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
@@ -1071,9 +1071,9 @@
                     <TextBlock
                         x:Name="textBlock1_Copy13"
                         Grid.Row="2"
-                        Width="58"
+                        Width="64"
                         Height="21"
-                        Margin="4,98,0,218"
+                        Margin="4,98,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
@@ -1091,9 +1091,9 @@
                     <TextBlock
                         x:Name="textBlock1_Copy14"
                         Grid.Row="2"
-                        Width="58"
+                        Width="64"
                         Height="21"
-                        Margin="4,124,0,192"
+                        Margin="4,124,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
@@ -1114,14 +1114,14 @@
                         Grid.Row="2"
                         Width="58"
                         Height="21"
-                        Margin="4,150,0,166"
+                        Margin="4,0,0,0"
                         HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Center"
                         FontSize="16"
                         Text="Relay 8"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy8"
+                        x:Name="checkBox_relay9"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1133,16 +1133,16 @@
                     <TextBlock
                         x:Name="textBlock1_Copy16"
                         Grid.Row="2"
-                        Width="58"
+                        Width="61"
                         Height="21"
-                        Margin="4,172,0,144"
+                        Margin="4,172,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
                         Text="Relay 9"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy9"
+                        x:Name="checkBox_relay10"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1154,16 +1154,16 @@
                     <TextBlock
                         x:Name="textBlock1_Copy17"
                         Grid.Row="2"
-                        Width="64"
+                        Width="68"
                         Height="21"
-                        Margin="4,198,0,118"
+                        Margin="4,198,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
                         Text="Relay 10"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy10"
+                        x:Name="checkBox_relay11"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1175,16 +1175,16 @@
                     <TextBlock
                         x:Name="textBlock1_Copy18"
                         Grid.Row="2"
-                        Width="64"
+                        Width="68"
                         Height="21"
-                        Margin="4,224,0,92"
+                        Margin="4,224,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
                         Text="Relay 11"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy11"
+                        x:Name="checkBox_relay12"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1196,16 +1196,16 @@
                     <TextBlock
                         x:Name="textBlock1_Copy19"
                         Grid.Row="2"
-                        Width="64"
+                        Width="68"
                         Height="21"
-                        Margin="4,247,0,69"
+                        Margin="4,247,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
                         Text="Relay 12"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy12"
+                        x:Name="checkBox_relay13"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1219,14 +1219,14 @@
                         Grid.Row="2"
                         Width="64"
                         Height="21"
-                        Margin="4,271,0,45"
+                        Margin="4,271,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
                         Text="Relay 13"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy13"
+                        x:Name="checkBox_relay14"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1238,9 +1238,9 @@
                     <TextBlock
                         x:Name="textBlock1_Copy21"
                         Grid.Row="2"
-                        Width="64"
+                        Width="68"
                         Height="21"
-                        Margin="4,297,0,19"
+                        Margin="4,297,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
@@ -1267,7 +1267,7 @@
                         Text="Relay 15"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy15"
+                        x:Name="checkBox_relay16"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1288,7 +1288,7 @@
                         Text="Relay 16"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy16"
+                        x:Name="checkBox_relay17"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1309,7 +1309,7 @@
                         Text="Relay 17"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy17"
+                        x:Name="checkBox_relay18"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1330,7 +1330,7 @@
                         Text="Relay 18"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy18"
+                        x:Name="checkBox_relay19"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1351,7 +1351,7 @@
                         Text="Relay 19"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy19"
+                        x:Name="checkBox_relay20"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1372,7 +1372,7 @@
                         Text="Relay 20"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy20"
+                        x:Name="checkBox_relay21"
                         Grid.Row="2"
                         Width="18"
                         Margin="226,126,0,0"
@@ -1392,7 +1392,7 @@
                         Text="Relay 21"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy21"
+                        x:Name="checkBox_relay22"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1413,7 +1413,7 @@
                         Text="Relay 22"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy22"
+                        x:Name="checkBox_relay23"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1434,7 +1434,7 @@
                         Text="Relay 23"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy23"
+                        x:Name="checkBox_relay24"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1455,7 +1455,7 @@
                         Text="Relay 24"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy24"
+                        x:Name="checkBox_relay25"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1476,7 +1476,7 @@
                         Text="Relay 25"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy25"
+                        x:Name="checkBox_relay26"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1497,7 +1497,7 @@
                         Text="Relay 26"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy26"
+                        x:Name="checkBox_relay27"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1518,7 +1518,7 @@
                         Text="Relay 27"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy27"
+                        x:Name="checkBox_relay28"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1539,7 +1539,7 @@
                         Text="Relay 28"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy28"
+                        x:Name="checkBox_relay29"
                         Grid.Row="1"
                         Width="18"
                         Margin="361,3,0,0"
@@ -1559,7 +1559,7 @@
                         Text="Relay 29"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy29"
+                        x:Name="checkBox_relay30"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1580,7 +1580,7 @@
                         Text="Relay 30"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy30"
+                        x:Name="checkBox_relay31"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1601,7 +1601,7 @@
                         Text="Relay 31"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy31"
+                        x:Name="checkBox_relay32"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1622,7 +1622,7 @@
                         Text="Relay 32"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy32"
+                        x:Name="checkBox_relay33"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1643,7 +1643,7 @@
                         Text="Relay 33"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy33"
+                        x:Name="checkBox_relay34"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1664,7 +1664,7 @@
                         Text="Relay 34"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy34"
+                        x:Name="checkBox_relay35"
                         Grid.Row="2"
                         Width="18"
                         Margin="361,125,0,0"
@@ -1684,7 +1684,7 @@
                         Text="Relay 35"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy35"
+                        x:Name="checkBox_relay36"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1705,7 +1705,7 @@
                         Text="Relay 36"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy36"
+                        x:Name="checkBox_relay37"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1726,7 +1726,7 @@
                         Text="Relay 37"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy37"
+                        x:Name="checkBox_relay38"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1747,7 +1747,7 @@
                         Text="Relay 38"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy38"
+                        x:Name="checkBox_relay39"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1768,7 +1768,7 @@
                         Text="Relay 39"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy39"
+                        x:Name="checkBox_relay40"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1789,7 +1789,7 @@
                         Text="Relay 40"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy40"
+                        x:Name="checkBox_relay41"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1810,7 +1810,7 @@
                         Text="Relay 41"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy41"
+                        x:Name="checkBox_relay42"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1831,7 +1831,7 @@
                         Text="Relay 42"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy42"
+                        x:Name="checkBox_relay43"
                         Grid.Row="1"
                         Width="18"
                         Margin="502,3,0,0"
@@ -1851,7 +1851,7 @@
                         Text="Relay 43"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy43"
+                        x:Name="checkBox_relay44"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1872,7 +1872,7 @@
                         Text="Relay 44"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy44"
+                        x:Name="checkBox_relay45"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1893,7 +1893,7 @@
                         Text="Relay 45"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy45"
+                        x:Name="checkBox_relay46"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1914,7 +1914,7 @@
                         Text="Relay 46"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy46"
+                        x:Name="checkBox_relay47"
                         Grid.Row="2"
                         Width="18"
                         Height="18"
@@ -1935,7 +1935,7 @@
                         Text="Relay 47"
                         TextWrapping="Wrap" />
                     <CheckBox
-                        x:Name="checkBox_Copy47"
+                        x:Name="checkBox_relay48"
                         Grid.Row="2"
                         Width="18"
                         Height="18"

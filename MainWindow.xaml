@@ -710,9 +710,10 @@
             </TabItem>
             <TabItem Name="MCU_Programing" Header="MCU Programing">
                 <Grid
+                    Height="381"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Background="White" Height="381">
+                    Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*" />
                         <RowDefinition Height="14*" />
@@ -744,7 +745,7 @@
                         x:Name="file_to_program_textBox"
                         Grid.Row="2"
                         Margin="10,3,383,253"
-                        Text="TextBox"
+                        Text=""
                         TextWrapping="Wrap"
                         d:LayoutOverrides="HorizontalAlignment" />
                     <Button
@@ -859,9 +860,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         SelectedIndex="0"
-                        SelectionChanged="Programing_choose_hardware_SelectionChanged"
-                        
-                        />
+                        SelectionChanged="Programing_choose_hardware_SelectionChanged" />
                     <TextBlock
                         x:Name="how_many_uut_textBlock"
                         Grid.Row="2"
@@ -870,41 +869,71 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="How many UUTs?"
-                        TextWrapping="Wrap" Visibility="Hidden" />
+                        TextWrapping="Wrap"
+                        Visibility="Hidden" />
                     <ComboBox
                         x:Name="how_many_uut_combobox"
                         Grid.Row="2"
+                        Width="71"
+                        Height="24"
                         Margin="134,132,0,0"
                         HorizontalAlignment="Left"
-                        VerticalAlignment="Top" Height="24" Width="71" SelectionChanged="how_many_uut_combobox_SelectionChanged" Visibility="Hidden" />
+                        VerticalAlignment="Top"
+                        SelectionChanged="how_many_uut_combobox_SelectionChanged"
+                        Visibility="Hidden" />
                     <Button
                         x:Name="JLINK_program_button"
                         Grid.Row="2"
+                        Width="56"
+                        Height="25"
                         Margin="13,220,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Background="#FFC8F9C9"
-                        Content="Program" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="56" Click="JLINK_program_button_Click" Visibility="Hidden" />
+                        Click="JLINK_program_button_Click"
+                        Content="Program"
+                        Visibility="Hidden" />
                     <Button
                         x:Name="JLINK_erase_button"
                         Grid.Row="2"
+                        Width="49"
+                        Height="25"
                         Margin="125,220,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Background="#FFF9CCC8"
-                        Content="Erase" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="49" Click="JLINK_erase_button_Click" Visibility="Hidden" />
-                    <TextBlock x:Name="jlink_MCU_Name_textBlock" Margin="10,186,670,100" Grid.Row="2" TextWrapping="Wrap" Text="MCU name" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
+                        Click="JLINK_erase_button_Click"
+                        Content="Erase"
+                        Visibility="Hidden" />
+                    <TextBlock
+                        x:Name="jlink_MCU_Name_textBlock"
+                        Grid.Row="2"
+                        Margin="10,186,670,100"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="MCU name"
+                        TextWrapping="Wrap"
+                        Visibility="Hidden" />
                     <TextBox
                         x:Name="jlink_uut_name_textBox"
                         Grid.Row="2"
+                        Width="111"
                         Margin="94,185,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Text="TextBox"
-                        TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" Visibility="Hidden" />
+                        TextWrapping="Wrap"
+                        Visibility="Hidden" />
                     <TextBlock
                         x:Name="Programing_choose_hardware_textBlock"
+                        Grid.Row="2"
                         Width="112"
                         Margin="10,73,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Hardware"
                         TextWrapping="Wrap"
-    Grid.Row="2" d:LayoutOverrides="VerticalAlignment" />
+                        d:LayoutOverrides="VerticalAlignment" />
                 </Grid>
             </TabItem>
             <TabItem Name="Realys_board_command_generate" Header="Realys board command generate">

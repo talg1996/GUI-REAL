@@ -239,16 +239,16 @@ namespace GUI_REAL
 
             string STM32_Programer_CLI_Path = "H:\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe";
             string Elf_File_To_Flash = file_to_program_textBox.Text;
-            STM32_Programer_CLI test = new STM32_Programer_CLI(STM32_Programer_CLI_Path, Elf_File_To_Flash);
-            programere_output_textbox.Text = test.Flash_STM32();
+            STLink test = new STLink(STM32_Programer_CLI_Path, Elf_File_To_Flash);
+            programere_output_textbox.Text = test.STLink_Program_STM32();
         }
 
         private void stlink_erase_button_Click(object sender, RoutedEventArgs e)
         {
             string STM32_Programer_CLI_Path = "H:\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe";
-            STM32_Programer_CLI test = new STM32_Programer_CLI(STM32_Programer_CLI_Path);
+            STLink test = new STLink(STM32_Programer_CLI_Path);
 
-            programere_output_textbox.Text = test.Delete_STM32();
+            programere_output_textbox.Text = test.STLink_Erase_STM32();
         }
 
         private void programere_output_textbox_TextChanged(object sender, TextChangedEventArgs e)
@@ -260,15 +260,15 @@ namespace GUI_REAL
         private void stlink_software_reset_button_Click(object sender, RoutedEventArgs e)
         {
             string STM32_Programer_CLI_Path = "H:\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe";
-            STM32_Programer_CLI test = new STM32_Programer_CLI(STM32_Programer_CLI_Path);
-            programere_output_textbox.Text = test.Reset_STM32();
+            STLink test = new STLink(STM32_Programer_CLI_Path);
+            programere_output_textbox.Text = test.STLink_Reset_STM32();
         }
 
         private void stlink_hardware_reset_button_Click(object sender, RoutedEventArgs e)
         {
             string STM32_Programer_CLI_Path = "H:\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe";
-            STM32_Programer_CLI test = new STM32_Programer_CLI(STM32_Programer_CLI_Path);
-            programere_output_textbox.Text = test.Hard_Reset_STM32();
+            STLink test = new STLink(STM32_Programer_CLI_Path);
+            programere_output_textbox.Text = test.STLink_Hard_Reset_STM32();
         }
 
         private void button5_Copy4_Click(object sender, RoutedEventArgs e)
@@ -280,14 +280,40 @@ namespace GUI_REAL
 
         private void JLINK_erase_button_Click(object sender, RoutedEventArgs e)
         {
-            JLINK test = new JLINK("STM32G431RB", "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", 1, file_to_program_textBox.Text, "4000");
-            test.Erase();
+            if (!string.IsNullOrEmpty(jlink_uut_name_textBox.Text) && !string.IsNullOrEmpty(how_many_uut_combobox.Text) )
+            {
+                try
+                {
+                    JLINK test = new JLINK(jlink_uut_name_textBox.Text, "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", int.Parse(how_many_uut_combobox.Text), file_to_program_textBox.Text, "4000");
+                    Trace.WriteLine(how_many_uut_combobox.Text);
+                    programere_output_textbox.Text = test.cmd_erase();
+                   
+                }
+                catch (Exception ex)
+                {
+                    programere_output_textbox.Text=ex.Message;
+                }
+            }
+            else
+                programere_output_textbox.Text = "Please enter all vlaues";
+
+
+
+
+
         }
 
         private void JLINK_program_button_Click(object sender, RoutedEventArgs e)
         {
-            JLINK test = new JLINK("STM32G431RB", "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", 1, file_to_program_textBox.Text, "4000");
-            test.Program();
+            try
+            {
+                JLINK test = new JLINK(jlink_uut_name_textBox.Text, "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", int.Parse(how_many_uut_combobox.Text), file_to_program_textBox.Text, "4000");
+                programere_output_textbox.Text=test.cmd_program();
+            }
+            catch (Exception ex)
+            {
+                programere_output_textbox.Text= ex.Message;
+            }
         }
 
         private void how_many_uut_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -16,6 +16,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using System.Xml.Linq;
 
 
 
@@ -36,6 +37,8 @@ namespace GUI_REAL
         string[] Programing_hardware = new string[] { "ST_Link", "JLINK" };
         string[] UUT_amount = new string[] { "1", "2", "3", "4" };
         
+        
+
 
         string User_mode;
 
@@ -69,7 +72,10 @@ namespace GUI_REAL
         private void Init()
         {
             Init_Programing();
+           
         }
+
+       
 
         private void Init_Programing()
         {
@@ -172,8 +178,100 @@ namespace GUI_REAL
         }
 
         private void button_generate_multi_relay_Click(object sender, RoutedEventArgs e)
-        {
+        {   
+            string adress = "00";
+            string command = adress + "!002";
+            string generated_command = command + get_realys_command();
+            relay_output_command.Text = generated_command+"<CR>";
+            
+        }
 
+
+        private string get_realys_command()
+        {
+            string A = BinaryToHex((checkBox_relay48.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay47.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay46.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay45.IsChecked == true ? "1" : "0"));
+
+            string B = BinaryToHex((checkBox_relay44.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay43.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay42.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay41.IsChecked == true ? "1" : "0"));
+
+            string C = BinaryToHex((checkBox_relay40.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay39.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay38.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay37.IsChecked == true ? "1" : "0"));
+
+            string D = BinaryToHex((checkBox_relay36.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay35.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay34.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay33.IsChecked == true ? "1" : "0"));
+
+            string E = BinaryToHex((checkBox_relay32.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay31.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay30.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay29.IsChecked == true ? "1" : "0"));
+
+            string F = BinaryToHex((checkBox_relay28.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay27.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay26.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay25.IsChecked == true ? "1" : "0"));
+
+            string G = BinaryToHex((checkBox_relay24.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay23.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay22.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay21.IsChecked == true ? "1" : "0"));
+
+            string H = BinaryToHex((checkBox_relay20.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay19.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay18.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay17.IsChecked == true ? "1" : "0"));
+
+            string I = BinaryToHex((checkBox_relay16.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay15.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay14.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay13.IsChecked == true ? "1" : "0"));
+
+            string J = BinaryToHex((checkBox_relay12.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay11.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay10.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay9.IsChecked == true ? "1" : "0"));
+
+            string K = BinaryToHex((checkBox_relay8.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay7.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay6.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay5.IsChecked == true ? "1" : "0"));
+
+            string L = BinaryToHex((checkBox_relay4.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay3.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay2.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay1.IsChecked == true ? "1" : "0"));
+
+            return A+B+C+D+E+F+H+I+J+K+L;
+        }
+
+        public string BinaryToHex(string binary)
+        {
+            // Check if the input string is not null or empty
+            if (string.IsNullOrEmpty(binary))
+                throw new ArgumentException("Input string cannot be null or empty.");
+
+            // Pad the binary string with zeros to ensure it's a multiple of 4
+            while (binary.Length % 4 != 0)
+                binary = "0" + binary;
+
+            // Convert binary string to hexadecimal
+            string hex = "";
+            for (int i = 0; i < binary.Length; i += 4)
+            {
+                string nibble = binary.Substring(i, 4);
+                int decimalValue = Convert.ToInt32(nibble, 2);
+                hex += decimalValue.ToString("X");
+            }
+
+            return hex;
         }
 
         private void file_to_program_textBox_button_Click(object sender, RoutedEventArgs e)
@@ -320,5 +418,61 @@ namespace GUI_REAL
         {
 
         }
+
+        
+
+        private void button_generate_one_relay_Click(object sender, RoutedEventArgs e)
+        {   
+            string input = single_input_command.Text;
+            string unfinish_command = "!003";
+            string relay_hex_Value = GetHexValue(input);
+            if (relay_hex_Value == "Input must be a number between 1 and 48.")
+            {
+                single_output_command.Text = "Input must be a number between 1 and 48.";
+            }
+            else
+            {
+                string final_command = unfinish_command + relay_hex_Value + "<CR>";
+                single_output_command.Text = final_command;
+            }
+        }
+
+
+
+        private void button_DeActive_generate_one_relay_Click(object sender, RoutedEventArgs e)
+        {
+            string input = single_input_command.Text;
+            string unfinish_command = "!004";
+            string relay_hex_Value = GetHexValue(input);
+            if(relay_hex_Value == "Input must be a number between 1 and 48.")
+            {
+                single_output_command.Text = "Input must be a number between 1 and 48.";
+            }
+            else
+            {
+                string final_command = unfinish_command + relay_hex_Value + "<CR>";
+                single_output_command.Text = final_command;
+            }
+           
+        }
+
+        static string GetHexValue(string input)
+        {
+            int number;
+            if (!int.TryParse(input, out number) || number < 1 || number > 48)
+            {
+               return "Input must be a number between 1 and 48.";
+            }
+
+            // Convert number to hexadecimal
+            return (number - 1).ToString("X2");
+        }
+
+        private void mark_unmark_checkboxes(string v)
+        {
+           
+        }
+
+       
     }
 }

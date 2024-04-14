@@ -39,13 +39,12 @@
                         d:LayoutOverrides="Height" />
                     <Image
                         x:Name="image"
-                        Width="321"
-                        Height="138"
-                        Margin="0,0,10,10"
+                        Width="273"
+                        Height="115"
+                        Margin="0,0,10,19"
                         HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
                         Source="/enercon.png"
-                        d:LayoutOverrides="HorizontalAlignment" />
+                        d:LayoutOverrides="HorizontalAlignment" VerticalAlignment="Bottom" />
                     <TextBlock
                         x:Name="textBlock_Copy1"
                         Width="150"
@@ -233,7 +232,7 @@
                     <TextBox
                         x:Name="textBox_Copy_1"
                         Grid.Row="2"
-                        Width="39"
+                        Width="25"
                         Height="21"
                         Margin="19,34,0,0"
                         HorizontalAlignment="Left"
@@ -355,7 +354,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
-                        Text="Useing chamber"
+                        Text="Using chamber"
                         TextWrapping="Wrap" />
                     <CheckBox
                         x:Name="checkBox"
@@ -480,35 +479,37 @@
             <TabItem
                 Name="Add_test_equipment_and_commands"
                 Header="Add test equipment  and commands"
-                Visibility="Hidden">
+                >
                 <Grid Background="White">
                     <TextBlock
                         x:Name="textBlock3"
-                        Margin="10,20,637,335"
-                        Text="Open instrumens file"
-                        TextWrapping="Wrap" />
+                        Margin="334,28,334,0"
+                        Text="Open instrumens file:"
+                        TextWrapping="Wrap" VerticalAlignment="Top" />
                     <Button
                         x:Name="button2"
-                        Margin="10,51,684,300"
-                        Content="Browse" />
+                        Margin="353,49,366,0"
+                        Content="Browse" VerticalAlignment="Top" Height="30" Background="White" />
                     <TextBlock
                         x:Name="textBlock3_Copy"
-                        Margin="10,127,637,228"
-                        Text="Open commands file"
-                        TextWrapping="Wrap" />
-                    <Button
-                        x:Name="button2_Copy"
-                        Margin="10,158,684,193"
-                        Content="Browse" />
+                        Margin="334,97,0,0"
+                        Text="Open commands file:"
+                        TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" d:LayoutOverrides="Width" />
                     <TextBlock
                         x:Name="textBlock3_Copy1"
-                        Margin="10,258,637,97"
-                        Text="Open flows file"
-                        TextWrapping="Wrap" />
+                        Margin="346,172,0,0"
+                        Text="Open flows file:"
+                        TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment" />
+                    <Button
+                        x:Name="button2_Copy"
+                        Margin="353,118,366,0"
+                        Content="Browse" VerticalAlignment="Top" Height="30" Background="White" />
                     <Button
                         x:Name="button2_Copy1"
-                        Margin="10,289,684,62"
-                        Content="Browse" />
+                        Margin="353,193,366,163"
+                        Content="Browse" Background="White" />
+                    <Border BorderThickness="1" Margin="299,10,312,105" Panel.ZIndex="-1" Background="#FFE4F5FB" CornerRadius="50,50,50,50"/>
+                    <Border BorderThickness="1" Margin="299,10,312,105" Panel.ZIndex="-1" Background="#FFE4F5FB" CornerRadius="50,50,50,50"/>
                 </Grid>
             </TabItem>
             <TabItem
@@ -2272,11 +2273,7 @@
                         TextWrapping="Wrap" />
                 </Grid>
             </TabItem>
-            <Border
-                Width="20"
-                Height="7"
-                BorderBrush="Black"
-                BorderThickness="1" />
+
 
 
 

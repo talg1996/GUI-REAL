@@ -906,7 +906,7 @@
                         Height="24"
                         Margin="134,132,136,0"
                         VerticalAlignment="Top"
-                        SelectionChanged="how_many_uut_combobox_SelectionChanged"
+                        
                         Visibility="Hidden" />
                     <Button
                         x:Name="JLINK_program_button"

@@ -28,61 +28,58 @@ namespace GUI_REAL
 
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Description: Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : System.Windows.Window, INotifyPropertyChanged
     {
-        Instrument temp_instrument = new Instrument();
-        List<Instrument> Instruments_Names_List = new List<Instrument>();
-
-        string[] Programing_hardware = new string[] { "ST_Link", "JLINK" };
-        string[] Relay_Option = new string[] { "48 relays", "32 relays" };
-        string[] UUT_amount = new string[] { "1", "2", "3", "4" };
+        Instrument temp_instrument = new Instrument(); // Temporary instrument instance
+        List<Instrument> Instruments_Names_List = new List<Instrument>(); // List to store instrument names
 
 
+        // Those strings are the content of the combo boxes any combo box in the
+        string[] Programing_hardware = new string[] { "ST_Link", "JLINK" }; 
+        string[] Relay_Option = new string[]        { "48 relays", "32 relays" };
+        string[] UUT_amount = new string[]          { "1", "2", "3", "4" };
 
 
-        string User_mode;
+
+        
+        string User_mode;// can be "user" or "technician"
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
 
-
-
-
-
-
-
-
-
         public MainWindow()
         {
-
-
-
-
-
             // Lists to store names and command strings from Excel files
-
             string Instruments_path_file = "H:\\Project\\Instrunets.xlsx";
+
             // Update_Instrument_List(Instruments_path_file, Instruments_Names_List);
 
             InitializeComponent();
             Init();
         }
-
+        /// <summary>
+        /// Description: Init the combo boxes
+        /// </summary>
         private void Init()
         {
             Init_Programing();
             Init_Relay();
         }
 
-
+        /// <summary>
+        /// Description: init the relays options
+        /// </summary>
         private void Init_Relay()
-        {
+        {  
             relays_options_comboBox.ItemsSource = Relay_Option;
-            relays_options_comboBox.SelectedIndex = 0;
+            relays_options_comboBox.SelectedIndex = 0; // Set default value so it wont be empty
         }
+
+        /// <summary>
+        /// Description: Init the programing options
+        /// </summary>
         private void Init_Programing()
         {
 
@@ -95,13 +92,21 @@ namespace GUI_REAL
 
         }
 
+        /// <summary>
+        /// Description: Update the List according to the file specific at the path 
+        /// </summary>
+        /// <param name="Instruments_path_file"></param>
+        /// <param name="Instruments_Names_List"></param>
         private void Update_Instrument_List(string Instruments_path_file, List<Instrument> Instruments_Names_List)
         {
-
-            Excel_Row_read_by_index(Instruments_path_file);
+             Excel_Row_read_by_index(Instruments_path_file);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public List<string> Excel_Row_read_by_index(string path)
         {
             string[] temp = new string[10];
@@ -213,6 +218,11 @@ namespace GUI_REAL
 
 
         }
+        /// <summary>
+        /// Description: Check if the input is 0x(00-FF)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>True  is the input is = 0x(00-FF)</returns>
         private bool address_input_ok(string input)
         {
 
@@ -237,7 +247,10 @@ namespace GUI_REAL
 
             return false;
         }
-
+        /// <summary>
+        /// Description:this function return the code to relay base on the check box used for 42 relay code generator
+        /// </summary>
+        /// <returns>ABCDEFGHIJKL each letter can be 0x(0,1,2...,F)</returns>
         private string get_realys_command48()
         {
             string A = BinaryToHex((checkBox_relay48.IsChecked == true ? "1" : "0") +
@@ -303,7 +316,10 @@ namespace GUI_REAL
             return A + B + C + D + E + F + H + I + J + K + L;
         }
 
-
+        /// <summary>
+        /// Description:this function return the code to relay base on the check box used for 32 relay code generator
+        /// </summary>
+        /// <returns>ABCDEFGHIJKL each letter can be 0x(0,1,2...,H)</returns>
         private string get_realys_command32()
         {
             
@@ -351,6 +367,13 @@ namespace GUI_REAL
             return A + B + C + D + E + F + H ;
         }
 
+
+        /// <summary>
+        /// Description: This func take string of binary code and translate it to hex string
+        /// </summary>
+        /// <param name="binary"></param>
+        /// <returns> string with the hex value of the binary code</returns>
+        /// <exception cref="ArgumentException"></exception>
         public string BinaryToHex(string binary)
         {
             // Check if the input string is not null or empty
@@ -372,7 +395,7 @@ namespace GUI_REAL
 
             return hex;
         }
-
+        
         private void file_to_program_textBox_button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -513,15 +536,16 @@ namespace GUI_REAL
             }
         }
 
-        private void how_many_uut_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        
 
-        }
-
-
+/// <summary>
+/// s
+/// </summary>
+/// <param name="input"></param>
+/// <returns></returns>
         private bool singleInputCommandOK(string input)
         {
-            int how_many_relays=48-relays_options_comboBox.SelectedIndex*16;  // 48 or 32
+            int how_many_relays=48-relays_options_comboBox.SelectedIndex*16;  // Set the amount of the relay 48 or 32
 
             int number;
             // Check if the input can be parsed as an integer and is within the range
@@ -534,6 +558,7 @@ namespace GUI_REAL
                 return false; // Return false if input is invalid
             }
         }
+
         private void button_generate_one_relay_Click(object sender, RoutedEventArgs e)
         {
             string input = single_input_command.Text;
@@ -566,7 +591,11 @@ namespace GUI_REAL
 
 
         }
-
+        /// <summary>
+        /// Check if the address is between 0x(00-FF)
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns> return true if the address is between 0x(00-FF) else false </returns>
         private string checkAdress(string text)
         {
             // Convert the string to uppercase for uniformity
@@ -593,7 +622,11 @@ namespace GUI_REAL
         }
 
 
-
+        /// <summary>
+        ///Convert number to hexadecimal
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         static string GetHexValue(string input)
         {
             int number;
@@ -604,10 +637,7 @@ namespace GUI_REAL
             return (number - 1).ToString("X2");
         }
 
-        private void mark_unmark_checkboxes(string v)
-        {
-
-        }
+        
         private void button_DeActive_generate_one_relay_Click(object sender, RoutedEventArgs e)
         {
             string input = single_input_command.Text;
@@ -660,6 +690,11 @@ namespace GUI_REAL
             else if (Chosen_Relay == "32 relays")
                 ShowHideRelayControls("Hidden");
         }
+
+        /// <summary>
+        /// Resposibal on UI depend of 32 or 48 relays. Show / hide check box
+        /// </summary>
+        /// <param name="op"></param>
         private void ShowHideRelayControls(string op)
         {
             Visibility visibility = Visibility.Hidden; // Default visibility is Hidden
@@ -690,4 +725,5 @@ namespace GUI_REAL
 
         
     }
+
 }

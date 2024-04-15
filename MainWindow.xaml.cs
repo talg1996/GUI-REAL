@@ -36,6 +36,7 @@ namespace GUI_REAL
         List<Instrument> Instruments_Names_List = new List<Instrument>();
 
         string[] Programing_hardware = new string[] { "ST_Link", "JLINK" };
+        string[] Relay_Option = new string[] { "48 relays", "32 relays" };
         string[] UUT_amount = new string[] { "1", "2", "3", "4" };
 
 
@@ -73,17 +74,24 @@ namespace GUI_REAL
         private void Init()
         {
             Init_Programing();
-
+            Init_Relay();
         }
 
 
-
+        private void Init_Relay()
+        {
+            relays_options_comboBox.ItemsSource = Relay_Option;
+            relays_options_comboBox.SelectedIndex = 0;
+        }
         private void Init_Programing()
         {
 
 
             Programing_choose_hardware.ItemsSource = Programing_hardware;
+            Programing_choose_hardware.SelectedIndex = 0;
+
             how_many_uut_combobox.ItemsSource = UUT_amount;
+            how_many_uut_combobox.SelectedIndex = 0;
 
         }
 
@@ -178,7 +186,7 @@ namespace GUI_REAL
             Add_test_equipment_and_commands.Visibility = Visibility.Visible;
         }
 
-        private void button_generate_multi_relay_Click(object sender, RoutedEventArgs e)
+        private void button_generate_multi_relay_48_Click(object sender, RoutedEventArgs e)
         {
 
             if (address_input_ok(adress_input_command.Text))
@@ -186,7 +194,7 @@ namespace GUI_REAL
                 string address = adress_input_command.Text;
 
                 string command = address + "!002";
-                string generated_command = command + get_realys_command();
+                string generated_command = command + get_realys_command48();
                 relay_output_command.Text = generated_command + "<CR>";
                 adress_input_command.Background = Brushes.White;
             }
@@ -223,7 +231,7 @@ namespace GUI_REAL
             return false;
         }
 
-        private string get_realys_command()
+        private string get_realys_command48()
         {
             string A = BinaryToHex((checkBox_relay48.IsChecked == true ? "1" : "0") +
                        (checkBox_relay47.IsChecked == true ? "1" : "0") +
@@ -286,6 +294,54 @@ namespace GUI_REAL
                        (checkBox_relay1.IsChecked == true ? "1" : "0"));
 
             return A + B + C + D + E + F + H + I + J + K + L;
+        }
+
+
+        private string get_realys_command32()
+        {
+            
+
+            string A = BinaryToHex((checkBox_relay32.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay31.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay30.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay29.IsChecked == true ? "1" : "0"));
+
+            string B = BinaryToHex((checkBox_relay28.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay27.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay26.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay25.IsChecked == true ? "1" : "0"));
+
+            string C = BinaryToHex((checkBox_relay24.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay23.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay22.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay21.IsChecked == true ? "1" : "0"));
+
+            string D = BinaryToHex((checkBox_relay20.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay19.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay18.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay17.IsChecked == true ? "1" : "0"));
+
+            string E = BinaryToHex((checkBox_relay16.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay15.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay14.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay13.IsChecked == true ? "1" : "0"));
+
+            string F = BinaryToHex((checkBox_relay12.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay11.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay10.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay9.IsChecked == true ? "1" : "0"));
+
+            string G = BinaryToHex((checkBox_relay8.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay7.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay6.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay5.IsChecked == true ? "1" : "0"));
+
+            string H = BinaryToHex((checkBox_relay4.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay3.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay2.IsChecked == true ? "1" : "0") +
+                       (checkBox_relay1.IsChecked == true ? "1" : "0"));
+
+            return A + B + C + D + E + F + H ;
         }
 
         public string BinaryToHex(string binary)
@@ -458,9 +514,11 @@ namespace GUI_REAL
 
         private bool singleInputCommandOK(string input)
         {
+            int how_many_relays=48-relays_options_comboBox.SelectedIndex*16;  // 48 or 32
+
             int number;
             // Check if the input can be parsed as an integer and is within the range
-            if (int.TryParse(input, out number) && number >= 1 && number <= 48)
+            if (int.TryParse(input, out number) && number >= 1 && number <=  how_many_relays)
             {
                 return true; // Return true if input is valid
             }
@@ -486,7 +544,7 @@ namespace GUI_REAL
                 }
                 else
                 {
-                    single_output_command.Text = "Please enter relay 1-48";
+                    single_output_command.Text = "Please enter relay 1-"+relays_options_comboBox.Text;
                     single_input_command.Background = Brushes.Pink;
                     adress_input_command.Background = Brushes.White;
 
@@ -560,7 +618,7 @@ namespace GUI_REAL
                 }
                 else
                 {
-                    single_output_command.Text = "Please enter relay 1-48";
+                    single_output_command.Text = "Please enter relay 1-" + relays_options_comboBox.Text;
                     single_input_command.Background = Brushes.Pink;
                     adress_input_command.Background = Brushes.White;
 
@@ -573,6 +631,62 @@ namespace GUI_REAL
                 single_input_command.Background = Brushes.White;
             }
 
+
+        }
+
+        private void relays_options_comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string Chosen_Relay = (sender as ComboBox).SelectedItem as string;
+            if (Chosen_Relay == "48 relays")
+                ShowHideRelayControls("Visible");
+            else if (Chosen_Relay == "32 relays")
+                ShowHideRelayControls("Hidden");
+        }
+        private void ShowHideRelayControls(string op)
+        {
+            Visibility visibility = Visibility.Hidden; // Default visibility is Hidden
+
+            // Determine the desired visibility based on the provided operation
+            if (op == "Visible")
+            {
+                visibility = Visibility.Visible;
+            }
+
+            // Loop through the checkboxes from 33 to 48 and set their visibility
+            for (int i = 33; i <= 48; i++)
+            {
+                string checkBoxName = "checkBox_relay" + i;
+                string textBlockName = "textBlockRelay" + i;
+                var checkBox = FindName(checkBoxName) as System.Windows.Controls.CheckBox;
+                var textBlock = FindName(textBlockName) as System.Windows.Controls.TextBlock;
+                if (checkBox != null)
+                {
+                    checkBox.Visibility = visibility;
+                }
+                if (textBlock != null)
+                {
+                    textBlock.Visibility = visibility;
+                }
+            }
+        }
+
+        private void button_generate_multi_relay_32_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (address_input_ok(adress_input_command.Text))
+            {
+                string address = adress_input_command.Text;
+
+                string command = address + "!002";
+                string generated_command = command + get_realys_command32();
+                relay_output_command.Text = generated_command + "<CR>";
+                adress_input_command.Background = Brushes.White;
+            }
+            else
+            {
+                relay_output_command.Text = "Please enter 00-FF address input";
+                adress_input_command.Background = Brushes.Pink;
+            }
         }
     }
 }

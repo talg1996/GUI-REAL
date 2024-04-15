@@ -737,6 +737,10 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="31*"/>
+                        <ColumnDefinition Width="39*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*" />
                         <RowDefinition Height="14*" />
@@ -744,7 +748,6 @@
                     </Grid.RowDefinitions>
                     <TextBlock
                         x:Name="textBlock_Copy2"
-                        Width="351"
                         Margin="1,10,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -762,12 +765,11 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Choose file to burn"
-                        TextWrapping="Wrap"
-                        d:LayoutOverrides="Height" />
+                        TextWrapping="Wrap" />
                     <TextBox
                         x:Name="file_to_program_textBox"
                         Grid.Row="2"
-                        Margin="10,3,383,253"
+                        Margin="10,3,-46,253"
                         Text=""
                         TextWrapping="Wrap"
                         d:LayoutOverrides="HorizontalAlignment" />
@@ -775,11 +777,11 @@
                         x:Name="file_to_program_textBox_button"
                         Grid.Row="2"
                         Width="52"
-                        Margin="399,7,0,0"
+                        Margin="58,7,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Click="file_to_program_textBox_button_Click"
-                        Content="Browse" />
+                        Content="Browse" Grid.Column="1" d:LayoutOverrides="HorizontalAlignment" />
                     <Button
                         x:Name="stlink_programming_button"
                         Grid.Row="2"
@@ -790,12 +792,10 @@
                         Background="#FFC8F1C0"
                         Click="stlink_programming_button_Click"
                         Content="Programming"
-                        Visibility="Hidden"
-                        d:LayoutOverrides="Height" />
+                        Visibility="Hidden" />
                     <TextBlock
                         x:Name="stlink_software_text"
                         Grid.Row="2"
-                        Width="219"
                         Margin="10,148,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -816,7 +816,6 @@
                     <Button
                         x:Name="stlink_hardware_reset_button"
                         Grid.Row="2"
-                        Width="93"
                         Margin="112,179,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -838,7 +837,6 @@
                     <TextBlock
                         x:Name="stlink_full_erase_text"
                         Grid.Row="2"
-                        Width="219"
                         Margin="10,229,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -849,32 +847,32 @@
                         x:Name="programere_output_textbox"
                         Grid.Row="2"
                         Width="279"
-                        Margin="491,73,0,73"
+                        Margin="150,73,0,73"
                         HorizontalAlignment="Left"
                         Text="Output"
                         TextChanged="programere_output_textbox_TextChanged"
                         TextWrapping="Wrap"
-                        d:LayoutOverrides="Height" />
+                        d:LayoutOverrides="Height" Grid.Column="1" />
                     <Button
                         x:Name="button5_Copy4"
                         Grid.Row="2"
                         Width="52"
-                        Margin="718,260,0,0"
+                        Margin="377,260,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFCECECE"
                         Click="button5_Copy4_Click"
-                        Content="Clear" />
+                        Content="Clear" Grid.Column="1" />
                     <TextBlock
                         x:Name="textBlock6_Copy2"
                         Grid.Row="2"
                         Width="68"
                         Height="20"
-                        Margin="636,260,0,0"
+                        Margin="295,260,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Clear log"
-                        TextWrapping="Wrap" />
+                        TextWrapping="Wrap" Grid.Column="1" />
                     <ComboBox
                         x:Name="Programing_choose_hardware"
                         Grid.Row="2"
@@ -883,7 +881,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         SelectedIndex="0"
-                        SelectionChanged="Programing_choose_hardware_SelectionChanged" />
+                        SelectionChanged="Programing_choose_hardware_SelectionChanged" Background="{x:Null}" />
                     <TextBlock
                         x:Name="how_many_uut_textBlock"
                         Grid.Row="2"
@@ -897,10 +895,8 @@
                     <ComboBox
                         x:Name="how_many_uut_combobox"
                         Grid.Row="2"
-                        Width="71"
                         Height="24"
-                        Margin="134,132,0,0"
-                        HorizontalAlignment="Left"
+                        Margin="134,132,136,0"
                         VerticalAlignment="Top"
                         SelectionChanged="how_many_uut_combobox_SelectionChanged"
                         Visibility="Hidden" />
@@ -919,7 +915,6 @@
                     <Button
                         x:Name="JLINK_erase_button"
                         Grid.Row="2"
-                        Width="49"
                         Height="25"
                         Margin="125,220,0,0"
                         HorizontalAlignment="Left"
@@ -931,7 +926,7 @@
                     <TextBlock
                         x:Name="jlink_MCU_Name_textBlock"
                         Grid.Row="2"
-                        Margin="10,186,670,100"
+                        Margin="10,186,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="MCU name"
@@ -940,7 +935,6 @@
                     <TextBox
                         x:Name="jlink_uut_name_textBox"
                         Grid.Row="2"
-                        Width="111"
                         Margin="94,185,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -960,7 +954,7 @@
                 </Grid>
             </TabItem>
             <TabItem Name="Realys_board_command_generate" Header="Realys board command generate">
-                <Grid Background="White">
+                <Grid Height="386" Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="36*" />
                         <RowDefinition Height="33*" />
@@ -1654,7 +1648,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy38"
+                        x:Name="textBlockRelay33"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1675,7 +1669,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy39"
+                        x:Name="textBlockRelay34"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1695,7 +1689,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy40"
+                        x:Name="textBlockRelay35"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1716,7 +1710,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy41"
+                        x:Name="textBlockRelay36"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1737,7 +1731,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy42"
+                        x:Name="textBlockRelay37"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1758,7 +1752,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy43"
+                        x:Name="textBlockRelay38"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1779,7 +1773,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy44"
+                        x:Name="textBlockRelay39"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1800,7 +1794,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy45"
+                        x:Name="textBlockRelay40"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1821,7 +1815,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy46"
+                        x:Name="textBlockRelay41"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1842,7 +1836,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy47"
+                        x:Name="textBlockRelay42"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1862,7 +1856,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy48"
+                        x:Name="textBlockRelay43"
                         Grid.Row="1"
                         Width="64"
                         Height="21"
@@ -1883,7 +1877,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy49"
+                        x:Name="textBlockRelay44"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1904,7 +1898,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy50"
+                        x:Name="textBlockRelay45"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1925,7 +1919,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy51"
+                        x:Name="textBlockRelay46"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1946,7 +1940,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy52"
+                        x:Name="textBlockRelay47"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1967,7 +1961,7 @@
                         Content=""
                         RenderTransformOrigin="0.537,0.411" />
                     <TextBlock
-                        x:Name="textBlock1_Copy53"
+                        x:Name="textBlockRelay48"
                         Grid.Row="2"
                         Width="64"
                         Height="21"
@@ -1979,37 +1973,37 @@
                         TextWrapping="Wrap" />
                     <TextBlock
                         x:Name="textBlock1_Copy54"
-                        Grid.Row="1"
+                        Grid.Row="2"
                         Width="174"
-                        Margin="567,0,0,0"
+                        Margin="539,51,0,0"
                         HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
+                        VerticalAlignment="Top"
                         FontSize="16"
                         FontWeight="Bold"
                         Text="Generate command:"
                         TextWrapping="Wrap"
-                        d:LayoutOverrides="TopPosition, BottomPosition" />
+                        d:LayoutOverrides="VerticalAlignment" />
                     <TextBox
                         x:Name="relay_output_command"
                         Grid.Row="2"
-                        Width="221"
+                        Width="187"
                         Height="25"
-                        Margin="567,47,0,0"
+                        Margin="556,116,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="TextBox"
                         TextWrapping="Wrap"
                         d:LayoutOverrides="VerticalAlignment" />
                     <Button
-                        x:Name="button_generate_multi_relay"
+                        x:Name="button_generate_multi_relay_48"
                         Grid.Row="2"
                         Width="62"
                         Height="21"
-                        Margin="567,9,0,0"
+                        Margin="556,81,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFC5ECA1"
-                        Click="button_generate_multi_relay_Click"
+                        Click="button_generate_multi_relay_48_Click"
                         Content=" many"
                         d:LayoutOverrides="VerticalAlignment" />
                     <Button
@@ -2017,7 +2011,7 @@
                         Grid.Row="2"
                         Width="64"
                         Height="24"
-                        Margin="667,160,0,0"
+                        Margin="626,227,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFC5ECA1"
@@ -2026,21 +2020,20 @@
                     <TextBlock
                         x:Name="textBlock1_Copy55"
                         Grid.Row="2"
-                        Width="262"
-                        Margin="422,133,0,0"
+                        Width="245"
+                        Margin="539,165,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
                         FontWeight="Bold"
                         Text="Generate solo relay command:"
-                        TextWrapping="Wrap"
-                        d:LayoutOverrides="VerticalAlignment" />
+                        TextWrapping="Wrap" />
                     <TextBox
                         x:Name="single_input_command"
                         Grid.Row="2"
-                        Width="111"
+                        Width="110"
                         Height="25"
-                        Margin="532,161,0,0"
+                        Margin="658,195,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Enter number 1-48"
@@ -2049,7 +2042,7 @@
                         x:Name="textBlock1_Copy56"
                         Grid.Row="2"
                         Width="105"
-                        Margin="422,161,0,0"
+                        Margin="539,190,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
@@ -2058,9 +2051,9 @@
                     <TextBox
                         x:Name="single_output_command"
                         Grid.Row="2"
-                        Width="221"
-                        Height="37"
-                        Margin="422,196,0,0"
+                        Width="166"
+                        Height="22"
+                        Margin="598,268,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="TextBox"
@@ -2069,8 +2062,8 @@
                         x:Name="button_DeActive_generate_one_relay"
                         Grid.Row="2"
                         Width="64"
-                        Height="24"
-                        Margin="667,194,0,0"
+                        Height="22"
+                        Margin="700,228,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFECB2A1"
@@ -2079,24 +2072,54 @@
                     <TextBlock
                         x:Name="textBlock1_Copy57"
                         Grid.Row="2"
-                        Width="262"
-                        Margin="422,250,0,0"
+                        Width="100"
+                        Margin="539,16,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FontSize="16"
                         FontWeight="Bold"
-                        Text="Enter adress"
-                        TextWrapping="Wrap" />
+                        Text="Enter addres"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="VerticalAlignment" />
                     <TextBox
                         x:Name="adress_input_command"
                         Grid.Row="2"
-                        Width="122"
-                        Height="25"
-                        Margin="422,276,0,0"
+                        Width="111"
+                        Height="21"
+                        Margin="644,20,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Enter number 00-FF"
-                        TextWrapping="Wrap" />
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="VerticalAlignment" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy58"
+                        Grid.Row="1"
+                        Width="100"
+                        Margin="539,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Text="Enter relay"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="TopPosition, BottomPosition" />
+                    <ComboBox
+                        x:Name="relays_options_comboBox"
+                        Grid.Row="1"
+                        Margin="634,0,0,0" SelectionChanged="relays_options_comboBox_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Center" Width="134" d:LayoutOverrides="TopPosition, BottomPosition" Background="{x:Null}" />
+                    <Button
+                        x:Name="button_generate_multi_relay_32"
+                        Grid.Row="2"
+                        Width="62"
+                        Height="21"
+                        Margin="651,81,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFC5ECA1"
+                        Click="button_generate_multi_relay_32_Click"
+                        Content=" many"
+    d:LayoutOverrides="VerticalAlignment" />
 
 
                 </Grid>

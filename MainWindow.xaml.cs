@@ -644,9 +644,15 @@ namespace GUI_REAL
         private void relays_options_comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (relays_options_comboBox.SelectedIndex == 0)
+            {
                 textBlock1_Copy56.Text = "Relay 1-48";
+               single_input_command.Text = "1-48";
+            }
             else
-                textBlock1_Copy56.Text = "Relay 1-32";
+            {
+               textBlock1_Copy56.Text = "Relay 1-32";
+                single_input_command.Text = "1-32";
+            }
 
             string Chosen_Relay = (sender as ComboBox).SelectedItem as string;
             if (Chosen_Relay == "48 relays")

@@ -517,7 +517,9 @@
                         Content="Browse" />
                     <Button
                         x:Name="button2_Copy1"
-                        Margin="353,193,366,163"
+                        Height="29"
+                        Margin="353,193,366,0"
+                        VerticalAlignment="Top"
                         Background="White"
                         Content="Browse" />
                     <Border
@@ -738,8 +740,8 @@
                     VerticalAlignment="Top"
                     Background="White">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="31*"/>
-                        <ColumnDefinition Width="39*"/>
+                        <ColumnDefinition Width="31*" />
+                        <ColumnDefinition Width="39*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*" />
@@ -776,12 +778,14 @@
                     <Button
                         x:Name="file_to_program_textBox_button"
                         Grid.Row="2"
+                        Grid.Column="1"
                         Width="52"
                         Margin="58,7,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Click="file_to_program_textBox_button_Click"
-                        Content="Browse" Grid.Column="1" d:LayoutOverrides="HorizontalAlignment" />
+                        Content="Browse"
+                        d:LayoutOverrides="HorizontalAlignment" />
                     <Button
                         x:Name="stlink_programming_button"
                         Grid.Row="2"
@@ -846,33 +850,36 @@
                     <TextBox
                         x:Name="programere_output_textbox"
                         Grid.Row="2"
+                        Grid.Column="1"
                         Width="279"
                         Margin="150,73,0,73"
                         HorizontalAlignment="Left"
                         Text="Output"
                         TextChanged="programere_output_textbox_TextChanged"
                         TextWrapping="Wrap"
-                        d:LayoutOverrides="Height" Grid.Column="1" />
+                        d:LayoutOverrides="Height" />
                     <Button
                         x:Name="button5_Copy4"
                         Grid.Row="2"
+                        Grid.Column="1"
                         Width="52"
                         Margin="377,260,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="#FFCECECE"
                         Click="button5_Copy4_Click"
-                        Content="Clear" Grid.Column="1" />
+                        Content="Clear" />
                     <TextBlock
                         x:Name="textBlock6_Copy2"
                         Grid.Row="2"
+                        Grid.Column="1"
                         Width="68"
                         Height="20"
                         Margin="295,260,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Clear log"
-                        TextWrapping="Wrap" Grid.Column="1" />
+                        TextWrapping="Wrap" />
                     <ComboBox
                         x:Name="Programing_choose_hardware"
                         Grid.Row="2"
@@ -880,8 +887,9 @@
                         Margin="10,93,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
+                        Background="{x:Null}"
                         SelectedIndex="0"
-                        SelectionChanged="Programing_choose_hardware_SelectionChanged" Background="{x:Null}" />
+                        SelectionChanged="Programing_choose_hardware_SelectionChanged" />
                     <TextBlock
                         x:Name="how_many_uut_textBlock"
                         Grid.Row="2"
@@ -2107,19 +2115,13 @@
                     <ComboBox
                         x:Name="relays_options_comboBox"
                         Grid.Row="1"
-                        Margin="634,0,0,0" SelectionChanged="relays_options_comboBox_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Center" Width="134" d:LayoutOverrides="TopPosition, BottomPosition" Background="{x:Null}" />
-                    <Button
-                        x:Name="button_generate_multi_relay_32"
-                        Grid.Row="2"
-                        Width="62"
-                        Height="21"
-                        Margin="651,81,0,0"
+                        Width="134"
+                        Margin="634,0,0,0"
                         HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Background="#FFC5ECA1"
-                        Click="button_generate_multi_relay_32_Click"
-                        Content=" many"
-    d:LayoutOverrides="VerticalAlignment" />
+                        VerticalAlignment="Center"
+                        Background="{x:Null}"
+                        SelectionChanged="relays_options_comboBox_SelectionChanged"
+                        d:LayoutOverrides="TopPosition, BottomPosition" />
 
 
                 </Grid>

@@ -188,13 +188,20 @@ namespace GUI_REAL
 
         private void button_generate_multi_relay_48_Click(object sender, RoutedEventArgs e)
         {
-
+            string generated_command;
             if (address_input_ok(adress_input_command.Text))
             {
                 string address = adress_input_command.Text;
 
                 string command = address + "!002";
-                string generated_command = command + get_realys_command48();
+                if (relays_options_comboBox.SelectedIndex == 0)
+                {
+                    generated_command = command + get_realys_command48();
+                }
+                else
+                {
+                    generated_command = command + get_realys_command32();
+                }
                 relay_output_command.Text = generated_command + "<CR>";
                 adress_input_command.Background = Brushes.White;
             }
@@ -636,6 +643,11 @@ namespace GUI_REAL
 
         private void relays_options_comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (relays_options_comboBox.SelectedIndex == 0)
+                textBlock1_Copy56.Text = "Relay 1-48";
+            else
+                textBlock1_Copy56.Text = "Relay 1-32";
+
             string Chosen_Relay = (sender as ComboBox).SelectedItem as string;
             if (Chosen_Relay == "48 relays")
                 ShowHideRelayControls("Visible");
@@ -670,23 +682,6 @@ namespace GUI_REAL
             }
         }
 
-        private void button_generate_multi_relay_32_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (address_input_ok(adress_input_command.Text))
-            {
-                string address = adress_input_command.Text;
-
-                string command = address + "!002";
-                string generated_command = command + get_realys_command32();
-                relay_output_command.Text = generated_command + "<CR>";
-                adress_input_command.Background = Brushes.White;
-            }
-            else
-            {
-                relay_output_command.Text = "Please enter 00-FF address input";
-                adress_input_command.Background = Brushes.Pink;
-            }
-        }
+        
     }
 }

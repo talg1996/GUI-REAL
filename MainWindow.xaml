@@ -43,8 +43,9 @@
                         Height="115"
                         Margin="0,0,10,19"
                         HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
                         Source="/enercon.png"
-                        d:LayoutOverrides="HorizontalAlignment" VerticalAlignment="Bottom" />
+                        d:LayoutOverrides="HorizontalAlignment" />
                     <TextBlock
                         x:Name="textBlock_Copy1"
                         Width="150"
@@ -476,40 +477,61 @@
 
            </Grid>
        </TabItem>-->
-            <TabItem
-                Name="Add_test_equipment_and_commands"
-                Header="Add test equipment  and commands"
-                >
+            <TabItem Name="Add_test_equipment_and_commands" Header="Add test equipment  and commands">
                 <Grid Background="White">
                     <TextBlock
                         x:Name="textBlock3"
                         Margin="334,28,334,0"
+                        VerticalAlignment="Top"
                         Text="Open instrumens file:"
-                        TextWrapping="Wrap" VerticalAlignment="Top" />
+                        TextWrapping="Wrap" />
                     <Button
                         x:Name="button2"
+                        Height="30"
                         Margin="353,49,366,0"
-                        Content="Browse" VerticalAlignment="Top" Height="30" Background="White" />
+                        VerticalAlignment="Top"
+                        Background="White"
+                        Content="Browse" />
                     <TextBlock
                         x:Name="textBlock3_Copy"
                         Margin="334,97,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Text="Open commands file:"
-                        TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" d:LayoutOverrides="Width" />
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="Width" />
                     <TextBlock
                         x:Name="textBlock3_Copy1"
                         Margin="346,172,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Text="Open flows file:"
-                        TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment" />
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="VerticalAlignment" />
                     <Button
                         x:Name="button2_Copy"
+                        Height="30"
                         Margin="353,118,366,0"
-                        Content="Browse" VerticalAlignment="Top" Height="30" Background="White" />
+                        VerticalAlignment="Top"
+                        Background="White"
+                        Content="Browse" />
                     <Button
                         x:Name="button2_Copy1"
                         Margin="353,193,366,163"
-                        Content="Browse" Background="White" />
-                    <Border BorderThickness="1" Margin="299,10,312,105" Panel.ZIndex="-1" Background="#FFE4F5FB" CornerRadius="50,50,50,50"/>
-                    <Border BorderThickness="1" Margin="299,10,312,105" Panel.ZIndex="-1" Background="#FFE4F5FB" CornerRadius="50,50,50,50"/>
+                        Background="White"
+                        Content="Browse" />
+                    <Border
+                        Margin="299,10,312,105"
+                        Panel.ZIndex="-1"
+                        Background="#FFE4F5FB"
+                        BorderThickness="1"
+                        CornerRadius="50,50,50,50" />
+                    <Border
+                        Margin="299,10,312,105"
+                        Panel.ZIndex="-1"
+                        Background="#FFE4F5FB"
+                        BorderThickness="1"
+                        CornerRadius="50,50,50,50" />
                 </Grid>
             </TabItem>
             <TabItem
@@ -2054,14 +2076,32 @@
                         Background="#FFECB2A1"
                         Click="button_DeActive_generate_one_relay_Click"
                         Content="De active" />
+                    <TextBlock
+                        x:Name="textBlock1_Copy57"
+                        Grid.Row="2"
+                        Width="262"
+                        Margin="422,250,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Text="Enter adress"
+                        TextWrapping="Wrap" />
+                    <TextBox
+                        x:Name="adress_input_command"
+                        Grid.Row="2"
+                        Width="122"
+                        Height="25"
+                        Margin="422,276,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="Enter number 00-FF"
+                        TextWrapping="Wrap" />
 
 
                 </Grid>
             </TabItem>
-            <TabItem
-                Name="UART_Communication"
-                Header="UART Communication"
-                Visibility="Hidden">
+            <TabItem Name="UART_Communication" Header="UART Communication">
                 <Grid Background="White">
                     <TextBlock
                         Height="21"
@@ -2075,6 +2115,7 @@
                         Width="127"
                         Margin="163,70,0,295"
                         HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Text="TextBox"
                         TextWrapping="Wrap" />
                     <TextBlock
@@ -2087,7 +2128,11 @@
                         TextWrapping="Wrap" />
                     <Button
                         x:Name="button3"
-                        Margin="10,350,699,10"
+                        Width="48"
+                        Height="21"
+                        Margin="10,0,0,30"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
                         Background="#FFB6FFB3"
                         Content="Send" />
                     <TextBlock
@@ -2101,30 +2146,42 @@
                     <ComboBox
                         x:Name="comboBox1"
                         Width="120"
-                        Height="18"
-                        Margin="10,140,664,228" />
+                        Height="23"
+                        Margin="10,140,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top" />
                     <TextBlock
                         x:Name="textBlock4"
-                        Margin="10,225,519,79"
+                        Width="340"
+                        Height="107"
+                        Margin="10,213,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Background="#FFF1FDF4"
                         Text="Data"
                         TextWrapping="Wrap" />
                     <TextBlock
                         Margin="10,183,0,182"
                         HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         FontSize="14"
                         Text="Enter data"
                         TextWrapping="Wrap" />
                     <TextBlock
                         x:Name="textBlock5"
-                        Margin="444,70,29,41"
+                        Width="368"
+                        Height="250"
+                        Margin="0,70,29,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
                         Background="#FFF9FBEE"
                         Text="Output"
-                        TextWrapping="Wrap"
-                        d:LayoutOverrides="VerticalAlignment" />
+                        TextWrapping="Wrap" />
                     <Button
                         x:Name="button3_Copy"
-                        Margin="680,350,29,10"
+                        Margin="0,0,29,41"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
                         Background="#FFD4D4D4"
                         Content="Clear log" />
                     <TextBlock

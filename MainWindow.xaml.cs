@@ -17,7 +17,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Xml.Linq;
-
+using System.Printing;
+using System.Windows.Media;
 
 
 
@@ -36,8 +37,8 @@ namespace GUI_REAL
 
         string[] Programing_hardware = new string[] { "ST_Link", "JLINK" };
         string[] UUT_amount = new string[] { "1", "2", "3", "4" };
-        
-        
+
+
 
 
         string User_mode;
@@ -72,10 +73,10 @@ namespace GUI_REAL
         private void Init()
         {
             Init_Programing();
-           
+
         }
 
-       
+
 
         private void Init_Programing()
         {
@@ -178,14 +179,49 @@ namespace GUI_REAL
         }
 
         private void button_generate_multi_relay_Click(object sender, RoutedEventArgs e)
-        {   
-            string adress = "00";
-            string command = adress + "!002";
-            string generated_command = command + get_realys_command();
-            relay_output_command.Text = generated_command+"<CR>";
-            
-        }
+        {
 
+            if (address_input_ok(adress_input_command.Text))
+            {
+                string address = adress_input_command.Text;
+
+                string command = address + "!002";
+                string generated_command = command + get_realys_command();
+                relay_output_command.Text = generated_command + "<CR>";
+                adress_input_command.Background = Brushes.White;
+            }
+            else
+            {
+                relay_output_command.Text = "Please enter 00-FF address input";
+                adress_input_command.Background = Brushes.Pink;
+            }
+
+
+        }
+        private bool address_input_ok(string input)
+        {
+
+            // Convert the string to uppercase for uniformity
+            input = input.ToUpper();
+
+            // Check if the string has exactly two characters
+            if (input.Length != 2)
+            {
+                return false;
+            }
+
+            // Try parsing the string as a hexadecimal number
+            if (int.TryParse(input, System.Globalization.NumberStyles.HexNumber, null, out int value))
+            {
+                // Check if the parsed value is between 0 and 255 (inclusive)
+                if (value >= 0 && value <= 255)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         private string get_realys_command()
         {
@@ -249,7 +285,7 @@ namespace GUI_REAL
                        (checkBox_relay2.IsChecked == true ? "1" : "0") +
                        (checkBox_relay1.IsChecked == true ? "1" : "0"));
 
-            return A+B+C+D+E+F+H+I+J+K+L;
+            return A + B + C + D + E + F + H + I + J + K + L;
         }
 
         public string BinaryToHex(string binary)
@@ -284,51 +320,51 @@ namespace GUI_REAL
 
         private void Programing_choose_hardware_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
             string hardware_selected = (sender as ComboBox).SelectedItem as string;
             if (hardware_selected == "ST_Link")
-                {
-                    ///--- Visible STLink CONTROL ---///
-                    stlink_software_text.Visibility = Visibility.Visible;
-                    stlink_hardware_reset_button.Visibility = Visibility.Visible;
-                    stlink_erase_button.Visibility = Visibility.Visible;
-                    stlink_software_reset_button.Visibility = Visibility.Visible;
-                    stlink_full_erase_text.Visibility = Visibility.Visible;
-                    stlink_software_text.Visibility = Visibility.Visible;
-                    stlink_programming_button.Visibility = Visibility.Visible;
+            {
+                ///--- Visible STLink CONTROL ---///
+                stlink_software_text.Visibility = Visibility.Visible;
+                stlink_hardware_reset_button.Visibility = Visibility.Visible;
+                stlink_erase_button.Visibility = Visibility.Visible;
+                stlink_software_reset_button.Visibility = Visibility.Visible;
+                stlink_full_erase_text.Visibility = Visibility.Visible;
+                stlink_software_text.Visibility = Visibility.Visible;
+                stlink_programming_button.Visibility = Visibility.Visible;
 
-                    ///--- Hide JLINK CONTROL ---///
-                    jlink_MCU_Name_textBlock.Visibility = Visibility.Hidden;
-                    JLINK_erase_button.Visibility = Visibility.Hidden;
-                    jlink_uut_name_textBox.Visibility = Visibility.Hidden;
-                    JLINK_program_button.Visibility = Visibility.Hidden;
-                    how_many_uut_combobox.Visibility = Visibility.Hidden;
-                    how_many_uut_textBlock.Visibility = Visibility.Hidden;
+                ///--- Hide JLINK CONTROL ---///
+                jlink_MCU_Name_textBlock.Visibility = Visibility.Hidden;
+                JLINK_erase_button.Visibility = Visibility.Hidden;
+                jlink_uut_name_textBox.Visibility = Visibility.Hidden;
+                JLINK_program_button.Visibility = Visibility.Hidden;
+                how_many_uut_combobox.Visibility = Visibility.Hidden;
+                how_many_uut_textBlock.Visibility = Visibility.Hidden;
 
-                }
-                else
-                {
-                    ///--- Hidden STLink CONTROL ---///
-                    stlink_software_text.Visibility = Visibility.Hidden;
-                    stlink_hardware_reset_button.Visibility = Visibility.Hidden;
-                    stlink_erase_button.Visibility = Visibility.Hidden;
-                    stlink_software_reset_button.Visibility = Visibility.Hidden;
-                    stlink_full_erase_text.Visibility = Visibility.Hidden;
-                    stlink_software_text.Visibility = Visibility.Hidden;
-                    stlink_programming_button.Visibility = Visibility.Hidden;
-
-
-                    ///--- Visible JLINK CONTROL ---///
-                    jlink_MCU_Name_textBlock.Visibility = Visibility.Visible;
-                    JLINK_erase_button.Visibility = Visibility.Visible;
-                    jlink_uut_name_textBox.Visibility = Visibility.Visible;
-                    JLINK_program_button.Visibility = Visibility.Visible;
-                    how_many_uut_combobox.Visibility = Visibility.Visible;
-                    how_many_uut_textBlock.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ///--- Hidden STLink CONTROL ---///
+                stlink_software_text.Visibility = Visibility.Hidden;
+                stlink_hardware_reset_button.Visibility = Visibility.Hidden;
+                stlink_erase_button.Visibility = Visibility.Hidden;
+                stlink_software_reset_button.Visibility = Visibility.Hidden;
+                stlink_full_erase_text.Visibility = Visibility.Hidden;
+                stlink_software_text.Visibility = Visibility.Hidden;
+                stlink_programming_button.Visibility = Visibility.Hidden;
 
 
-                }
-            
+                ///--- Visible JLINK CONTROL ---///
+                jlink_MCU_Name_textBlock.Visibility = Visibility.Visible;
+                JLINK_erase_button.Visibility = Visibility.Visible;
+                jlink_uut_name_textBox.Visibility = Visibility.Visible;
+                JLINK_program_button.Visibility = Visibility.Visible;
+                how_many_uut_combobox.Visibility = Visibility.Visible;
+                how_many_uut_textBlock.Visibility = Visibility.Visible;
+
+
+            }
+
 
         }
 
@@ -374,22 +410,22 @@ namespace GUI_REAL
             programere_output_textbox.Text = "";
         }
 
-      
+
 
         private void JLINK_erase_button_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(jlink_uut_name_textBox.Text) && !string.IsNullOrEmpty(how_many_uut_combobox.Text) )
+            if (!string.IsNullOrEmpty(jlink_uut_name_textBox.Text) && !string.IsNullOrEmpty(how_many_uut_combobox.Text))
             {
                 try
                 {
                     JLINK test = new JLINK(jlink_uut_name_textBox.Text, "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", int.Parse(how_many_uut_combobox.Text), file_to_program_textBox.Text, "4000");
                     Trace.WriteLine(how_many_uut_combobox.Text);
                     programere_output_textbox.Text = test.cmd_erase();
-                   
+
                 }
                 catch (Exception ex)
                 {
-                    programere_output_textbox.Text=ex.Message;
+                    programere_output_textbox.Text = ex.Message;
                 }
             }
             else
@@ -406,11 +442,11 @@ namespace GUI_REAL
             try
             {
                 JLINK test = new JLINK(jlink_uut_name_textBox.Text, "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", int.Parse(how_many_uut_combobox.Text), file_to_program_textBox.Text, "4000");
-                programere_output_textbox.Text=test.cmd_program();
+                programere_output_textbox.Text = test.cmd_program();
             }
             catch (Exception ex)
             {
-                programere_output_textbox.Text= ex.Message;
+                programere_output_textbox.Text = ex.Message;
             }
         }
 
@@ -419,50 +455,85 @@ namespace GUI_REAL
 
         }
 
-        
 
-        private void button_generate_one_relay_Click(object sender, RoutedEventArgs e)
-        {   
-            string input = single_input_command.Text;
-            string unfinish_command = "!003";
-            string relay_hex_Value = GetHexValue(input);
-            if (relay_hex_Value == "Input must be a number between 1 and 48.")
+        private bool singleInputCommandOK(string input)
+        {
+            int number;
+            // Check if the input can be parsed as an integer and is within the range
+            if (int.TryParse(input, out number) && number >= 1 && number <= 48)
             {
-                single_output_command.Text = "Input must be a number between 1 and 48.";
+                return true; // Return true if input is valid
             }
             else
             {
-                string final_command = unfinish_command + relay_hex_Value + "<CR>";
-                single_output_command.Text = final_command;
+                return false; // Return false if input is invalid
             }
         }
-
-
-
-        private void button_DeActive_generate_one_relay_Click(object sender, RoutedEventArgs e)
+        private void button_generate_one_relay_Click(object sender, RoutedEventArgs e)
         {
             string input = single_input_command.Text;
-            string unfinish_command = "!004";
-            string relay_hex_Value = GetHexValue(input);
-            if(relay_hex_Value == "Input must be a number between 1 and 48.")
+            if (address_input_ok(adress_input_command.Text))
             {
-                single_output_command.Text = "Input must be a number between 1 and 48.";
+                if (singleInputCommandOK(single_input_command.Text))
+                {
+                    string address = adress_input_command.Text;
+                    string unfinish_command = "!" + address + "3";
+                    string relay_hex_Value = GetHexValue(input);
+                    string final_command = unfinish_command + relay_hex_Value + "<CR>";
+                    single_output_command.Text = final_command;
+                    single_input_command.Background = Brushes.White;
+                    adress_input_command.Background = Brushes.White;
+                }
+                else
+                {
+                    single_output_command.Text = "Please enter relay 1-48";
+                    single_input_command.Background = Brushes.Pink;
+                    adress_input_command.Background = Brushes.White;
+
+                }
             }
             else
             {
-                string final_command = unfinish_command + relay_hex_Value + "<CR>";
-                single_output_command.Text = final_command;
+                single_output_command.Text = "Please enter address 00-FF";
+                adress_input_command.Background = Brushes.Pink;
+                single_input_command.Background = Brushes.White;
             }
-           
+
+
         }
+
+        private string checkAdress(string text)
+        {
+            // Convert the string to uppercase for uniformity
+            text = text.ToUpper();
+
+            // Check if the string has exactly two characters
+            if (text.Length != 2)
+            {
+                return "Please enter a hex number with exactly two characters.";
+            }
+
+            // Try parsing the string as a hexadecimal number
+            if (int.TryParse(text, System.Globalization.NumberStyles.HexNumber, null, out int value))
+            {
+                // Check if the parsed value is between 0 and 255 (inclusive)
+                if (value >= 0 && value <= 255)
+                {
+                    // Return the hexadecimal number as string
+                    return text;
+                }
+            }
+
+            return "Please enter a hex number between 00 and FF.";
+        }
+
+
 
         static string GetHexValue(string input)
         {
             int number;
-            if (!int.TryParse(input, out number) || number < 1 || number > 48)
-            {
-               return "Input must be a number between 1 and 48.";
-            }
+            int.TryParse(input, out number);
+
 
             // Convert number to hexadecimal
             return (number - 1).ToString("X2");
@@ -470,9 +541,38 @@ namespace GUI_REAL
 
         private void mark_unmark_checkboxes(string v)
         {
-           
-        }
 
-       
+        }
+        private void button_DeActive_generate_one_relay_Click(object sender, RoutedEventArgs e)
+        {
+            string input = single_input_command.Text;
+            if (address_input_ok(adress_input_command.Text))
+            {
+                if (singleInputCommandOK(single_input_command.Text))
+                {
+                    string address = adress_input_command.Text;
+                    string unfinish_command = "!" + address + "4";
+                    string relay_hex_Value = GetHexValue(input);
+                    string final_command = unfinish_command + relay_hex_Value + "<CR>";
+                    single_output_command.Text = final_command;
+                    single_input_command.Background = Brushes.White;
+                    adress_input_command.Background = Brushes.White;
+                }
+                else
+                {
+                    single_output_command.Text = "Please enter relay 1-48";
+                    single_input_command.Background = Brushes.Pink;
+                    adress_input_command.Background = Brushes.White;
+
+                }
+            }
+            else
+            {
+                single_output_command.Text = "Please enter address 00-FF";
+                adress_input_command.Background = Brushes.Pink;
+                single_input_command.Background = Brushes.White;
+            }
+
+        }
     }
 }

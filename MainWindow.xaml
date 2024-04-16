@@ -578,9 +578,9 @@
                         TextWrapping="Wrap"
                         d:LayoutOverrides="Height, LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <ComboBox
-                        x:Name="comboBox_Instrument"
+                        x:Name="comboBox_Instrument_select"
                         Grid.Row="3"
-                        Grid.Column="1" Margin="15,1,16,0" Height="25" VerticalAlignment="Top" />
+                        Grid.Column="1" Margin="15,1,16,0" Height="25" VerticalAlignment="Top" SelectionChanged="comboBox_Instrument_select_SelectionChanged" />
                     <ComboBox
                         x:Name="comboBox_command"
                         Grid.Row="4"

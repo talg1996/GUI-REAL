@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Xml.Linq;
 using System.Printing;
 using System.Windows.Media;
+using System.Reflection.Emit;
 
 
 
@@ -34,6 +35,11 @@ namespace GUI_REAL
     {
         Instrument temp_instrument = new Instrument(); // Temporary instrument instance
         List<Instrument> Instruments_Names_List = new List<Instrument>(); // List to store instrument names
+
+        Command temp_Command = new Command(); // Temporary Command_List instance
+        List<Command> Command_List = new List<Command>(); // List to store Command_List names
+
+        List<Command> Command_List_per_instrument = new List<Command>(); // List to store Command_List names per label
 
 
         // Those strings are the content of the combo boxes any combo box in the
@@ -53,12 +59,64 @@ namespace GUI_REAL
         {
             // Lists to store names and command strings from Excel files
             string Instruments_path_file = "H:\\Project\\Instrunets.xlsx";
+            string Commands_path_file = "H:\\Project\\Commands.xlsx";
 
-             Update_Instrument_List(Instruments_path_file, Instruments_Names_List);
-
+            Update_Instrument_List(Instruments_path_file, Instruments_Names_List);
+            Update_Commands_List(Commands_path_file, Command_List);
             InitializeComponent();
             Init();
+            
         }
+
+        private List<string> Update_Commands_List(string commands_path_file, List<Command> command_List)
+        {
+
+            string[] temp = new string[10];
+            string filePath = commands_path_file;
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            Workbook wb;
+            Worksheet ws;
+
+            wb = excel.Workbooks.Open(filePath);
+            ws = wb.Worksheets[1];
+
+            // Find the last used row
+            int lastRow = ws.Cells[ws.Rows.Count, 1].End[XlDirection.xlUp].Row;
+
+            // Find the last used column
+            int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
+
+            for (int row = 2; row <= lastRow; row++)
+            {
+                for (int column = 1; column <= lastColumn; column++)
+                {
+                    temp[column - 1] = ws.Cells[row, column].Value?.ToString();
+                }
+                try
+                {
+                    temp_Command.Model = temp[0];
+                    temp_Command.Name = temp[1];
+                    temp_Command.SCPI_Command = temp[2];
+                    
+                    command_List.Add(temp_Command);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"error");
+                    wb.Close(false); // Close the workbook without saving changes
+                    excel.Quit();    // Quit the Excel application
+
+                }
+
+
+            }
+
+
+            wb.Close(false); // Close the workbook without saving changes
+            excel.Quit();    // Quit the Excel application
+            return new List<string>();
+        }
+
         /// <summary>
         /// Description: Init the combo boxes
         /// </summary>
@@ -66,17 +124,21 @@ namespace GUI_REAL
         {
             Init_Programing();
             Init_Relay();
-            Init_Instruments();
+            Init_InstrumentsAndCommands();
         }
 
         /// <summary>
         /// Description: init the relays options
         /// </summary>
         /// 
-        private void Init_Instruments()
+        private void Init_InstrumentsAndCommands()
         {
-            comboBox_Instrument.ItemsSource = Instruments_Names_List.Select(instrument => instrument.Name).ToList();
-            comboBox_Instrument.SelectedIndex = 0;
+            comboBox_Instrument_select.ItemsSource = Instruments_Names_List.Select(instrument => instrument.Name).ToList();
+            comboBox_Instrument_select.SelectedIndex = 0;
+
+            
+
+
         }
 
             private void Init_Relay()
@@ -134,17 +196,19 @@ namespace GUI_REAL
 
             for (int row = 2; row <= lastRow; row++)
             {
-                for (int column = 1; column < lastColumn; column++)
+                for (int column = 1; column <= lastColumn; column++)
                 {
                     temp[column - 1] = ws.Cells[row, column].Value?.ToString();
                 }
                 try
                 {
+                    temp_instrument.Model = temp[0];
                     temp_instrument.Name = temp[1];
                     temp_instrument.Com = temp[2];
                     temp_instrument.Lan = temp[3];
                     temp_instrument.Visa_USB = temp[4];
                     temp_instrument.Visa_Lan = temp[5];
+                    temp_instrument.IP = temp[6];
                     Instruments_Names_List.Add(temp_instrument);
                 }
                 catch (Exception ex)
@@ -158,9 +222,7 @@ namespace GUI_REAL
 
             }
 
-            // Now you have the total rows and columns
-            MessageBox.Show($"Total Rows: {lastRow}");
-            MessageBox.Show($"Total Columns: {lastColumn}");
+           
             wb.Close(false); // Close the workbook without saving changes
             excel.Quit();    // Quit the Excel application
             return new List<string>();
@@ -731,7 +793,46 @@ namespace GUI_REAL
             }
         }
 
-        
+        private void comboBox_Instrument_select_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        { string lable= comboBox_Instrument_select.SelectedItem as string;
+            Trace.WriteLine(lable);
+           string model=  findModelPerLable(lable);
+            updateComboboxCommand(model);
+           
+        }
+        private string findModelPerLable(string label)
+        {
+            foreach (Instrument instrument in Instruments_Names_List)
+            {
+                if (instrument.Name == label)
+                {
+                    // Add matching command to Command_List_per_instrument
+                    return instrument.Model;
+                }
+            }
+
+            return "none";
+        }
+        private void updateComboboxCommand(string model)
+        {
+
+            // Clear the contents of Command_List_per_instrument
+            Command_List_per_instrument.Clear();
+
+            // Iterate through Command_List to find commands with matching Name
+            foreach (Command command in Command_List)
+            {
+                if (command.Model == model)
+                {
+                    // Add matching command to Command_List_per_instrument
+                    Command_List_per_instrument.Add(command);
+                }
+            }
+
+            // Set the ItemsSource of comboBox_command to Command_List_per_instrument
+            comboBox_command.ItemsSource = Command_List_per_instrument.Select(command => command.Name).ToList();
+
+        }
     }
 
 }

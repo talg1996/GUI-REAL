@@ -38,8 +38,8 @@ namespace GUI_REAL
 
         // Those strings are the content of the combo boxes any combo box in the
         string[] Programing_hardware = new string[] { "ST_Link", "JLINK" }; 
-        string[] Relay_Option = new string[]        { "48 relays", "32 relays" };
-        string[] UUT_amount = new string[]          { "1", "2", "3", "4" };
+        string[] Relay_Option =        new string[] { "48 relays", "32 relays" };
+        string[] UUT_amount =         new string[]  { "1", "2", "3", "4" };
 
 
 
@@ -54,7 +54,7 @@ namespace GUI_REAL
             // Lists to store names and command strings from Excel files
             string Instruments_path_file = "H:\\Project\\Instrunets.xlsx";
 
-            // Update_Instrument_List(Instruments_path_file, Instruments_Names_List);
+             Update_Instrument_List(Instruments_path_file, Instruments_Names_List);
 
             InitializeComponent();
             Init();
@@ -66,12 +66,20 @@ namespace GUI_REAL
         {
             Init_Programing();
             Init_Relay();
+            Init_Instruments();
         }
 
         /// <summary>
         /// Description: init the relays options
         /// </summary>
-        private void Init_Relay()
+        /// 
+        private void Init_Instruments()
+        {
+            comboBox_Instrument.ItemsSource = Instruments_Names_List.Select(instrument => instrument.Name).ToList();
+            comboBox_Instrument.SelectedIndex = 0;
+        }
+
+            private void Init_Relay()
         {  
             relays_options_comboBox.ItemsSource = Relay_Option;
             relays_options_comboBox.SelectedIndex = 0; // Set default value so it wont be empty
@@ -135,7 +143,7 @@ namespace GUI_REAL
                     temp_instrument.Name = temp[1];
                     temp_instrument.Com = temp[2];
                     temp_instrument.Lan = temp[3];
-                    temp_instrument.Visa_Usb = temp[4];
+                    temp_instrument.Visa_USB = temp[4];
                     temp_instrument.Visa_Lan = temp[5];
                     Instruments_Names_List.Add(temp_instrument);
                 }

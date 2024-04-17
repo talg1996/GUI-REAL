@@ -34,9 +34,11 @@ namespace GUI_REAL
     public partial class MainWindow : System.Windows.Window, INotifyPropertyChanged
     {
         Instrument temp_instrument = new Instrument(); // Temporary instrument instance
+        Instrument chosen_instrument = new Instrument(); // chosen instrument instance
         List<Instrument> Instruments_Names_List = new List<Instrument>(); // List to store instrument names
 
         Command temp_Command = new Command(); // Temporary Command_List instance
+        Command chosen_Command = new Command(); // chosen Command_List instance
         List<Command> Command_List = new List<Command>(); // List to store Command_List names
 
         List<Command> Command_List_per_instrument = new List<Command>(); // List to store Command_List names per label
@@ -795,7 +797,7 @@ namespace GUI_REAL
 
         private void comboBox_Instrument_select_SelectionChanged(object sender, SelectionChangedEventArgs e)
         { string lable= comboBox_Instrument_select.SelectedItem as string;
-            Trace.WriteLine(lable);
+            
            string model=  findModelPerLable(lable);
             updateComboboxCommand(model);
            
@@ -806,6 +808,8 @@ namespace GUI_REAL
             {
                 if (instrument.Name == label)
                 {
+                    
+                    chosen_instrument = instrument;
                     // Add matching command to Command_List_per_instrument
                     return instrument.Model;
                 }
@@ -824,14 +828,29 @@ namespace GUI_REAL
             {
                 if (command.Model == model)
                 {
+                    chosen_Command = command;
                     // Add matching command to Command_List_per_instrument
                     Command_List_per_instrument.Add(command);
                 }
             }
 
             // Set the ItemsSource of comboBox_command to Command_List_per_instrument
-            comboBox_command.ItemsSource = Command_List_per_instrument.Select(command => command.Name).ToList();
+            comboBox_selected_command.ItemsSource = Command_List_per_instrument.Select(command => command.Name).ToList();
 
+        }
+
+        private void comboBox_selected_command_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+                
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string scpi_Command = chosen_Command.SCPI_Command;
+            Trace.WriteLine(scpi_Command);
+
+            string communictae = chosen_instrument.where_Communicate(chosen_instrument.How_Communicate());
+            Trace.WriteLine(communictae);
         }
     }
 

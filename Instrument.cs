@@ -53,21 +53,21 @@ namespace GUI_REAL
 
         public string How_Communicate()
         {
-            if (Com != "none") { return "Com"; }
-            if (Lan != "none") { return "Lan"; }
-            if (Visa_USB != "none") { return "Visa_USB"; }
-            if (Visa_Lan != "none") { return "Visa_Lan"; }
-            if (IP != "none") { return "IP"; }
+            if (Com.ToLower() != "none") { return "Com"; }
+            if (Lan.ToLower() != "none") { return "Lan"; }
+            if (Visa_USB.ToLower() != "none") { return "Visa_USB"; }
+            if (Visa_Lan.ToLower() != "none") { return "Visa_Lan"; }
+            if (IP.ToLower() != "none") { return "IP"; }
             return "none";
         }
 
-        public string where_Communicate(string WheeToSend)
+        public string where_Communicate(string WhereToSend)
         {
-            if (WheeToSend == "Com") { return this.Com; }
-            if (WheeToSend == "Lan") { return this.Lan; }
-            if (WheeToSend == "Visa_USB") { return this.Visa_USB; }
-            if (WheeToSend == "Visa_Lan") { return this.Visa_Lan; }
-            if (WheeToSend == "IP") { return this.IP; }
+            if (WhereToSend == "Com") { return this.Com; }
+            if (WhereToSend == "Lan") { return this.Lan; }
+            if (WhereToSend == "Visa_USB") { return this.Visa_USB; }
+            if (WhereToSend == "Visa_Lan") { return this.Visa_Lan; }
+            if (WhereToSend == "IP") { return this.IP; }
             return "none";
         }
 

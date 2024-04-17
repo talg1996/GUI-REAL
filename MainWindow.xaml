@@ -582,16 +582,16 @@
                         Grid.Row="3"
                         Grid.Column="1" Margin="15,1,16,0" Height="25" VerticalAlignment="Top" SelectionChanged="comboBox_Instrument_select_SelectionChanged" />
                     <ComboBox
-                        x:Name="comboBox_command"
+                        x:Name="comboBox_selected_command"
                         Grid.Row="4"
                         Grid.Column="1"
-                        Margin="17,21,13,8" />
+                        Margin="17,21,13,8" SelectionChanged="comboBox_selected_command_SelectionChanged" />
                     <Button
                         Grid.Row="6"
                         Grid.Column="2"
                         Margin="24,9,128,8"
                         Content="Send"
-                        RenderTransformOrigin="0.492,0.358" />
+                        RenderTransformOrigin="0.492,0.358" Click="Button_Click" />
                     <TextBox
                         Grid.Row="5"
                         Grid.RowSpan="2"
@@ -2105,6 +2105,7 @@
                         Background="{x:Null}"
                         SelectionChanged="relays_options_comboBox_SelectionChanged"
                         d:LayoutOverrides="TopPosition, BottomPosition" />
+                    <Label x:Name="label" Content="Label" Margin="473,258,321,62" Grid.Row="2"/>
 
 
                 </Grid>

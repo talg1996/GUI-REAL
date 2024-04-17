@@ -796,7 +796,9 @@ namespace GUI_REAL
         }
 
         private void comboBox_Instrument_select_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        { string lable= comboBox_Instrument_select.SelectedItem as string;
+        {
+            comboBox_selected_command.ItemsSource = null;
+            string lable= comboBox_Instrument_select.SelectedItem as string;
             
            string model=  findModelPerLable(lable);
             updateComboboxCommand(model);

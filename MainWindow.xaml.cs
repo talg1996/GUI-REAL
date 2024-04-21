@@ -866,7 +866,15 @@ namespace GUI_REAL
             
         }
 
-        
+        private void button_clear_output_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            SCPI_Command_output_textBox.Text = "";
+        }
+
+        private void button_clear_output_Click(object sender, RoutedEventArgs e)
+        {
+            result_output_textBox.Text = "";
+        }
     }
 
 }

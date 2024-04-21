@@ -830,7 +830,7 @@ namespace GUI_REAL
             {
                 if (command.Model == model)
                 {
-                    chosen_Command = command;
+                   
                     // Add matching command to Command_List_per_instrument
                     Command_List_per_instrument.Add(command);
                 }
@@ -843,17 +843,30 @@ namespace GUI_REAL
 
         private void comboBox_selected_command_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-                
+            string command_name = comboBox_selected_command.SelectedItem as string;
+
+            foreach (Command command in Command_List_per_instrument)
+            {
+                if (command.Name == command_name)
+                {
+                    chosen_Command= command;
+                   
+                  
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string scpi_Command = chosen_Command.SCPI_Command;
-            Trace.WriteLine(scpi_Command);
-
-            string communictae = chosen_instrument.where_Communicate(chosen_instrument.How_Communicate());
-            Trace.WriteLine(communictae);
+        {   
+            Command command_with_args =  new Command(chosen_Command);
+            command_with_args.SCPI_Command= chosen_Command.SCPI_Command.Replace("a1", textBox_arg1.Text).Replace("a2", textBox_arg2.Text).Replace("a3", textBox_arg3.Text);
+            SendCommand send_Command = new SendCommand(command_with_args, chosen_instrument);
+            result_output_textBox.Text=send_Command.SendCommandToInstrument();
+            SCPI_Command_output_textBox.Text = command_with_args.SCPI_Command;
+            
         }
+
+        
     }
 
 }

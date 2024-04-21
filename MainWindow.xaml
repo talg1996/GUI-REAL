@@ -564,7 +564,8 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Text="Enter instrument name (Lable)"
-                        TextWrapping="Wrap" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <TextBlock
                         Grid.Row="3"
                         Grid.Column="1"
@@ -580,19 +581,26 @@
                     <ComboBox
                         x:Name="comboBox_Instrument_select"
                         Grid.Row="3"
-                        Grid.Column="1" Margin="15,1,16,0" Height="25" VerticalAlignment="Top" SelectionChanged="comboBox_Instrument_select_SelectionChanged" />
+                        Grid.Column="1"
+                        Height="25"
+                        Margin="15,1,16,0"
+                        VerticalAlignment="Top"
+                        SelectionChanged="comboBox_Instrument_select_SelectionChanged" />
                     <ComboBox
                         x:Name="comboBox_selected_command"
                         Grid.Row="4"
                         Grid.Column="1"
-                        Margin="17,21,13,8" SelectionChanged="comboBox_selected_command_SelectionChanged" />
+                        Margin="17,21,13,8"
+                        SelectionChanged="comboBox_selected_command_SelectionChanged" />
                     <Button
                         Grid.Row="6"
                         Grid.Column="2"
                         Margin="24,9,128,8"
+                        Click="Button_Click"
                         Content="Send"
-                        RenderTransformOrigin="0.492,0.358" Click="Button_Click" />
+                        RenderTransformOrigin="0.492,0.358" />
                     <TextBox
+                        x:Name="result_output_textBox"
                         Grid.Row="5"
                         Grid.RowSpan="2"
                         Grid.Column="3"
@@ -610,7 +618,8 @@
                         RenderTransformOrigin="0.929,0.095"
                         Text="COM"
                         TextWrapping="Wrap"
-                        Visibility="Hidden" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                        Visibility="Hidden"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <ComboBox
                         Grid.Row="3"
                         Grid.Column="3"
@@ -619,53 +628,63 @@
                         d:LayoutOverrides="VerticalAlignment" />
                     <TextBlock
                         x:Name="textBlock_arg1"
-                        Grid.Row="6"
+                        Grid.Row="5"
                         Grid.Column="1"
-                        Margin="17,3,0,0"
+                        Width="29"
+                        Margin="17,4,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        TextWrapping="Wrap" Width="29" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"><Run Text="Arg 1" /><LineBreak /><Run /></TextBlock>
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin"><Run Text="Arg 1" /><LineBreak /><Run /></TextBlock>
                     <TextBox
                         x:Name="textBox_arg1"
-                        Grid.Row="6"
+                        Grid.Row="5"
                         Grid.Column="1"
-                        Margin="105,5,95,24"
-                        Text="Arg 1"
-                        TextWrapping="Wrap"
-                        d:LayoutOverrides="HorizontalAlignment, VerticalAlignment, LeftMargin, RightMargin, TopMargin, BottomMargin" />
-                    <TextBlock
-                        x:Name="textBlock_arg2"
-                        Grid.Row="7"
-                        Grid.Column="1"
-                        Margin="17,14,0,0"
+                        Width="20"
+                        Margin="102,3,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        TextWrapping="Wrap" Grid.RowSpan="2" Width="29" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"><Run Text="Arg 2" /><LineBreak /><Run /><LineBreak /><Run /></TextBlock>
-                    <TextBox
-                        Grid.Row="7"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        x:Name="textBlock_arg2"
+                        Grid.Row="6"
                         Grid.Column="1"
-                        Margin="105,10,95,21"
-                        Text="Arg 2&#xD;&#xA;"
+                        Width="29"
+                        Margin="17,7,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         TextWrapping="Wrap"
-                        d:LayoutOverrides="HorizontalAlignment, VerticalAlignment, LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                        d:LayoutOverrides="LeftMargin, RightMargin"><Run Text="Arg 2" /><LineBreak /><Run /><LineBreak /><Run /></TextBlock>
+                    <TextBox
+                        x:Name="textBox_arg2"
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        Margin="102,10,101,0"
+                        VerticalAlignment="Top"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="Width" />
                     <Button
                         x:Name="button_Refresh_COM"
                         Grid.Row="3"
                         Grid.Column="3"
+                        Width="40"
                         Margin="184,19,0,18"
+                        HorizontalAlignment="Left"
                         Background="#FFB1EFFF"
                         BorderBrush="#FF636363"
                         Content="Refresh"
                         Foreground="Black"
                         RenderTransformOrigin="0.688,-0.486"
                         Visibility="Hidden"
-                        d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Left" Width="40" />
+                        d:LayoutOverrides="VerticalAlignment" />
                     <Button
                         x:Name="button_clear_output"
                         Grid.Row="7"
                         Grid.Column="3"
+                        Width="108"
                         Margin="21,14,0,14"
-                        Content="Clear" HorizontalAlignment="Left" Width="108" />
+                        HorizontalAlignment="Left"
+                        Content="Clear" />
                     <TextBlock
                         x:Name="Title_Command_to_instrument"
                         Grid.Row="1"
@@ -691,29 +710,55 @@
                         TextWrapping="Wrap"
                         d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <TextBox
+                        x:Name="SCPI_Command_output_textBox"
                         Grid.Row="2"
                         Grid.RowSpan="2"
                         Grid.Column="3"
                         Margin="21,22,17,5"
                         Text="SCPI command"
-                        TextWrapping="Wrap" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="3"
                         Width="99"
                         Height="22"
-                        Margin="19,0,0,33"
+                        Margin="21,0,0,30"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
                         RenderTransformOrigin="0.5,0.501"
                         Text="SCPI command"
-                        TextWrapping="Wrap" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                        TextWrapping="Wrap" />
                     <Button
                         x:Name="button_clear_output_Copy"
                         Grid.Row="4"
                         Grid.Column="3"
+                        Width="108"
                         Margin="21,1,129,16"
-                        Content="Clear" Width="108" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                        Content="Clear"
+                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
+                    <TextBlock
+                        x:Name="textBlock_arg3"
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        Width="30"
+                        Margin="14,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="TopPosition, BottomPosition"><Run Text="Arg 2" /><LineBreak /><Run /><LineBreak /><Run /></TextBlock>
+                    <TextBox
+                        x:Name="textBox_arg3"
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        Width="63"
+                        Height="19"
+                        Margin="100,5,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Text="&#xA;"
+                        TextWrapping="Wrap"
+                        d:LayoutOverrides="VerticalAlignment" />
 
                 </Grid>
             </TabItem>
@@ -2105,7 +2150,11 @@
                         Background="{x:Null}"
                         SelectionChanged="relays_options_comboBox_SelectionChanged"
                         d:LayoutOverrides="TopPosition, BottomPosition" />
-                    <Label x:Name="label" Content="Label" Margin="473,258,321,62" Grid.Row="2"/>
+                    <Label
+                        x:Name="label"
+                        Grid.Row="2"
+                        Margin="473,258,321,62"
+                        Content="Label" />
 
 
                 </Grid>

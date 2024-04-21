@@ -21,6 +21,13 @@ namespace GUI_REAL
             SCPI_Command = SCPI_command;
         }
 
+        public Command(Command other)
+        {
+            Model = other.Model;
+            Name = other.Name;
+            SCPI_Command = other.SCPI_Command;
+        }
+
 
     }
 }

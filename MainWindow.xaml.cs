@@ -20,6 +20,7 @@ using System.Xml.Linq;
 using System.Printing;
 using System.Windows.Media;
 using System.Reflection.Emit;
+using System.Runtime.InteropServices;
 
 
 
@@ -33,25 +34,35 @@ namespace GUI_REAL
     /// </summary>
     public partial class MainWindow : System.Windows.Window, INotifyPropertyChanged
     {
+        //*********** handle chosen instrument *************//
         Instrument temp_instrument = new Instrument(); // Temporary instrument instance
         Instrument chosen_instrument = new Instrument(); // chosen instrument instance
         List<Instrument> Instruments_Names_List = new List<Instrument>(); // List to store instrument names
+                                                                          //*********** handle chosen instrument *************//
 
+        //*********** handle chosen command*************//
         Command temp_Command = new Command(); // Temporary Command_List instance
         Command chosen_Command = new Command(); // chosen Command_List instance
         List<Command> Command_List = new List<Command>(); // List to store Command_List names
-
         List<Command> Command_List_per_instrument = new List<Command>(); // List to store Command_List names per label
+        //*********** handle chosen command*************//
 
+        //*********** handle flow *************//
+        Command flow_Command = new Command();
+        Instrument flow_Instrument = new Instrument();
+        FlowInstruction tempFlowInstruction = new FlowInstruction();
+        List<FlowInstruction> FlowInstructions_List = new List<FlowInstruction>();
+        //*********** handle flow *************//
 
         // Those strings are the content of the combo boxes any combo box in the
-        string[] Programing_hardware = new string[] { "ST_Link", "JLINK" }; 
-        string[] Relay_Option =        new string[] { "48 relays", "32 relays" };
-        string[] UUT_amount =         new string[]  { "1", "2", "3", "4" };
+        string[] Programing_hardware = new string[] { "ST_Link", "JLINK" };
+        string[] Relay_Option = new string[] { "48 relays", "32 relays" };
+        string[] UUT_amount = new string[] { "1", "2", "3", "4" };
+
+        string result;//store the instriment result
+        string[] results = new string[501]; // Will save all the result from the user flow
 
 
-
-        
         string User_mode;// can be "user" or "technician"
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -67,7 +78,7 @@ namespace GUI_REAL
             Update_Commands_List(Commands_path_file, Command_List);
             InitializeComponent();
             Init();
-            
+
         }
 
         private List<string> Update_Commands_List(string commands_path_file, List<Command> command_List)
@@ -99,7 +110,7 @@ namespace GUI_REAL
                     temp_Command.Model = temp[0];
                     temp_Command.Name = temp[1];
                     temp_Command.SCPI_Command = temp[2];
-                    
+
                     command_List.Add(temp_Command);
                 }
                 catch (Exception ex)
@@ -138,13 +149,13 @@ namespace GUI_REAL
             comboBox_Instrument_select.ItemsSource = Instruments_Names_List.Select(instrument => instrument.Name).ToList();
             comboBox_Instrument_select.SelectedIndex = 0;
 
-            
+
 
 
         }
 
-            private void Init_Relay()
-        {  
+        private void Init_Relay()
+        {
             relays_options_comboBox.ItemsSource = Relay_Option;
             relays_options_comboBox.SelectedIndex = 0; // Set default value so it wont be empty
         }
@@ -171,7 +182,7 @@ namespace GUI_REAL
         /// <param name="Instruments_Names_List"></param>
         private void Update_Instrument_List(string Instruments_path_file, List<Instrument> Instruments_Names_List)
         {
-             Excel_Row_read_by_index(Instruments_path_file);
+            Excel_Row_read_by_index(Instruments_path_file);
         }
 
         /// <summary>
@@ -224,7 +235,7 @@ namespace GUI_REAL
 
             }
 
-           
+
             wb.Close(false); // Close the workbook without saving changes
             excel.Quit();    // Quit the Excel application
             return new List<string>();
@@ -394,7 +405,7 @@ namespace GUI_REAL
         /// <returns>ABCDEFGHIJKL each letter can be 0x(0,1,2...,H)</returns>
         private string get_realys_command32()
         {
-            
+
 
             string A = BinaryToHex((checkBox_relay32.IsChecked == true ? "1" : "0") +
                        (checkBox_relay31.IsChecked == true ? "1" : "0") +
@@ -436,7 +447,7 @@ namespace GUI_REAL
                        (checkBox_relay2.IsChecked == true ? "1" : "0") +
                        (checkBox_relay1.IsChecked == true ? "1" : "0"));
 
-            return A + B + C + D + E + F + H ;
+            return A + B + C + D + E + F + H;
         }
 
 
@@ -467,7 +478,7 @@ namespace GUI_REAL
 
             return hex;
         }
-        
+
         private void file_to_program_textBox_button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -608,20 +619,20 @@ namespace GUI_REAL
             }
         }
 
-        
 
-/// <summary>
-/// s
-/// </summary>
-/// <param name="input"></param>
-/// <returns></returns>
+
+        /// <summary>
+        /// s
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private bool singleInputCommandOK(string input)
         {
-            int how_many_relays=48-relays_options_comboBox.SelectedIndex*16;  // Set the amount of the relay 48 or 32
+            int how_many_relays = 48 - relays_options_comboBox.SelectedIndex * 16;  // Set the amount of the relay 48 or 32
 
             int number;
             // Check if the input can be parsed as an integer and is within the range
-            if (int.TryParse(input, out number) && number >= 1 && number <=  how_many_relays)
+            if (int.TryParse(input, out number) && number >= 1 && number <= how_many_relays)
             {
                 return true; // Return true if input is valid
             }
@@ -648,7 +659,7 @@ namespace GUI_REAL
                 }
                 else
                 {
-                    single_output_command.Text = "Please enter relay 1-"+relays_options_comboBox.Text;
+                    single_output_command.Text = "Please enter relay 1-" + relays_options_comboBox.Text;
                     single_input_command.Background = Brushes.Pink;
                     adress_input_command.Background = Brushes.White;
 
@@ -709,7 +720,7 @@ namespace GUI_REAL
             return (number - 1).ToString("X2");
         }
 
-        
+
         private void button_DeActive_generate_one_relay_Click(object sender, RoutedEventArgs e)
         {
             string input = single_input_command.Text;
@@ -748,11 +759,11 @@ namespace GUI_REAL
             if (relays_options_comboBox.SelectedIndex == 0)
             {
                 textBlock1_Copy56.Text = "Relay 1-48";
-               single_input_command.Text = "1-48";
+                single_input_command.Text = "1-48";
             }
             else
             {
-               textBlock1_Copy56.Text = "Relay 1-32";
+                textBlock1_Copy56.Text = "Relay 1-32";
                 single_input_command.Text = "1-32";
             }
 
@@ -798,11 +809,11 @@ namespace GUI_REAL
         private void comboBox_Instrument_select_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             comboBox_selected_command.ItemsSource = null;
-            string lable= comboBox_Instrument_select.SelectedItem as string;
-            
-           string model=  findModelPerLable(lable);
+            string lable = comboBox_Instrument_select.SelectedItem as string;
+
+            string model = findModelPerLable(lable);
             updateComboboxCommand(model);
-           
+
         }
         private string findModelPerLable(string label)
         {
@@ -810,7 +821,7 @@ namespace GUI_REAL
             {
                 if (instrument.Name == label)
                 {
-                    
+
                     chosen_instrument = instrument;
                     // Add matching command to Command_List_per_instrument
                     return instrument.Model;
@@ -818,6 +829,22 @@ namespace GUI_REAL
             }
 
             return "none";
+        }
+        /// <summary>
+        /// update global temp_Instrument per lable
+        /// </summary>
+        /// <param name="label"></param>
+        public void findInstrumentPerLable(string label)
+        {
+            foreach (Instrument instrument in Instruments_Names_List)
+
+                if (instrument.Name == label) temp_instrument = instrument;
+
+
+
+
+
+
         }
         private void updateComboboxCommand(string model)
         {
@@ -830,7 +857,7 @@ namespace GUI_REAL
             {
                 if (command.Model == model)
                 {
-                   
+
                     // Add matching command to Command_List_per_instrument
                     Command_List_per_instrument.Add(command);
                 }
@@ -849,21 +876,24 @@ namespace GUI_REAL
             {
                 if (command.Name == command_name)
                 {
-                    chosen_Command= command;
-                   
-                  
+                    chosen_Command = command;
+
+
                 }
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {   
-            Command command_with_args =  new Command(chosen_Command);
-            command_with_args.SCPI_Command= chosen_Command.SCPI_Command.Replace("a1", textBox_arg1.Text).Replace("a2", textBox_arg2.Text).Replace("a3", textBox_arg3.Text);
+        {
+            Command command_with_args = new Command(chosen_Command);
+            command_with_args.SCPI_Command = chosen_Command.SCPI_Command.Replace("a1", textBox_arg1.Text).Replace("a2", textBox_arg2.Text).Replace("a3", textBox_arg3.Text);
             SendCommand send_Command = new SendCommand(command_with_args, chosen_instrument);
-            result_output_textBox.Text=send_Command.SendCommandToInstrument();
+            result_output_textBox.Text = send_Command.SendCommandToInstrument();
+            result = result_output_textBox.Text;
             SCPI_Command_output_textBox.Text = command_with_args.SCPI_Command;
-            
+            Lable_Command_output_textBox.Text = chosen_instrument.Name;
+
+
         }
 
         private void button_clear_output_Copy_Click(object sender, RoutedEventArgs e)
@@ -874,6 +904,182 @@ namespace GUI_REAL
         private void button_clear_output_Click(object sender, RoutedEventArgs e)
         {
             result_output_textBox.Text = "";
+        }
+
+
+
+        private void chosen_flow_comboBoxChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //string chosen_flow = chosen_flow_comboBox.SelectedItem as string;
+
+
+        }
+
+        private void btn_start_flow_test_Click(object sender, RoutedEventArgs e)
+        {
+            flow_output_textbox.Text = "Tesd started";
+            string flowPath = "H:\\Project\\Flows\\Test.xlsx";
+            upDateFlow(flowPath);
+            excuteFlow();
+
+        }
+
+        private void excuteFlow()
+        {
+            clearResultsArray();
+            int index_to_save;
+            string logfilePath = @"H:\Project\Flows\Log.xlsx";
+
+
+            foreach (FlowInstruction user_Instruction in FlowInstructions_List)
+            {
+                findInstrumentPerLable(user_Instruction.Lable); // Update the global temp instrument
+                SendCommand user_send_command = new SendCommand(user_Instruction.SCPI_Command, temp_instrument);
+
+                if (user_Instruction.Index_To_Save != "none")
+                {
+                    try
+                    {
+                        index_to_save = int.Parse(user_Instruction.Index_To_Save);
+                        results[index_to_save] = user_send_command.SendCommandToInstrument();
+                    }
+                    catch (FormatException)
+                    {
+                        MessageBox.Show("Please insert index 0-499 or none to Index to save at flow excel");
+                    }
+                }
+                else
+                {
+                    user_send_command.SendCommandToInstrument();
+                }
+
+                Thread.Sleep(1000); // 1000 milliseconds = 1 second
+
+                // Write the result to the file
+
+
+
+            }
+            printResults(logfilePath);
+        }
+
+        private void printResults(string logFilePath)
+        {
+            if (string.IsNullOrEmpty(logFilePath))
+            {
+                throw new ArgumentException("Log file path cannot be null or empty.");
+            }
+
+            Microsoft.Office.Interop.Excel.Application excel = null;
+            Workbook wb = null;
+            Worksheet ws = null;
+
+            try
+            {
+                excel = new Microsoft.Office.Interop.Excel.Application();
+                excel.Visible = false; // Hide Excel application
+                excel.DisplayAlerts = false; // Disable alerts
+
+                if (File.Exists(logFilePath))
+                {
+                    wb = excel.Workbooks.Open(logFilePath);
+                }
+                else
+                {
+                    wb = excel.Workbooks.Add();
+                }
+
+                ws = wb.Worksheets[1];
+
+                int excelRow = 1;
+                foreach (string result in results)
+                {
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        ws.Cells[excelRow, 1] = result; // Always write to first column
+                        excelRow++;
+                    }
+                }
+
+                // Save and close workbook
+                wb.SaveAs(logFilePath);
+                wb.Close();
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions gracefully
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+            finally
+            {
+                // Clean up resources
+                if (ws != null) Marshal.ReleaseComObject(ws);
+                if (wb != null) Marshal.ReleaseComObject(wb);
+                if (excel != null)
+                {
+                    excel.Quit();
+                    Marshal.ReleaseComObject(excel);
+                }
+            }
+        }
+     
+
+
+        private void clearResultsArray()
+        {
+            for (int i = 0; i < results.Length; i++)
+            {
+                results[i] = null;
+            }
+        }
+
+        private void upDateFlow(string flowPath)
+        {
+            FlowInstructions_List.Clear();
+            string[] temp = new string[10];
+            string filePath = flowPath;
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            Workbook wb;
+            Worksheet ws;
+
+            wb = excel.Workbooks.Open(filePath);
+            ws = wb.Worksheets[1];
+
+            // Find the last used row
+            int lastRow = ws.Cells[ws.Rows.Count, 1].End[XlDirection.xlUp].Row;
+
+            // Find the last used column
+            int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
+
+            for (int row = 2; row <= lastRow; row++)
+            {
+                for (int column = 1; column <= lastColumn-1; column++)
+                {
+                    temp[column - 1] = ws.Cells[row, column].Value?.ToString();
+                }
+                try
+                {
+                    tempFlowInstruction.Lable = temp[0];
+                    tempFlowInstruction.SCPI_Command = temp[1];
+                    tempFlowInstruction.Index_To_Save = temp[2];
+
+                    FlowInstructions_List.Add(tempFlowInstruction);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"error");
+                    wb.Close(false); // Close the workbook without saving changes
+                    excel.Quit();    // Quit the Excel application
+
+                }
+
+
+            }
+
+
+            wb.Close(false); // Close the workbook without saving changes
+            excel.Quit();    // Quit the Excel application
+            
         }
     }
 

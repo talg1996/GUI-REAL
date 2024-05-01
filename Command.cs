@@ -20,6 +20,11 @@ namespace GUI_REAL
             Name = name;
             SCPI_Command = SCPI_command;
         }
+        public Command(string command)
+        {
+           
+            SCPI_Command = command;
+        }
 
         public Command(Command other)
         {

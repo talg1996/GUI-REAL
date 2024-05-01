@@ -151,7 +151,7 @@
                         TextWrapping="Wrap"
                         d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <TextBox
-                        x:Name="textBox1"
+                        x:Name="flow_output_textbox"
                         Grid.Row="1"
                         Grid.RowSpan="3"
                         Grid.Column="1"
@@ -194,13 +194,14 @@
                         TextWrapping="Wrap"
                         d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <ComboBox
-                        x:Name="comboBox_Copy"
+                        x:Name="chosen_flow_comboBox"
                         Grid.Row="1"
                         Width="107"
                         Height="22"
                         Margin="19,108,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
+                        SelectionChanged="chosen_flow_comboBoxChanged"
                         d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <TextBlock
                         x:Name="textBlock1_Copy1"
@@ -273,7 +274,7 @@
                         TextWrapping="Wrap"
                         d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <Button
-                        x:Name="button_Copy2"
+                        x:Name="btn_start_flow_test"
                         Grid.Row="4"
                         Grid.Column="1"
                         Width="95"
@@ -282,6 +283,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
                         Background="#FFAFFFBB"
+                        Click="btn_start_flow_test_Click"
                         Content="Start"
                         d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <Button
@@ -625,7 +627,17 @@
                         Grid.ColumnSpan="2"
                         Margin="17,21,102,8"
                         SelectionChanged="comboBox_selected_command_SelectionChanged" />
-                    <Button Grid.Row="6" Grid.Column="2" Click="Button_Click" Style="{StaticResource RoundedButtonStyle}" FontWeight="Bold" Background="#FFF1F0F0" BorderBrush="#FF56EC4A" Foreground="White" OpacityMask="#FFBB2525" Margin="50,8,102,9">
+                    <Button
+                        Grid.Row="6"
+                        Grid.Column="2"
+                        Margin="50,8,102,9"
+                        Background="#FFF1F0F0"
+                        BorderBrush="#FF56EC4A"
+                        Click="Button_Click"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        OpacityMask="#FFBB2525"
+                        Style="{StaticResource RoundedButtonStyle}">
                         Send
                     </Button>
                     <TextBox
@@ -634,8 +646,9 @@
                         Grid.RowSpan="2"
                         Grid.Column="3"
                         Margin="20,13,18,14"
+                        Background="#FFF7F9DA"
                         Text="Output"
-                        TextWrapping="Wrap" Background="#FFF7F9DA" />
+                        TextWrapping="Wrap" />
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="3"
@@ -711,7 +724,8 @@
                         Width="99"
                         Margin="21,14,0,14"
                         HorizontalAlignment="Left"
-                        Content="Clear" Click="button_clear_output_Click" />
+                        Click="button_clear_output_Click"
+                        Content="Clear" />
                     <TextBlock
                         x:Name="Title_Command_to_instrument"
                         Grid.Row="1"
@@ -739,12 +753,12 @@
                     <TextBox
                         x:Name="SCPI_Command_output_textBox"
                         Grid.Row="2"
-                        Grid.RowSpan="2"
                         Grid.Column="3"
-                        Margin="21,22,17,5"
+                        Margin="21,22,4,5"
+                        Background="#FFF8F9DD"
                         Text="SCPI command"
                         TextWrapping="Wrap"
-                        d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" Background="#FFF8F9DD" />
+                        d:LayoutOverrides="TopMargin, BottomMargin" />
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="3"
@@ -761,9 +775,10 @@
                         Grid.Row="4"
                         Grid.Column="3"
                         Margin="21,1,138,26"
-                        Content="Clear" Click="button_clear_output_Copy_Click" >
+                        Click="button_clear_output_Copy_Click"
+                        Content="Clear">
                         <Button.Style>
-                            <Style/>
+                            <Style />
                         </Button.Style>
                     </Button>
                     <TextBlock
@@ -775,7 +790,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         TextWrapping="Wrap"
-                        d:LayoutOverrides="TopPosition, BottomPosition"><Run Text="Arg 2" /><LineBreak /><Run /><LineBreak /><Run /></TextBlock>
+                        d:LayoutOverrides="TopPosition, BottomPosition"><Run Text="Arg 3" /><LineBreak /><Run /><LineBreak /><Run /></TextBlock>
                     <TextBox
                         x:Name="textBox_arg3"
                         Grid.Row="7"
@@ -788,6 +803,25 @@
                         Text="&#xA;"
                         TextWrapping="Wrap"
                         d:LayoutOverrides="VerticalAlignment" />
+                    <TextBox
+                        x:Name="Lable_Command_output_textBox"
+                        Grid.Row="3"
+                        Grid.Column="3"
+                        Margin="21,19,4,8"
+                        Background="#FFF8F9DD"
+                        Text="SCPI command"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="3"
+                        Width="99"
+                        Height="22"
+                        Margin="21,0,0,30"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        RenderTransformOrigin="0.5,0.501"
+                        Text="Lable command"
+                        TextWrapping="Wrap" />
 
                 </Grid>
             </TabItem>

@@ -24,6 +24,12 @@ namespace GUI_REAL
             this.instrument = instrument;
         }
 
+        public SendCommand(string command, Instrument instrument)
+        {
+            this.command.SCPI_Command = command;
+            this.instrument = instrument;
+        }
+
         public string SendCommandToInstrument()
         {
             

@@ -86,47 +86,62 @@ namespace GUI_REAL
 
             string[] temp = new string[10];
             string filePath = commands_path_file;
-            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            Workbook wb;
-            Worksheet ws;
 
-            wb = excel.Workbooks.Open(filePath);
-            ws = wb.Worksheets[1];
+            Microsoft.Office.Interop.Excel.Application excel = null;
+            Workbook wb=null;
+            Worksheet ws=null;
 
-            // Find the last used row
-            int lastRow = ws.Cells[ws.Rows.Count, 1].End[XlDirection.xlUp].Row;
-
-            // Find the last used column
-            int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
-
-            for (int row = 2; row <= lastRow; row++)
+            try
             {
-                for (int column = 1; column <= lastColumn; column++)
-                {
-                    temp[column - 1] = ws.Cells[row, column].Value?.ToString();
-                }
-                try
-                {
-                    temp_Command.Model = temp[0];
-                    temp_Command.Name = temp[1];
-                    temp_Command.SCPI_Command = temp[2];
+                excel = new Microsoft.Office.Interop.Excel.Application();
+                wb = excel.Workbooks.Open(commands_path_file);
+                ws = wb.Worksheets[1];
 
-                    command_List.Add(temp_Command);
-                }
-                catch (Exception ex)
+                int lastRow = ws.Cells[ws.Rows.Count, 1].End[XlDirection.xlUp].Row;
+                int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
+
+                for (int row = 2; row <= lastRow; row++)
                 {
-                    MessageBox.Show($"error");
+                    for (int column = 1; column <= lastColumn; column++)
+                    {
+                        temp[column - 1] = ws.Cells[row, column].Value?.ToString();
+                    }
+
+                    try
+                    {
+                        Command tempCommand = new Command();
+                        tempCommand.Model = temp[0];
+                        tempCommand.Name = temp[1];
+                        tempCommand.SCPI_Command = temp[2];
+
+                        command_List.Add(tempCommand);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error: {ex.Message}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                // Clean up resources
+                if (ws != null) Marshal.ReleaseComObject(ws);
+                if (wb != null)
+                {
                     wb.Close(false); // Close the workbook without saving changes
-                    excel.Quit();    // Quit the Excel application
-
+                    Marshal.ReleaseComObject(wb);
                 }
-
-
+                if (excel != null)
+                {
+                    excel.Quit(); // Quit the Excel application
+                    Marshal.ReleaseComObject(excel);
+                }
             }
 
-
-            wb.Close(false); // Close the workbook without saving changes
-            excel.Quit();    // Quit the Excel application
             return new List<string>();
         }
 
@@ -193,51 +208,68 @@ namespace GUI_REAL
         public List<string> Excel_Row_read_by_index(string path)
         {
             string[] temp = new string[10];
-            string filePath = path;
-            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            Workbook wb;
-            Worksheet ws;
+            
+            
+           
 
-            wb = excel.Workbooks.Open(filePath);
-            ws = wb.Worksheets[1];
+            Microsoft.Office.Interop.Excel.Application excel = null;
+            Workbook wb =null;
+            Worksheet ws =null;
 
-            // Find the last used row
-            int lastRow = ws.Cells[ws.Rows.Count, 1].End[XlDirection.xlUp].Row;
-
-            // Find the last used column
-            int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
-
-            for (int row = 2; row <= lastRow; row++)
+            try
             {
-                for (int column = 1; column <= lastColumn; column++)
+                excel = new Microsoft.Office.Interop.Excel.Application();
+                wb = excel.Workbooks.Open(path);
+                ws = wb.Worksheets[1];
+
+                int lastRow = ws.Cells[ws.Rows.Count, 1].End[XlDirection.xlUp].Row;
+                int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
+
+                for (int row = 2; row <= lastRow; row++)
                 {
-                    temp[column - 1] = ws.Cells[row, column].Value?.ToString();
+                    for (int column = 1; column <= lastColumn; column++)
+                    {
+                        temp[column - 1] = ws.Cells[row, column].Value?.ToString();
+                    }
+
+                    try
+                    {
+                        Instrument tempInstrument = new Instrument();
+                        tempInstrument.Model = temp[0];
+                        tempInstrument.Name = temp[1];
+                        tempInstrument.Com = temp[2];
+                        tempInstrument.Lan = temp[3];
+                        tempInstrument.Visa_USB = temp[4];
+                        tempInstrument.Visa_Lan = temp[5];
+                        tempInstrument.IP = temp[6];
+                        Instruments_Names_List.Add(tempInstrument);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error: {ex.Message}");
+                    }
                 }
-                try
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                // Clean up resources
+                if (ws != null) Marshal.ReleaseComObject(ws);
+                if (wb != null)
                 {
-                    temp_instrument.Model = temp[0];
-                    temp_instrument.Name = temp[1];
-                    temp_instrument.Com = temp[2];
-                    temp_instrument.Lan = temp[3];
-                    temp_instrument.Visa_USB = temp[4];
-                    temp_instrument.Visa_Lan = temp[5];
-                    temp_instrument.IP = temp[6];
-                    Instruments_Names_List.Add(temp_instrument);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"error");
                     wb.Close(false); // Close the workbook without saving changes
-                    excel.Quit();    // Quit the Excel application
-
+                    Marshal.ReleaseComObject(wb);
                 }
-
-
+                if (excel != null)
+                {
+                    excel.Quit(); // Quit the Excel application
+                    Marshal.ReleaseComObject(excel);
+                }
             }
 
-
-            wb.Close(false); // Close the workbook without saving changes
-            excel.Quit();    // Quit the Excel application
             return new List<string>();
         }
 
@@ -1038,48 +1070,60 @@ namespace GUI_REAL
             FlowInstructions_List.Clear();
             string[] temp = new string[10];
             string filePath = flowPath;
-            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            Workbook wb;
-            Worksheet ws;
+            Microsoft.Office.Interop.Excel.Application excel = null;
+            Workbook wb=null;
+            Worksheet ws=null;
 
-            wb = excel.Workbooks.Open(filePath);
-            ws = wb.Worksheets[1];
-
-            // Find the last used row
-            int lastRow = ws.Cells[ws.Rows.Count, 1].End[XlDirection.xlUp].Row;
-
-            // Find the last used column
-            int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
-
-            for (int row = 2; row <= lastRow; row++)
+            try
             {
-                for (int column = 1; column <= lastColumn-1; column++)
+                excel = new Microsoft.Office.Interop.Excel.Application();
+                wb = excel.Workbooks.Open(flowPath);
+                ws = wb.Worksheets[1];
+
+                int lastRow = ws.Cells[ws.Rows.Count, 1].End[XlDirection.xlUp].Row;
+                int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
+
+                for (int row = 2; row <= lastRow; row++)
                 {
-                    temp[column - 1] = ws.Cells[row, column].Value?.ToString();
+                    for (int column = 1; column <= lastColumn - 1; column++)
+                    {
+                        temp[column - 1] = ws.Cells[row, column].Value?.ToString();
+                    }
+
+                    try
+                    {
+                        FlowInstruction tempFlowInstruction = new FlowInstruction();
+                        tempFlowInstruction.Lable = temp[0];
+                        tempFlowInstruction.SCPI_Command = temp[1];
+                        tempFlowInstruction.Index_To_Save = temp[2];
+
+                        FlowInstructions_List.Add(tempFlowInstruction);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error: {ex.Message}");
+                    }
                 }
-                try
-                {
-                    tempFlowInstruction.Lable = temp[0];
-                    tempFlowInstruction.SCPI_Command = temp[1];
-                    tempFlowInstruction.Index_To_Save = temp[2];
-
-                    FlowInstructions_List.Add(tempFlowInstruction);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"error");
-                    wb.Close(false); // Close the workbook without saving changes
-                    excel.Quit();    // Quit the Excel application
-
-                }
-
-
             }
-
-
-            wb.Close(false); // Close the workbook without saving changes
-            excel.Quit();    // Quit the Excel application
-            
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                // Clean up resources
+                if (ws != null) Marshal.ReleaseComObject(ws);
+                if (wb != null)
+                {
+                    wb.Close(false); // Close the workbook without saving changes
+                    Marshal.ReleaseComObject(wb);
+                }
+                if (excel != null)
+                {
+                    excel.Quit(); // Quit the Excel application
+                    Marshal.ReleaseComObject(excel);
+                }
+            }
         }
     }
 

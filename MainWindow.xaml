@@ -215,7 +215,7 @@
                         TextWrapping="Wrap"
                         d:LayoutOverrides="LeftMargin, RightMargin" />
                     <TextBox
-                        x:Name="textBox"
+                        x:Name="flowSerialUUT"
                         Grid.Row="1"
                         Width="95"
                         Height="28"
@@ -263,7 +263,7 @@
                         TextWrapping="Wrap"
                         d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <TextBox
-                        x:Name="textBox_Copy_1"
+                        x:Name="flowTempeture"
                         Grid.Row="2"
                         Width="25"
                         Height="21"
@@ -349,7 +349,7 @@
                         TextWrapping="Wrap"
                         d:LayoutOverrides="VerticalAlignment, LeftMargin, RightMargin, TopMargin, BottomMargin" />
                     <TextBox
-                        x:Name="textBox_Copy3"
+                        x:Name="flowTesterName"
                         Grid.Row="1"
                         Width="95"
                         Height="22"

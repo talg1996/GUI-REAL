@@ -952,6 +952,7 @@ namespace GUI_REAL
 
         private void btn_start_flow_test_Click(object sender, RoutedEventArgs e)
         {
+            stopFlow = false;
             flow_output_textbox.Text = "Tesd started";
             string flowPath = "H:\\Project\\Flows\\Test.xlsx";
             upDateFlow(flowPath);

@@ -1,0 +1,29 @@
+﻿<Window
+    x:Class="GUI_REAL.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GUI_REAL"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Window1"
+    Width="800"
+    Height="450"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid>
+        <Image
+            x:Name="___enercon_png"
+            Margin="198,217,198,61"
+            Source="/enercon.png"
+            Stretch="Fill"
+            d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" />
+        <TextBlock
+            x:Name="textBlock"
+            Margin="262,62,262,262"
+            FontSize="72"
+            FontWeight="Bold"
+            Text="Loading"
+            TextWrapping="Wrap"
+            d:LayoutOverrides="HorizontalAlignment" />
+    </Grid>
+</Window>

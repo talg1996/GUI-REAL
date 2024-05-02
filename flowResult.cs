@@ -60,8 +60,8 @@ namespace GUI_REAL
                 }
 
                 // Calculate the modified divisor values
-                divisorPositive = acceptedValue + divisorPositive* acceptedValue;
-                divisorNegative = acceptedValue - divisorNegative* acceptedValue;
+                divisorPositive = divisorPositive;
+                divisorNegative = divisorNegative;
                 Trace.WriteLine("lowest current highest result");
                 // Check if sampleValue falls within the range defined by the modified divisors
                 if (divisorPositive < sampleValue || divisorNegative > sampleValue)
@@ -76,7 +76,7 @@ namespace GUI_REAL
             catch (Exception ex)
             {
                 // Handle any exceptions that may occur during the execution
-                MessageBox.Show("An error occurred: " + ex.Message);
+                MessageBox.Show("An error occurred:AA " + ex.Message);
                 return "Error"; // Or handle the error in another appropriate way
             }
         }

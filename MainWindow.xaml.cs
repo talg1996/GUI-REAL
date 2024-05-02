@@ -965,8 +965,14 @@ namespace GUI_REAL
 
 
             foreach (FlowInstruction user_Instruction in FlowInstructions_List)
-            {   switch (user_Instruction.Lable)
+                
+            {
+               
+                switch (user_Instruction.Lable)
                 {
+                    case "Delay":
+                        Thread.Sleep(int.Parse(user_Instruction.SCPI_Command));
+                        break;
                     case "heading":
                         index_to_save = int.Parse(user_Instruction.Index_To_Save);
                         results[index_to_save].Type = "heading";
@@ -1020,7 +1026,7 @@ namespace GUI_REAL
 
                 
 
-                Thread.Sleep(100); // 1000 milliseconds = 1 second
+                Thread.Sleep(500); // 1000 milliseconds = 1 second
 
                 // Write the result to the file
 

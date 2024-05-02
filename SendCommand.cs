@@ -71,6 +71,7 @@ namespace GUI_REAL
             try
             {
                 inst.IO = (IMessage)rm.Open(ID);
+                inst.IO.Timeout = 10000;
                 inst.WriteString(commandd);
 
                 if (IsQuery(commandd))
@@ -84,6 +85,8 @@ namespace GUI_REAL
                 result = ex.Message;
                 MessageBox.Show(ex.Message);
             }
+            inst.IO.Clear();
+            inst.IO.Close();
             return result;
         }
 
@@ -121,7 +124,7 @@ namespace GUI_REAL
                 // Handle exception (e.g., port not available, permission denied)
                 result = $"Error: {ex.Message}";
             }
-
+            
             return result;
         }
 
@@ -140,9 +143,12 @@ namespace GUI_REAL
             try
             {
                 inst.IO = (IMessage)rm.Open(ID);
-                inst.WriteString(commandd);
-               
-                    if(IsQuery(commandd))
+                inst.IO.Timeout = 10000;
+                
+                Task t1=Task.Factory.StartNew(()=> inst.WriteString(commandd));
+                t1.Wait(3000); // This will wait for the task to complete.
+
+                if (IsQuery(commandd))
                     result = inst.ReadString();
                     else result = "No output";
                 
@@ -153,6 +159,9 @@ namespace GUI_REAL
                 result = ex.Message;
                MessageBox.Show(ex.Message);
             }
+            inst.IO.Clear();
+            inst.IO.Close();
+
             return result;
         }
 

@@ -22,6 +22,7 @@ using System.Windows.Media;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Media;
 
 
 
@@ -979,7 +980,8 @@ namespace GUI_REAL
                         results[index_to_save].Value = user_Instruction.SCPI_Command;
                         break;
                     case "test":
-                         index_to_save = int.Parse(user_Instruction.Index_To_Save);
+                        
+                        index_to_save = int.Parse(user_Instruction.Index_To_Save);
 
                         string[] testValues = user_Instruction.SCPI_Command.Split(',');
                         string Type, testName, divP, divN, AcceptedValue, index, measureValue;
@@ -1026,7 +1028,7 @@ namespace GUI_REAL
 
                 
 
-                Thread.Sleep(500); // 1000 milliseconds = 1 second
+                Thread.Sleep(80); // 1000 milliseconds = 1 second
 
                 // Write the result to the file
 
@@ -1037,7 +1039,7 @@ namespace GUI_REAL
         }
 
         private void printResults(string logFilePath)
-        {
+        { bool isTestPass = true;
             if (string.IsNullOrEmpty(logFilePath))
             {
                 throw new ArgumentException("Log file path cannot be null or empty.");
@@ -1100,7 +1102,7 @@ namespace GUI_REAL
                                 }
                                 else if(str == "Fail")
                                 {
-
+                                    isTestPass = false;
                                     ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightSalmon);
                                     ws.Cells[excelRow, excelCol].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
                                     ws.Cells[excelRow, excelCol].Font.Bold = true;
@@ -1141,11 +1143,13 @@ namespace GUI_REAL
                 // Save and close workbook
                 wb.SaveAs(logFilePath);
                 wb.Close();
+
+                playFinishSound(isTestPass);
             }
             catch (Exception ex)
             {
                 // Handle exceptions gracefully
-                Console.WriteLine("An error occurred: " + ex.Message);
+                MessageBox.Show("An error occurred: " + ex.Message);
             }
             finally
             {
@@ -1160,7 +1164,33 @@ namespace GUI_REAL
             }
         }
 
-        
+        private void playFinishSound(bool isTestPass)
+        {
+            try
+            {
+                string soundFilePath;
+                // Path to the sound file
+                if (isTestPass == true)
+                {
+                    soundFilePath = "H:\\Project\\Sounds\\passSound.wav";
+                }
+                else
+                {
+                    soundFilePath = "H:\\Project\\Sounds\\failSound.wav";
+
+                }
+
+                // Create a SoundPlayer instance with the sound file path
+                SoundPlayer player = new SoundPlayer(soundFilePath);
+
+                // Play the sound
+                player.Play();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("An error occurred. Please try again later.","Error");
+            }
+        }
 
         private void clearResultsArray()
         {

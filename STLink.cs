@@ -24,6 +24,9 @@ class STLink
     /// <summary>
     /// Description: Program .elf/.hex file to the MCU.
     /// </summary>
+    /// <param name="STM32_Programer_CLI_Path"></param>
+    /// <param name="Elf_File_To_Flash"></param>
+    /// <returns></returns>
     public string STLink_Program_STM32(string STM32_Programer_CLI_Path, string Elf_File_To_Flash)
     {
         try

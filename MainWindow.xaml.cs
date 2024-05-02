@@ -21,6 +21,7 @@ using System.Printing;
 using System.Windows.Media;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
+using Excel = Microsoft.Office.Interop.Excel;
 
 
 
@@ -60,7 +61,7 @@ namespace GUI_REAL
         string[] UUT_amount = new string[] { "1", "2", "3", "4" };
 
         string result;//store the instriment result
-        string[] results = new string[501]; // Will save all the result from the user flow
+        flowResult[] results = new flowResult[501]; // Will save all the result from the user flow
 
 
         string User_mode;// can be "user" or "technician"
@@ -964,28 +965,62 @@ namespace GUI_REAL
 
 
             foreach (FlowInstruction user_Instruction in FlowInstructions_List)
-            {
-                findInstrumentPerLable(user_Instruction.Lable); // Update the global temp instrument
-                SendCommand user_send_command = new SendCommand(user_Instruction.SCPI_Command, temp_instrument);
-
-                if (user_Instruction.Index_To_Save != "none")
+            {   switch (user_Instruction.Lable)
                 {
-                    try
-                    {
+                    case "heading":
                         index_to_save = int.Parse(user_Instruction.Index_To_Save);
-                        results[index_to_save] = user_send_command.SendCommandToInstrument();
-                    }
-                    catch (FormatException)
-                    {
-                        MessageBox.Show("Please insert index 0-499 or none to Index to save at flow excel");
-                    }
-                }
-                else
-                {
-                    user_send_command.SendCommandToInstrument();
-                }
+                        results[index_to_save].Type = "heading";
+                        results[index_to_save].Value = user_Instruction.SCPI_Command;
+                        break;
+                    case "test":
+                         index_to_save = int.Parse(user_Instruction.Index_To_Save);
 
-                Thread.Sleep(1000); // 1000 milliseconds = 1 second
+                        string[] testValues = user_Instruction.SCPI_Command.Split(',');
+                        string Type, testName, divP, divN, AcceptedValue, index, measureValue;
+                        Type = "Test";
+                        index = testValues[0];
+                        divP = testValues[2];
+                        divN = testValues[3];
+                        AcceptedValue = testValues[1];
+                        testName= testValues[4];
+                        measureValue = results[int.Parse(index)].Value;
+
+                        flowResult current = new flowResult(Type, measureValue, AcceptedValue, divP, divN);
+                        results[index_to_save].Value = testName + ":" + current.isItPass();
+                        results[index_to_save].Type = Type;
+
+                        break;
+
+                    default:
+                        findInstrumentPerLable(user_Instruction.Lable); // Update the global temp instrument
+                        SendCommand user_send_command = new SendCommand(user_Instruction.SCPI_Command, temp_instrument);
+                        if (user_Instruction.Index_To_Save != "none")
+                        {
+
+
+                            try
+                            {
+                                index_to_save = int.Parse(user_Instruction.Index_To_Save);
+                                results[index_to_save].Type = "measure";
+                                results[index_to_save].Value = user_send_command.SendCommandToInstrument();
+                            }
+                            catch (FormatException)
+                            {
+                                MessageBox.Show("Please insert index 0-499 or none to Index to save at flow excel");
+                            }
+
+                        }
+                        else
+                        {
+                            user_send_command.SendCommandToInstrument();
+                        }
+                break;
+                }
+                
+
+                
+
+                Thread.Sleep(100); // 1000 milliseconds = 1 second
 
                 // Write the result to the file
 
@@ -1006,11 +1041,13 @@ namespace GUI_REAL
             Workbook wb = null;
             Worksheet ws = null;
 
+
             try
             {
                 excel = new Microsoft.Office.Interop.Excel.Application();
-                excel.Visible = false; // Hide Excel application
+                excel.Visible = false;       // Hide Excel application
                 excel.DisplayAlerts = false; // Disable alerts
+                 
 
                 if (File.Exists(logFilePath))
                 {
@@ -1023,15 +1060,77 @@ namespace GUI_REAL
 
                 ws = wb.Worksheets[1];
 
+                
+
                 int excelRow = 1;
-                foreach (string result in results)
+                int excelCol=1;
+                foreach (flowResult result in results)
                 {
-                    if (!string.IsNullOrEmpty(result))
+                    excelCol = 1;
+                    if (result.Type=="Test" || result.Type == "heading")
                     {
-                        ws.Cells[excelRow, 1] = result; // Always write to first column
-                        excelRow++;
+                        if (result.Type == "Test")
+                        {
+                            string[] labels = ["Value tested","Low","Measure","High","Result"];
+                            foreach (string str in labels)
+                            {
+
+                                ws.Cells[excelRow, excelCol] = str; // Always write to first column
+                                excelCol++;
+
+                            }
+                            excelRow++;
+                            excelCol = 1;
+                            string[] arr = result.Value.Split(':');
+                            foreach (string str in arr)
+                            {
+                                
+                                ws.Cells[excelRow, excelCol] = str; // Always write to first column
+                                if (str == "Pass")
+                                {
+                                    ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGreen);
+                                    ws.Cells[excelRow, excelCol].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+                                    ws.Cells[excelRow, excelCol].Font.Bold = true;
+                                }
+                                else if(str == "Fail")
+                                {
+
+                                    ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightSalmon);
+                                    ws.Cells[excelRow, excelCol].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+                                    ws.Cells[excelRow, excelCol].Font.Bold = true;
+
+                                }
+
+                                excelCol++;
+
+                            }
+                            excelRow++;
+                        }
+                        else
+                        {
+                            
+                            ws.Cells[excelRow, excelCol] = result.Value; // Always write to first column
+                            excelRow++;
+                        }
+                        
                     }
                 }
+
+                // Select all cells in the worksheet
+                Excel.Range allCells = ws.Cells;
+
+                // Set horizontal alignment to center for all cells
+                allCells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+
+                // Auto-fit columns
+                Excel.Range columns = ws.UsedRange.Columns;
+                columns.AutoFit();
+
+                // Auto-fit rows
+                Excel.Range rows = ws.UsedRange.Rows;
+                rows.AutoFit();
+
 
                 // Save and close workbook
                 wb.SaveAs(logFilePath);
@@ -1054,14 +1153,14 @@ namespace GUI_REAL
                 }
             }
         }
-     
 
+        
 
         private void clearResultsArray()
         {
-            for (int i = 0; i < results.Length; i++)
+            foreach (flowResult result in results)
             {
-                results[i] = null;
+                result.deleteResult();
             }
         }
 

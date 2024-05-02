@@ -53,7 +53,7 @@ namespace GUI_REAL
 
         public string How_Communicate()
         {
-            if (Com.ToLower() != "none") { return "Com"; }
+            if (Com.ToLower() != "none")         { return "Com"; }
             if (Lan.ToLower() != "none") { return "Lan"; }
             if (Visa_USB.ToLower() != "none") { return "Visa_USB"; }
             if (Visa_Lan.ToLower() != "none") { return "Visa_Lan"; }

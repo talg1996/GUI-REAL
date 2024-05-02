@@ -54,6 +54,7 @@ namespace GUI_REAL
         Instrument flow_Instrument = new Instrument();
         FlowInstruction tempFlowInstruction = new FlowInstruction();
         List<FlowInstruction> FlowInstructions_List = new List<FlowInstruction>();
+        bool? stopFlow=false;
         //*********** handle flow *************//
 
         // Those strings are the content of the combo boxes any combo box in the
@@ -954,7 +955,8 @@ namespace GUI_REAL
             flow_output_textbox.Text = "Tesd started";
             string flowPath = "H:\\Project\\Flows\\Test.xlsx";
             upDateFlow(flowPath);
-            excuteFlow();
+           Task startFlow=Task.Factory.StartNew(()=> excuteFlow());
+
 
         }
 
@@ -968,6 +970,10 @@ namespace GUI_REAL
             foreach (FlowInstruction user_Instruction in FlowInstructions_List)
                 
             {
+                if (stopFlow == true)
+                {
+                    break;
+                }
                
                 switch (user_Instruction.Lable)
                 {
@@ -1257,8 +1263,16 @@ namespace GUI_REAL
                 {
                     excel.Quit(); // Quit the Excel application
                     Marshal.ReleaseComObject(excel);
+                   
                 }
             }
+        }
+
+        
+        private void stopFlowBTNClick(object sender, RoutedEventArgs e)
+        {
+           stopFlow=true;   
+            
         }
     }
 

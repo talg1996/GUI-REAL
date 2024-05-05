@@ -23,6 +23,7 @@ using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Media;
+using GUI_REAL.Classes;
 
 
 
@@ -950,99 +951,150 @@ namespace GUI_REAL
 
         }
 
-        private void btn_start_flow_test_Click(object sender, RoutedEventArgs e)
+
+        private CancellationTokenSource cancellationTokenSource;
+        private ManualResetEventSlim pauseEvent = new ManualResetEventSlim(false);
+
+        private async void btn_start_flow_test_Click(object sender, RoutedEventArgs e)
         {
-            stopFlow = false;
-            flow_output_textbox.Text = "Tesd started";
+            // Create a new CancellationTokenSource
+            cancellationTokenSource = new CancellationTokenSource();
+
+            flow_output_textbox.Text = "Test started";
             string flowPath = "H:\\Project\\Flows\\Test.xlsx";
             upDateFlow(flowPath);
-           Task startFlow=Task.Factory.StartNew(()=> excuteFlow());
 
+            // Start excuteFlow asynchronously with CancellationToken
+            await excuteFlow(cancellationTokenSource.Token);
+        
+    }
 
-        }
-
-        private void excuteFlow()
+        private async Task excuteFlow(CancellationToken cancellationToken)
         {
-            clearResultsArray();
+            // Reset the pauseEvent when execution completes or is stopped
+            pauseEvent.Reset();
+
             int index_to_save;
             string logfilePath = @"H:\Project\Flows\Log.xlsx";
-
-
-            foreach (FlowInstruction user_Instruction in FlowInstructions_List)
-                
+            try
             {
-                if (stopFlow == true)
-                {
-                    break;
-                }
-               
-                switch (user_Instruction.Lable)
-                {
-                    case "Delay":
-                        Thread.Sleep(int.Parse(user_Instruction.SCPI_Command));
-                        break;
-                    case "heading":
-                        index_to_save = int.Parse(user_Instruction.Index_To_Save);
-                        results[index_to_save].Type = "heading";
-                        results[index_to_save].Value = user_Instruction.SCPI_Command;
-                        break;
-                    case "test":
-                        
-                        index_to_save = int.Parse(user_Instruction.Index_To_Save);
-
-                        string[] testValues = user_Instruction.SCPI_Command.Split(',');
-                        string Type, testName, divP, divN, AcceptedValue, index, measureValue;
-                        Type = "Test";
-                        index = testValues[0];
-                        divP = testValues[2];
-                        divN = testValues[3];
-                        AcceptedValue = testValues[1];
-                        testName= testValues[4];
-                        measureValue = results[int.Parse(index)].Value;
-
-                        flowResult current = new flowResult(Type, measureValue, AcceptedValue, divP, divN);
-                        results[index_to_save].Value = testName + ":" + current.isItPass();
-                        results[index_to_save].Type = Type;
-
-                        break;
-
-                    default:
-                        findInstrumentPerLable(user_Instruction.Lable); // Update the global temp instrument
-                        SendCommand user_send_command = new SendCommand(user_Instruction.SCPI_Command, temp_instrument);
-                        if (user_Instruction.Index_To_Save != "none")
-                        {
-
-
-                            try
-                            {
-                                index_to_save = int.Parse(user_Instruction.Index_To_Save);
-                                results[index_to_save].Type = "measure";
-                                results[index_to_save].Value = user_send_command.SendCommandToInstrument();
-                            }
-                            catch (FormatException)
-                            {
-                                MessageBox.Show("Please insert index 0-499 or none to Index to save at flow excel");
-                            }
-
-                        }
-                        else
-                        {
-                            user_send_command.SendCommandToInstrument();
-                        }
-                break;
-                }
+                clearResultsArray();
                 
+                // Update UI from the UI thread
+                Dispatcher.Invoke(() => flow_output_textbox.Text = "");
 
-                
+                foreach (FlowInstruction user_Instruction in FlowInstructions_List)
 
-                Thread.Sleep(80); // 1000 milliseconds = 1 second
+                {
 
-                // Write the result to the file
+                    // Check if cancellation is requested
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        // Clean up and exit the method
+                        printResults(logfilePath);
+                        return;
+                    }
 
+                    // Check for pause
+                    while (pauseEvent.Wait(0))
+                    {
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            printResults(logfilePath);
+                            return;
+                        }
+                        // Wait for a short time before checking again
+                        await Task.Delay(100);
+                    }
+
+                    // Asynchronously update UI with the current instruction and all previous instructions
+                    Dispatcher.InvokeAsync(() =>
+                    {
+                        // Append the current instruction to the existing text in the textbox
+                        flow_output_textbox.Text += user_Instruction.Lable + " --> " + user_Instruction.SCPI_Command + "\n";
+                    });
+
+                    switch (user_Instruction.Lable)
+                    {
+                        case "Delay":
+                            await Task.Delay(int.Parse(user_Instruction.SCPI_Command), cancellationToken);
+                            break;
+                        case "heading":
+                            index_to_save = int.Parse(user_Instruction.Index_To_Save);
+                            results[index_to_save].Type = "heading";
+                            results[index_to_save].Value = user_Instruction.SCPI_Command;
+                            break;
+                        case "test":
+
+                            index_to_save = int.Parse(user_Instruction.Index_To_Save);
+
+                            string[] testValues = user_Instruction.SCPI_Command.Split(',');
+                            string Type, testName, divP, divN, AcceptedValue, index, measureValue;
+                            Type = "Test";
+                            index = testValues[0];
+                            divP = testValues[2];
+                            divN = testValues[3];
+                            AcceptedValue = testValues[1];
+                            testName = testValues[4];
+                            measureValue = results[int.Parse(index)].Value;
+
+                            flowResult current = new flowResult(Type, measureValue, AcceptedValue, divP, divN);
+                            results[index_to_save].Value = testName + ":" + current.isItPass();
+                            results[index_to_save].Type = Type;
+
+                            break;
+
+                        default:
+                            findInstrumentPerLable(user_Instruction.Lable); // Update the global temp instrument
+                            SendCommand user_send_command = new SendCommand(user_Instruction.SCPI_Command, temp_instrument);
+                            if (user_Instruction.Index_To_Save != "none")
+                            {
+
+
+                                try
+                                {
+                                    index_to_save = int.Parse(user_Instruction.Index_To_Save);
+                                    results[index_to_save].Type = "measure";
+                                    results[index_to_save].Value = user_send_command.SendCommandToInstrument();
+                                }
+                                catch (FormatException)
+                                {
+                                    MessageBox.Show("Please insert index 0-499 or none to Index to save at flow excel");
+                                }
+
+                            }
+                            else
+                            {
+                                user_send_command.SendCommandToInstrument();
+                            }
+                            break;
+                    }
+
+
+
+
+                    // Use Task.Delay instead of Thread.Sleep
+                     await Task.Delay(80, cancellationToken);
+                    // Write the result to the file
+
+
+
+                }
+                printResults(logfilePath);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+                printResults(logfilePath);
 
 
             }
-            printResults(logfilePath);
+
+        }
+
+        private void upDateFlowOutput(FlowInstruction user_Instruction)
+        {
+            flow_output_textbox.Text += user_Instruction.Lable + "-->" + user_Instruction.SCPI_Command + "\n";
         }
 
         private void printResults(string logFilePath)
@@ -1079,6 +1131,26 @@ namespace GUI_REAL
 
                 int excelRow = 1;
                 int excelCol=1;
+                
+                ws.Cells[excelRow, excelCol] = "Tested by "+ flowTesterName.Text;
+                ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Plum);
+                ws.Cells[excelRow, excelCol].Borders.LineStyle = Excel.XlLineStyle.xlContinuous; // Set border style
+                ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlThin; // Set border weight
+                excelRow++;
+
+                ws.Cells[excelRow, excelCol] = "Room temp is  " + flowTempeture.Text;
+                ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Plum);
+                ws.Cells[excelRow, excelCol].Borders.LineStyle = Excel.XlLineStyle.xlContinuous; // Set border style
+                ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlThin; // Set border weight
+                excelRow++;
+
+                ws.Cells[excelRow, excelCol] = "UUt serial is  " + flowSerialUUT.Text;
+                ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Plum);
+                ws.Cells[excelRow, excelCol].Borders.LineStyle = Excel.XlLineStyle.xlContinuous; // Set border style
+                ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlThin; // Set border weight
+                excelRow++;
+
+
                 foreach (flowResult result in results)
                 {
                     excelCol = 1;
@@ -1091,6 +1163,11 @@ namespace GUI_REAL
                             {
 
                                 ws.Cells[excelRow, excelCol] = str; // Always write to first column
+                                ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightCyan);
+                                ws.Cells[excelRow, excelCol].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+                                ws.Cells[excelRow, excelCol].Borders.LineStyle = Excel.XlLineStyle.xlContinuous; // Set border style
+                                ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlMedium; // Set border weight
+                                ws.Cells[excelRow, excelCol].Font.Bold = true;
                                 excelCol++;
 
                             }
@@ -1099,12 +1176,16 @@ namespace GUI_REAL
                             string[] arr = result.Value.Split(':');
                             foreach (string str in arr)
                             {
-                                
+                                ws.Cells[excelRow, excelCol].Borders.LineStyle = Excel.XlLineStyle.xlContinuous; // Set border style
+                                ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlThin; // Set border weight
+
                                 ws.Cells[excelRow, excelCol] = str; // Always write to first column
                                 if (str == "Pass")
                                 {
                                     ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGreen);
                                     ws.Cells[excelRow, excelCol].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+                                    ws.Cells[excelRow, excelCol].Borders.LineStyle = Excel.XlLineStyle.xlContinuous; // Set border style
+                                    ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlMedium; // Set border weight
                                     ws.Cells[excelRow, excelCol].Font.Bold = true;
                                 }
                                 else if(str == "Fail")
@@ -1112,6 +1193,8 @@ namespace GUI_REAL
                                     isTestPass = false;
                                     ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightSalmon);
                                     ws.Cells[excelRow, excelCol].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+                                    ws.Cells[excelRow, excelCol].Borders.LineStyle = Excel.XlLineStyle.xlContinuous; // Set border style
+                                    ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlMedium; // Set border weight
                                     ws.Cells[excelRow, excelCol].Font.Bold = true;
 
                                 }
@@ -1125,11 +1208,21 @@ namespace GUI_REAL
                         {
                             
                             ws.Cells[excelRow, excelCol] = result.Value; // Always write to first column
+                            ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Yellow);
+                            ws.Cells[excelRow, excelCol].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+                            ws.Cells[excelRow, excelCol].Font.Bold = true;
+                            ws.Cells[excelRow, excelCol].Borders.LineStyle = Excel.XlLineStyle.xlContinuous; // Set border style
+                            ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlMedium; // Set border weight
+
                             excelRow++;
                         }
                         
                     }
+                    
                 }
+
+
+               
 
                 // Select all cells in the worksheet
                 Excel.Range allCells = ws.Cells;
@@ -1270,10 +1363,24 @@ namespace GUI_REAL
         }
 
         
+        
         private void stopFlowBTNClick(object sender, RoutedEventArgs e)
         {
-           stopFlow=true;   
-            
+            // Cancel the CancellationTokenSource when the stop button is clicked
+            cancellationTokenSource?.Cancel();
+        }
+        private void pauseFlowBTNClick(object sender, RoutedEventArgs e)
+        {
+            pauseEvent.Set(); // Set the ManualResetEventSlim to signal pause
+        }
+        private void resumeFlowBTNClick(object sender, RoutedEventArgs e)
+        {
+            pauseEvent.Reset(); // Reset the ManualResetEventSlim to signal resume
+        }
+
+        private void flow_output_textbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            flow_output_textbox.ScrollToEnd();
         }
     }
 

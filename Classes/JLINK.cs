@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace GUI_REAL
+namespace GUI_REAL.Classes
 {
     internal class JLINK
     {

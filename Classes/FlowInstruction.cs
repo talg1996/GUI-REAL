@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GUI_REAL
+namespace GUI_REAL.Classes
 {
     internal struct FlowInstruction
     {

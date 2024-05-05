@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace GUI_REAL
+namespace GUI_REAL.Classes
 {
     public struct Instrument
     {
@@ -53,7 +53,7 @@ namespace GUI_REAL
 
         public string How_Communicate()
         {
-            if (Com.ToLower() != "none")         { return "Com"; }
+            if (Com.ToLower() != "none") { return "Com"; }
             if (Lan.ToLower() != "none") { return "Lan"; }
             if (Visa_USB.ToLower() != "none") { return "Visa_USB"; }
             if (Visa_Lan.ToLower() != "none") { return "Visa_Lan"; }
@@ -63,11 +63,11 @@ namespace GUI_REAL
 
         public string where_Communicate(string WhereToSend)
         {
-            if (WhereToSend == "Com") { return this.Com; }
-            if (WhereToSend == "Lan") { return this.Lan; }
-            if (WhereToSend == "Visa_USB") { return this.Visa_USB; }
-            if (WhereToSend == "Visa_Lan") { return this.Visa_Lan; }
-            if (WhereToSend == "IP") { return this.IP; }
+            if (WhereToSend == "Com") { return Com; }
+            if (WhereToSend == "Lan") { return Lan; }
+            if (WhereToSend == "Visa_USB") { return Visa_USB; }
+            if (WhereToSend == "Visa_Lan") { return Visa_Lan; }
+            if (WhereToSend == "IP") { return IP; }
             return "none";
         }
 

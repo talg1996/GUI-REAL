@@ -161,7 +161,7 @@
                         SelectionBrush="#FFF9F9F9"
                         Text="Output log"
                         TextWrapping="Wrap"
-                        d:LayoutOverrides="TopMargin, BottomMargin" />
+                        d:LayoutOverrides="TopMargin, BottomMargin" TextChanged="flow_output_textbox_TextChanged" />
                     <ComboBox
                         x:Name="comboBox"
                         Grid.Row="1"
@@ -400,6 +400,32 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content="" />
+                    <Button
+                        x:Name="stopFlowBTN_Copy"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Width="95"
+                        Height="36"
+                        Margin="0,0,137,10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Background="#FFFFC59D"
+                        Click="pauseFlowBTNClick"
+                        Content="Pause"
+                        d:LayoutOverrides="TopMargin, BottomMargin" />
+                    <Button
+                        x:Name="stopFlowBTN_Copy1"
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Width="95"
+                        Height="36"
+                        Margin="0,0,254,10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Background="#FFFAFF9D"
+                        Click="resumeFlowBTNClick"
+                        Content="Resume"
+                        d:LayoutOverrides="TopMargin, BottomMargin" />
 
 
                 </Grid>

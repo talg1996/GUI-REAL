@@ -9,11 +9,11 @@ using VisaComLib;
 using System.IO.Ports;
 using System.Windows.Controls;
 
-namespace GUI_REAL
+namespace GUI_REAL.Classes
 {
     internal class SendCommand
     {
-         
+
         Command command;
         Instrument instrument;
         string result = "No output";
@@ -32,7 +32,7 @@ namespace GUI_REAL
 
         public string SendCommandToInstrument()
         {
-            
+
             switch (instrument.How_Communicate())
             {
                 case "Com":
@@ -48,7 +48,7 @@ namespace GUI_REAL
                     break;
 
                 case "Visa_Lan":
-                    result =sendScipiViaVisaLAN();
+                    result = sendScipiViaVisaLAN();
                     break;
 
                 default:
@@ -124,7 +124,7 @@ namespace GUI_REAL
                 // Handle exception (e.g., port not available, permission denied)
                 result = $"Error: {ex.Message}";
             }
-            
+
             return result;
         }
 
@@ -136,28 +136,28 @@ namespace GUI_REAL
 
         private string sendScipiViaVisaLAN()
         {
-            VisaComLib.ResourceManager rm = new VisaComLib.ResourceManager();
-            VisaComLib.FormattedIO488 inst = new FormattedIO488();
+            ResourceManager rm = new ResourceManager();
+            FormattedIO488 inst = new FormattedIO488();
             string ID = instrument.where_Communicate(instrument.How_Communicate());
             string commandd = command.SCPI_Command;
             try
             {
                 inst.IO = (IMessage)rm.Open(ID);
                 inst.IO.Timeout = 10000;
-                
-                Task t1=Task.Factory.StartNew(()=> inst.WriteString(commandd));
+
+                Task t1 = Task.Factory.StartNew(() => inst.WriteString(commandd));
                 t1.Wait(3000); // This will wait for the task to complete.
 
                 if (IsQuery(commandd))
                     result = inst.ReadString();
-                    else result = "No output";
-                
-                
+                else result = "No output";
+
+
             }
             catch (Exception ex)
             {
                 result = ex.Message;
-               MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
             inst.IO.Clear();
             inst.IO.Close();
@@ -165,6 +165,6 @@ namespace GUI_REAL
             return result;
         }
 
-        
+
     }
 }

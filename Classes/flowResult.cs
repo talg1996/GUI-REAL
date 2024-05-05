@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 
-namespace GUI_REAL
+namespace GUI_REAL.Classes
 {
     internal struct flowResult
     {
@@ -18,25 +18,25 @@ namespace GUI_REAL
             Value = value;
         }
 
-        public flowResult(string type, string value , string AValue,string divp,string divn)
+        public flowResult(string type, string value, string AValue, string divp, string divn)
         {
             Type = type;
             Value = value;
             divP = divp;
             divN = divn;
-            AcceptedValue= AValue;
+            AcceptedValue = AValue;
         }
         public flowResult()
         {
-            
+
         }
 
         public void deleteResult()
         {
-            Type = null;          
-            Value = null;            
-            divP = null;           
-            divN = null;           
+            Type = null;
+            Value = null;
+            divP = null;
+            divN = null;
             AcceptedValue = null;
         }
         public string isItPass()
@@ -52,7 +52,7 @@ namespace GUI_REAL
                 if (!float.TryParse(divP, out divisorPositive) ||
                     !float.TryParse(divN, out divisorNegative) ||
                     !float.TryParse(AcceptedValue, out acceptedValue) ||
-                    !float.TryParse(this.Value, out sampleValue))
+                    !float.TryParse(Value, out sampleValue))
                 {
                     // If parsing fails, return false
                     MessageBox.Show("Please enter number");
@@ -65,13 +65,13 @@ namespace GUI_REAL
                 Trace.WriteLine("lowest current highest result");
                 // Check if sampleValue falls within the range defined by the modified divisors
                 if (divisorPositive < sampleValue || divisorNegative > sampleValue)
-                    return (divisorNegative.ToString() + ":" + sampleValue.ToString() + ":" + divisorPositive.ToString() + ":" + "Fail");
+                    return divisorNegative.ToString() + ":" + sampleValue.ToString() + ":" + divisorPositive.ToString() + ":" + "Fail";
 
                 else
                 {
-                    return (divisorNegative.ToString() + ":" + sampleValue.ToString() + ":" + divisorPositive.ToString() + ":" + "Pass");
+                    return divisorNegative.ToString() + ":" + sampleValue.ToString() + ":" + divisorPositive.ToString() + ":" + "Pass";
                 }
-                   
+
             }
             catch (Exception ex)
             {

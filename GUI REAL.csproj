@@ -36,6 +36,13 @@
 
   <ItemGroup>
     <PackageReference Include="System.IO.Ports" Version="8.0.0" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="IAHAL">
+      <HintPath>..\..\..\OneDrive - F.F3 E.N.C Ltd\Desktop\IA Customer Support 20240322\DLL\IAHAL.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

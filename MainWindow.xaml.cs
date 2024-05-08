@@ -24,6 +24,8 @@ using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Media;
 using GUI_REAL.Classes;
+using IAHAL;
+using System.ComponentModel.Design;
 
 
 
@@ -41,7 +43,7 @@ namespace GUI_REAL
         Instrument temp_instrument = new Instrument(); // Temporary instrument instance
         Instrument chosen_instrument = new Instrument(); // chosen instrument instance
         List<Instrument> Instruments_Names_List = new List<Instrument>(); // List to store instrument names
-                                                                          //*********** handle chosen instrument *************//
+        //*********** handle chosen instrument *************//
 
         //*********** handle chosen command*************//
         Command temp_Command = new Command(); // Temporary Command_List instance
@@ -57,6 +59,12 @@ namespace GUI_REAL
         List<FlowInstruction> FlowInstructions_List = new List<FlowInstruction>();
         bool? stopFlow=false;
         //*********** handle flow *************//
+
+        //*********** handle relay *************//
+        List<string> IAIpAdressDevicesList = new List<string>();
+        IADevices iadevs = new IADevices();
+        IADevice chosenRelayBoard;
+        //*********** handle relay *************//
 
         // Those strings are the content of the combo boxes any combo box in the
         string[] Programing_hardware = new string[] { "ST_Link", "JLINK" };
@@ -80,6 +88,7 @@ namespace GUI_REAL
 
             Update_Instrument_List(Instruments_path_file, Instruments_Names_List);
             Update_Commands_List(Commands_path_file, Command_List);
+            updateIAIpAdressDevicesList();
             InitializeComponent();
             Init();
 
@@ -961,7 +970,7 @@ namespace GUI_REAL
             cancellationTokenSource = new CancellationTokenSource();
 
             flow_output_textbox.Text = "Test started";
-            string flowPath = "H:\\Project\\Flows\\Test.xlsx";
+            string flowPath = "H:\\Project\\Flows\\Test1.xlsx";
             upDateFlow(flowPath);
 
             // Start excuteFlow asynchronously with CancellationToken
@@ -1018,6 +1027,31 @@ namespace GUI_REAL
                     {
                         case "Delay":
                             await Task.Delay(int.Parse(user_Instruction.SCPI_Command), cancellationToken);
+                            break;
+                        case "Relay":
+                            string ipAdress, command;
+
+                            // Split the input string by comma
+                            string[] parts = user_Instruction.SCPI_Command.Split(',');
+
+                            // Extract IP address and command
+                            ipAdress = parts[0];
+                             command = parts[1];
+
+                            //send the command
+                            string response = "";
+                            findRelayBoard(ipAdress);
+                            try
+                            {
+                                chosenRelayBoard.SendReceive(command, ref response);
+                            }
+                            catch (Exception ex)
+                            {
+                                cancellationTokenSource?.Cancel();
+                                MessageBox.Show("No relay found");
+
+                            }
+
                             break;
                         case "heading":
                             index_to_save = int.Parse(user_Instruction.Index_To_Save);
@@ -1091,6 +1125,22 @@ namespace GUI_REAL
             }
 
         }
+
+        private void findRelayBoard(string ipAdress)
+        {
+             chosenRelayBoard = null;
+            foreach (IADevice board in iadevs)
+            {
+                if (ipAdress == board.Address)
+                {
+                    chosenRelayBoard = board;
+                    
+                }
+            }
+         
+        }
+
+        
 
         private void upDateFlowOutput(FlowInstruction user_Instruction)
         {
@@ -1381,6 +1431,21 @@ namespace GUI_REAL
         private void flow_output_textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             flow_output_textbox.ScrollToEnd();
+        }
+        private void updateIAIpAdressDevicesList()
+        {
+            IAError ec = iadevs.DetectTCPDevices();
+            if (ec != IAError.IA_OK)
+            {
+                MessageBox.Show(iadevs.GetErrorMessage(ec));
+                return;
+            }
+            foreach (IADevice b in iadevs)
+            {
+                IAIpAdressDevicesList.Add(b.Address);
+            }
+
+            //RelayCB.ItemsSource = IAIpAdressDevicesList;
         }
     }
 

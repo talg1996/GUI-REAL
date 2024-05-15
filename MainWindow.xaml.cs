@@ -326,7 +326,7 @@ namespace GUI_REAL
             {
                 string address = adress_input_command.Text;
 
-                string command = address + "!002";
+                string command =  "!"+ address+"2";
                 if (relays_options_comboBox.SelectedIndex == 0)
                 {
                     generated_command = command + get_realys_command48();
@@ -335,7 +335,7 @@ namespace GUI_REAL
                 {
                     generated_command = command + get_realys_command32();
                 }
-                relay_output_command.Text = generated_command + "<CR>";
+                relay_output_command.Text = generated_command ;
                 adress_input_command.Background = Brushes.White;
             }
             else
@@ -441,7 +441,7 @@ namespace GUI_REAL
                        (checkBox_relay2.IsChecked == true ? "1" : "0") +
                        (checkBox_relay1.IsChecked == true ? "1" : "0"));
 
-            return A + B + C + D + E + F + H + I + J + K + L;
+            return A + B + C + D + E + F + G+H + I + J + K + L;
         }
 
         /// <summary>
@@ -492,7 +492,7 @@ namespace GUI_REAL
                        (checkBox_relay2.IsChecked == true ? "1" : "0") +
                        (checkBox_relay1.IsChecked == true ? "1" : "0"));
 
-            return A + B + C + D + E + F + H;
+            return A + B + C + D + E + F +G+ H;
         }
 
 
@@ -970,7 +970,7 @@ namespace GUI_REAL
             cancellationTokenSource = new CancellationTokenSource();
 
             flow_output_textbox.Text = "Test started";
-            string flowPath = "H:\\Project\\Flows\\Test1.xlsx";
+            string flowPath = "H:\\Project\\Flows\\M7027-65\\Full3.xlsx";
             upDateFlow(flowPath);
 
             // Start excuteFlow asynchronously with CancellationToken
@@ -984,7 +984,7 @@ namespace GUI_REAL
             pauseEvent.Reset();
 
             int index_to_save;
-            string logfilePath = @"H:\Project\Flows\Log.xlsx";
+            string logfilePath = @"H:\Project\Flows\Logs\log.xlsx";
             try
             {
                 clearResultsArray();
@@ -1017,7 +1017,7 @@ namespace GUI_REAL
                     }
 
                     // Asynchronously update UI with the current instruction and all previous instructions
-                    Dispatcher.InvokeAsync(() =>
+                     Dispatcher.InvokeAsync(() =>
                     {
                         // Append the current instruction to the existing text in the textbox
                         flow_output_textbox.Text += user_Instruction.Lable + " --> " + user_Instruction.SCPI_Command + "\n";
@@ -1025,6 +1025,11 @@ namespace GUI_REAL
 
                     switch (user_Instruction.Lable)
                     {
+
+                        case "math":
+                           await math(user_Instruction);
+
+                            break;
                         case "Delay":
                             await Task.Delay(int.Parse(user_Instruction.SCPI_Command), cancellationToken);
                             break;
@@ -1125,6 +1130,72 @@ namespace GUI_REAL
             }
 
         }
+
+        private async Task math(FlowInstruction user_Instruction)
+        {
+
+            float number1, number2;
+            float result;
+            string SCPIcommand = user_Instruction.SCPI_Command;
+            int indexToSave= int.Parse( user_Instruction.Index_To_Save);
+            try
+            {
+                string[] arr = SCPIcommand.Split(',');                
+                if (arr.Length != 3)
+                {
+                    // Display MessageBox for invalid SCPI command format
+                    MessageBox.Show("Invalid SCPI command format.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+
+
+
+                // Parsing indices and operation
+                int index1 = int.Parse(arr[0]);
+                string operation = arr[1];
+                int index2 = int.Parse(arr[2]);
+
+                number1 = float.Parse(results[index1].Value);
+                number2 = float.Parse(results[index2].Value);
+
+                result = calc(ref number1, ref number2, ref operation);
+                results[indexToSave].Type = "Math";
+                results[indexToSave].Value = result.ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Invalid Math format.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+        }
+
+        private float calc(ref float number1, ref float number2,ref string operation)
+        {
+            switch (operation)
+            {
+                case "+":
+                    return number1 + number2;
+                case "-":
+                    return number1 - number2;
+                case "*":
+                    return number1 * number2;
+                case "/":
+                    if (number2 != 0)
+                        return number1 / number2;
+                    else
+                    {
+                        // Display MessageBox for divide by zero error
+                        MessageBox.Show("Cannot divide by zero.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return float.NaN; // Return NaN to signify an error
+                    }
+                default:
+                    // Display MessageBox for invalid operation symbol
+                    MessageBox.Show("Invalid operation symbol.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return float.NaN; // Return NaN to signify an error
+            }
+        }
+
 
         private void findRelayBoard(string ipAdress)
         {

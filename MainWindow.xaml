@@ -41,10 +41,12 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <TabControl x:Name="tabControl">
+        <Viewbox>
+
+            <TabControl x:Name="tabControl" Height="552" Width="1014">
 
             <TabItem Name="all_tabs" Header="Home">
-                <Grid Background="White">
+                <Grid Background="White" Margin="0,0,-5,0">
                     <TextBlock
                         x:Name="textBlock"
                         Height="83"
@@ -2484,5 +2486,7 @@
 
 
         </TabControl>
+    </Viewbox>
     </Grid>
+   
 </Window>

@@ -71,13 +71,14 @@ namespace GUI_REAL.Classes
             try
             {
                 inst.IO = (IMessage)rm.Open(ID);
-                inst.IO.Timeout = 10000;
+                inst.IO.Timeout = 6000;
                 inst.WriteString(commandd);
 
                 if (IsQuery(commandd))
                     result = inst.ReadString();
                 else result = "No output";
-
+                inst.IO.Clear();
+                inst.IO.Close();
 
             }
             catch (Exception ex)
@@ -85,8 +86,7 @@ namespace GUI_REAL.Classes
                 result = ex.Message;
                 MessageBox.Show(ex.Message);
             }
-            inst.IO.Clear();
-            inst.IO.Close();
+            
             return result;
         }
 
@@ -153,14 +153,16 @@ namespace GUI_REAL.Classes
                 else result = "No output";
 
 
+                inst.IO.Clear();
+                inst.IO.Close();
+
             }
             catch (Exception ex)
             {
                 result = ex.Message;
                 MessageBox.Show(ex.Message);
             }
-            inst.IO.Clear();
-            inst.IO.Close();
+            
 
             return result;
         }

@@ -999,7 +999,7 @@ namespace GUI_REAL
                 upDateFlow(flowPath);
 
                 // Start excuteFlow asynchronously with CancellationToken
-                await excuteFlow(cancellationTokenSource.Token);
+                await excuteFlow(cancellationTokenSource.Token,project,dash,flow);
             }
             catch (Exception ex)
             {
@@ -1008,14 +1008,15 @@ namespace GUI_REAL
             }
         
     }
+        
 
-        private async Task excuteFlow(CancellationToken cancellationToken)
+        private async Task excuteFlow(CancellationToken cancellationToken , string project,string dash,string flow)
         {
             // Reset the pauseEvent when execution completes or is stopped
             pauseEvent.Reset();
 
             int index_to_save;
-            string logfilePath = @"H:\Project\Flows\Logs\log.xlsx";
+            string logfilePath = $@"H:\Project\Flows\Logs\{project}\{dash}\{flow}\{flowSerialUUT.Text}.xlsx";
             try
             {
                 clearResultsArray();
@@ -1094,6 +1095,11 @@ namespace GUI_REAL
                         case "heading":
                             index_to_save = int.Parse(user_Instruction.Index_To_Save);
                             results[index_to_save].Type = "heading";
+                            results[index_to_save].Value = user_Instruction.SCPI_Command;
+                            break;
+                        case "label":
+                            index_to_save = int.Parse(user_Instruction.Index_To_Save);
+                            results[index_to_save].Type = "label";
                             results[index_to_save].Value = user_Instruction.SCPI_Command;
                             break;
                         case "test":
@@ -1307,10 +1313,10 @@ namespace GUI_REAL
                 excelRow++;
 
 
-                foreach (flowResult result in results)
+                foreach (flowResult result in results) 
                 {
                     excelCol = 1;
-                    if (result.Type=="Test" || result.Type == "heading")
+                    if (result.Type=="Test" || result.Type == "heading" || result.Type == "label")
                     {
                         if (result.Type == "Test")
                         {
@@ -1360,7 +1366,7 @@ namespace GUI_REAL
                             }
                             excelRow++;
                         }
-                        else
+                        else if (result.Type == "heading")
                         {
                             
                             ws.Cells[excelRow, excelCol] = result.Value; // Always write to first column
@@ -1372,7 +1378,19 @@ namespace GUI_REAL
 
                             excelRow++;
                         }
-                        
+                        else if (result.Type == "label")
+                        {
+
+                            ws.Cells[excelRow, excelCol] = result.Value; // Always write to first column
+                            ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Orange);
+                            ws.Cells[excelRow, excelCol].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+                            ws.Cells[excelRow, excelCol].Font.Bold = true;
+                            ws.Cells[excelRow, excelCol].Borders.LineStyle = Excel.XlLineStyle.xlContinuous; // Set border style
+                            ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlMedium; // Set border weight
+
+                            excelRow++;
+                        }
+
                     }
                     
                 }
@@ -1397,7 +1415,17 @@ namespace GUI_REAL
 
 
                 // Save and close workbook
+                // Check if the directory exists
+                string directoryPath = System.IO.Path.GetDirectoryName(logFilePath);
+                if (!Directory.Exists(directoryPath))
+                {
+                    // Create the directory if it doesn't exist
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                // Now you can save your Excel file
                 wb.SaveAs(logFilePath);
+
                 wb.Close();
 
                 playFinishSound(isTestPass);

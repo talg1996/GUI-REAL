@@ -163,10 +163,36 @@ namespace GUI_REAL
         /// </summary>
         private void Init()
         {
+            InitATRFlow();
             Init_Programing();
             Init_Relay();
             Init_InstrumentsAndCommands();
         }
+
+        private void InitATRFlow()
+        {
+            string directoryPath = @"H:\Project\Flows\Projects";
+
+            if (Directory.Exists(directoryPath))
+            {
+                string[] folderNames = Directory.GetDirectories(directoryPath);
+
+                foreach (string folderName in folderNames)
+                {
+                    // Add folder name to ComboBox
+                    productChooseCB.Items.Add(System.IO.Path.GetFileName(folderName));
+                }
+            }
+            else
+            {
+                MessageBox.Show("Directory not found!");
+            }
+        }
+        
+
+
+
+
 
         /// <summary>
         /// Description: init the relays options
@@ -953,12 +979,7 @@ namespace GUI_REAL
 
 
 
-        private void chosen_flow_comboBoxChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //string chosen_flow = chosen_flow_comboBox.SelectedItem as string;
-
-
-        }
+        
 
 
         private CancellationTokenSource cancellationTokenSource;
@@ -966,15 +987,25 @@ namespace GUI_REAL
 
         private async void btn_start_flow_test_Click(object sender, RoutedEventArgs e)
         {
-            // Create a new CancellationTokenSource
-            cancellationTokenSource = new CancellationTokenSource();
+            try
+            {  // Create a new CancellationTokenSource
+                cancellationTokenSource = new CancellationTokenSource();
+                string project = productChooseCB.Text as string;
+                string dash = chooseDashCB.Text as string;
+                string flow = chosenFlowCB.Text as string;
 
-            flow_output_textbox.Text = "Test started";
-            string flowPath = "H:\\Project\\Flows\\M7027-65\\Full3.xlsx";
-            upDateFlow(flowPath);
+                flow_output_textbox.Text = "Test started";
+                string flowPath = $@"H:\Project\Flows\Projects\{project}\{dash}\{flow}.xlsx";
+                upDateFlow(flowPath);
 
-            // Start excuteFlow asynchronously with CancellationToken
-            await excuteFlow(cancellationTokenSource.Token);
+                // Start excuteFlow asynchronously with CancellationToken
+                await excuteFlow(cancellationTokenSource.Token);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("cant find path");
+            }
         
     }
 
@@ -1020,6 +1051,7 @@ namespace GUI_REAL
                      Dispatcher.InvokeAsync(() =>
                     {
                         // Append the current instruction to the existing text in the textbox
+
                         flow_output_textbox.Text += user_Instruction.Lable + " --> " + user_Instruction.SCPI_Command + "\n";
                     });
 
@@ -1028,6 +1060,7 @@ namespace GUI_REAL
 
                         case "math":
                            await math(user_Instruction);
+                             
 
                             break;
                         case "Delay":
@@ -1162,6 +1195,8 @@ namespace GUI_REAL
                 result = calc(ref number1, ref number2, ref operation);
                 results[indexToSave].Type = "Math";
                 results[indexToSave].Value = result.ToString();
+
+                flow_output_textbox.Text += $"{number1} " + operation + $" {number2}" +" = "+ results[indexToSave].Value;
             }
             catch
             {
@@ -1517,6 +1552,60 @@ namespace GUI_REAL
             }
 
             //RelayCB.ItemsSource = IAIpAdressDevicesList;
+        }
+
+        private void productChooseCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            chooseDashCB.Items.Clear();
+            string? chosenProject = productChooseCB.SelectedItem as string;
+           if (chosenProject != null)
+            {
+                string directoryPath = @"H:\Project\Flows\Projects\"+chosenProject;
+
+                if (Directory.Exists(directoryPath))
+                {
+                    string[] folderNames = Directory.GetDirectories(directoryPath);
+
+                    foreach (string folderName in folderNames)
+                    {
+                        // Add folder name to ComboBox
+                        chooseDashCB.Items.Add(System.IO.Path.GetFileName(folderName));
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Directory not found!");
+                }
+            }
+
+        }
+
+        private void chooseDashCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            chosenFlowCB.Items.Clear();
+            string fileName;
+
+            string ? chosenDash= chooseDashCB.SelectedItem as string;
+            if (chosenDash != null)
+            {
+                string directoryPath = $@"H:\Project\Flows\Projects\{productChooseCB.SelectedItem}\{chosenDash}";
+
+                if (Directory.Exists(directoryPath))
+                {
+                    string[] excelFiles = Directory.GetFiles(directoryPath, "*.xlsx");
+
+                    foreach (string excelFile in excelFiles)
+                    {
+                        fileName = System.IO.Path.GetFileNameWithoutExtension(excelFile);
+                        // Add Excel file name to ComboBox
+                        chosenFlowCB.Items.Add(fileName);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Directory not found!");
+                }
+            }
         }
     }
 

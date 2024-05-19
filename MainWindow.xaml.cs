@@ -1023,10 +1023,12 @@ namespace GUI_REAL
                 
                 // Update UI from the UI thread
                 Dispatcher.Invoke(() => flow_output_textbox.Text = "");
-
+                int ExcuteRow = 0;// Mark the row that we cuu
+                precentToFinishTB.Text = "0";
                 foreach (FlowInstruction user_Instruction in FlowInstructions_List)
 
                 {
+                    ExcuteRow++;
 
                     // Check if cancellation is requested
                     if (cancellationToken.IsCancellationRequested)
@@ -1053,7 +1055,8 @@ namespace GUI_REAL
                     {
                         // Append the current instruction to the existing text in the textbox
 
-                        flow_output_textbox.Text += user_Instruction.Lable + " --> " + user_Instruction.SCPI_Command + "\n";
+                        flow_output_textbox.Text += ExcuteRow+": "+user_Instruction.Lable + " --> " + user_Instruction.SCPI_Command + "\n";
+                        precentToFinishTB.Text = (ExcuteRow * 100 / FlowInstructions_List.Count).ToString();
                     });
 
                     switch (user_Instruction.Lable)

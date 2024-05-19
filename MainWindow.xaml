@@ -449,6 +449,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top" SelectionChanged="chooseDashCB_SelectionChanged"
                             />
+                        <TextBox x:Name="precentToFinishTB" Margin="228,105,15,15" Grid.Row="6" TextWrapping="Wrap" Text="TextBox" Width="120"/>
 
 
                     </Grid>

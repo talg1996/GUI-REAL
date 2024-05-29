@@ -246,7 +246,7 @@ namespace GUI_REAL
         /// <returns></returns>
         public List<string> Excel_Row_read_by_index(string path)
         {
-            string[] temp = new string[10];
+            string[] temp = new string[15];
             
             
            
@@ -281,6 +281,7 @@ namespace GUI_REAL
                         tempInstrument.Visa_USB = temp[4];
                         tempInstrument.Visa_Lan = temp[5];
                         tempInstrument.IP = temp[6];
+                        tempInstrument.ModbusIP = temp[7];
                         Instruments_Names_List.Add(tempInstrument);
                     }
                     catch (Exception ex)
@@ -957,7 +958,9 @@ namespace GUI_REAL
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Command command_with_args = new Command(chosen_Command);
-            command_with_args.SCPI_Command = chosen_Command.SCPI_Command.Replace("a1", textBox_arg1.Text).Replace("a2", textBox_arg2.Text).Replace("a3", textBox_arg3.Text);
+           if(chosen_Command.SCPI_Command!=null)
+                command_with_args.SCPI_Command = chosen_Command.SCPI_Command.Replace("a1", textBox_arg1.Text).Replace("a2", textBox_arg2.Text).Replace("a3", textBox_arg3.Text);
+            
             SendCommand send_Command = new SendCommand(command_with_args, chosen_instrument);
             result_output_textBox.Text = send_Command.SendCommandToInstrument();
             result = result_output_textBox.Text;
@@ -1117,10 +1120,10 @@ namespace GUI_REAL
                             divN = testValues[3];
                             AcceptedValue = testValues[1];
                             testName = testValues[4];
-                            measureValue = results[int.Parse(index)].Value;
+                            measureValue = results[int.Parse(index)].Value.Replace("\n", ""); ;
 
                             flowResult current = new flowResult(Type, measureValue, AcceptedValue, divP, divN);
-                            results[index_to_save].Value = testName + ":" + current.isItPass();
+                            results[index_to_save].Value = testName+":"+divN+":"+measureValue+":"+divP+":"+current.isItPass();
                             results[index_to_save].Type = Type;
 
                             break;
@@ -1315,7 +1318,7 @@ namespace GUI_REAL
                 ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlThin; // Set border weight
                 excelRow++;
 
-
+                
                 foreach (flowResult result in results) 
                 {
                     excelCol = 1;

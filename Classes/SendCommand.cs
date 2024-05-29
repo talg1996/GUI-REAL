@@ -8,31 +8,48 @@ using System.Windows;
 using VisaComLib;
 using System.IO.Ports;
 using System.Windows.Controls;
+using Microsoft.Office.Interop.Excel;
+
 
 namespace GUI_REAL.Classes
 {
+    /// <summary>
+    /// Handles the sending of commands to instruments.
+    /// </summary>
     internal class SendCommand
     {
-
         Command command;
         Instrument instrument;
         string result = "No output";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendCommand"/> class with a command and an instrument.
+        /// </summary>
+        /// <param name="command">The command to be sent.</param>
+        /// <param name="instrument">The instrument to which the command will be sent.</param>
         public SendCommand(Command command, Instrument instrument)
         {
             this.command = command;
             this.instrument = instrument;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SendCommand"/> class with a command string and an instrument.
+        /// </summary>
+        /// <param name="command">The command string to be sent.</param>
+        /// <param name="instrument">The instrument to which the command will be sent.</param>
         public SendCommand(string command, Instrument instrument)
         {
             this.command.SCPI_Command = command;
             this.instrument = instrument;
         }
 
+        /// <summary>
+        /// Sends the command to the instrument based on the communication type.
+        /// </summary>
+        /// <returns>The result of the command execution.</returns>
         public string SendCommandToInstrument()
         {
-
             switch (instrument.How_Communicate())
             {
                 case "Com":
@@ -51,6 +68,15 @@ namespace GUI_REAL.Classes
                     result = sendScipiViaVisaLAN();
                     break;
 
+                case "IP":
+                    // Handle command for IP connection
+                    break;
+                case "ModbusIP":
+                    if(instrument.Model== "LIB-Chamber")
+                    result = SendLibModbusIPCommand();// Handle command for Modbus IP connection
+                    else result="No match chamber";
+                    break;
+
                 default:
                     // Handle default case
                     break;
@@ -59,13 +85,54 @@ namespace GUI_REAL.Classes
             return result;
         }
 
+        private string SendLibModbusIPCommand()
+        {
+            try
+            {
+                string[] parts = command.SCPI_Command.Split(new string[] { "to" }, StringSplitOptions.RemoveEmptyEntries);
+
+                string? commandName = command.SCPI_Command;
+                string stringTemperature=null;
+                if (parts.Length == 2)
+                {
+                     commandName = parts[0].Trim();
+                     stringTemperature = parts[1].Trim();
+                }
+                switch (commandName)
+                {
+                    case string cmdName when cmdName.Contains("Set temperature"):
+                        LibCamberModbus.WriteTemperature(instrument.ModbusIP, 8000, (byte)1, float.Parse(stringTemperature));
+                        return $"Write temperature to {command.SCPI_Command}";
+                    case "Read temperature":
+                        string temperature = LibCamberModbus.ReadTemperature(instrument.ModbusIP, 8000, 1).ToString();
+                        return $"Read temperature: {temperature}";
+                    case "Run":
+                        LibCamberModbus.SendRunCommand(instrument.ModbusIP, 8000, 1);
+                        return "Run command sent.";
+                    case "S":
+                        LibCamberModbus.SendStopCommand(instrument.ModbusIP, 8000, 1);
+                        return "Stop command sent.";
+                    default:
+                        return "No supported command";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Issu with LIB chamber communication");
+                return "Error was occurred";
+            }
+            }
+        
+
+
+
         private string sendScipiViaVisaUSB()
         {
             // Create ResourceManager and FormattedIO488 instances
             ResourceManager rm = new ResourceManager();
             FormattedIO488 inst = new FormattedIO488();
 
-            // Define ID and commandd variables 
+            // Define ID and command variables 
             string ID = instrument.where_Communicate(instrument.How_Communicate());
             string commandd = command.SCPI_Command;
             try
@@ -86,7 +153,7 @@ namespace GUI_REAL.Classes
                 result = ex.Message;
                 MessageBox.Show(ex.Message);
             }
-            
+
             return result;
         }
 
@@ -162,11 +229,9 @@ namespace GUI_REAL.Classes
                 result = ex.Message;
                 MessageBox.Show(ex.Message);
             }
-            
+
 
             return result;
         }
-
-
     }
 }

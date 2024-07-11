@@ -92,10 +92,11 @@ namespace GUI_REAL.Classes
         public string Program()
         {
             // Commands for different UUTs
-            string[] commands1UUTs = { "connect", Device, "J", "-1 -1", Speed, "LoadFile " + HexFile, "R" };
-            string[] commands2UUTs = { "connect", Device, "J", "-1 -1", Speed, "LoadFile " + HexFile, "R", "JTAGConf 9 2", "connect", "LoadFile " + HexFile, "R" };
-            string[] commands3UUTs = { "connect", Device, "J", "-1 -1", Speed, "LoadFile " + HexFile, "R", "JTAGConf 9 2", "connect", "LoadFile " + HexFile, "R", "JTAGConf 18 4", "connect", "LoadFile " + HexFile, "R" };
-            string[] commands4UUTs = { "connect", Device, "J", "-1 -1", Speed, "LoadFile " + HexFile, "R", "JTAGConf 9 2", "connect", "LoadFile " + HexFile, "R", "JTAGConf 18 4", "connect", "LoadFile " + HexFile, "R", "JTAGConf 27 6", "connect", "LoadFile " + HexFile, "R" };
+            string[] commands1UUTs = { "connect", Device, "J", "-1 -1", Speed, "LoadFile " + HexFile, "reset", "go" };
+            string[] commands2UUTs = { "connect", Device, "J", "-1 -1", Speed, "LoadFile " + HexFile, "reset", "go", "JTAGConf 9 2", "connect", "LoadFile " + HexFile, "reset", "go" };
+            string[] commands3UUTs = { "connect", Device, "J", "-1 -1", Speed, "LoadFile " + HexFile, "reset", "go", "JTAGConf 9 2", "connect", "LoadFile " + HexFile, "reset", "go", "JTAGConf 18 4", "connect", "LoadFile " + HexFile, "reset", "go" };
+            string[] commands4UUTs = { "connect", Device, "J", "-1 -1", Speed, "LoadFile " + HexFile, "reset", "go", "JTAGConf 9 2", "connect", "LoadFile " + HexFile, "reset", "go", "JTAGConf 18 4", "connect", "LoadFile " + HexFile, "reset", "go", "JTAGConf 27 6", "connect", "LoadFile " + HexFile, "reset", "go", "exit" };
+
             string[] programCommands; //The command array that will be sent to the Segger CL
 
             // Assign appropriate commands based on device number
@@ -154,10 +155,30 @@ namespace GUI_REAL.Classes
             {
                 string jLinkExecutable = @"H:\JLink.exe";
                 string jLinkCommandFilePath = @"H:\JLinkCommandFile.jlink";
+                string newComments = "";
+                if (DeviceNumber == 1)
+                {
+                    newComments = "device " + Device + "\n" + "si JTAG\n" + "speed 4000\n" + "jtagconf -1,-1\n" + "connect\n" + "LoadFile " + HexFile + "\n" + "reset\n" + "go\n "+"Exit\n";
+                }
+                if (DeviceNumber == 2)
+                {
+                    newComments = "device " + Device + "\n" + "si JTAG\n" + "speed 4000\n" + "jtagconf -1,-1\n" + "connect\n" + "LoadFile " + HexFile + "\n" + "reset\n" + "go\n " + "JTAGConf 9 2" + "\n" + "connect" + "\n" + "LoadFile " + HexFile + "\n" + "reset\n" + "go\n " + "Exit\n";
 
-                string newComments = "device " + Device + "\n" + "si JTAG\n" + "speed 4000\n" + "jtagconf -1,-1\n" + "connect\n" + "LoadFile " + HexFile + "\n" + "Exit\n";
-                // Write only the new comments to the file
-                File.WriteAllText(jLinkCommandFilePath, newComments);
+                }
+
+                if (DeviceNumber == 3)
+                {
+                    newComments = "device " + Device + "\n" + "si JTAG\n" + "speed 4000\n" + "jtagconf -1,-1\n" + "connect\n" + "LoadFile " + HexFile + "\n" + "reset\n" + "go\n " + "JTAGConf 9 2" + "\n" + "connect" + "\n" + "LoadFile " + HexFile + "\n" + "reset\n" + "go\n " + "JTAGConf 18 4" + "\n" + "connect" + "\n" + "LoadFile " + HexFile + "\n" + "reset\n" + "go\n " + "Exit\n";
+
+                }
+                if (DeviceNumber == 4)
+                {
+                    newComments = "device " + Device + "\n" + "si JTAG\n" + "speed 4000\n" + "jtagconf -1,-1\n" + "connect\n" + "LoadFile " + HexFile + "\n" + "reset\n" + "go\n " + "JTAGConf 9 2"+ "\n"+ "connect"+ "\n"+ "LoadFile " + HexFile+ "\n" + "reset\n" + "go\n " + "JTAGConf 18 4"+ "\n"+ "connect"+ "\n"+ "LoadFile " + HexFile+ "\n" + "reset\n" + "go\n " + "JTAGConf 27 6"+ "\n"+ "connect"+ "\n"+ "LoadFile " + HexFile +"\n"+ "reset\n" + "go\n "+ "Exit\n";
+    
+                }
+
+                            // Write only the new comments to the file
+                            File.WriteAllText(jLinkCommandFilePath, newComments);
                 // Create process start information
                 ProcessStartInfo psi = new ProcessStartInfo();
                 psi.FileName = "cmd.exe";
@@ -210,7 +231,27 @@ namespace GUI_REAL.Classes
                 string jLinkExecutable = @"H:\JLink.exe";
                 string jLinkCommandFilePath = @"H:\JLinkCommandFile.jlink";
 
-                string newComments = "device " + Device + "\n" + "si JTAG\n" + "speed 4000\n" + "jtagconf -1,-1\n" + "connect\n" + "erase\n" + "Exit\n";
+                string newComments="";
+                if (DeviceNumber == 1)
+                {
+                    newComments = "device " + Device + "\n" + "si JTAG\n" + "speed 4000\n" + "jtagconf -1,-1\n" + "connect\n" + "erase\n" + "Exit\n";
+                }
+                if (DeviceNumber == 2)
+                {
+                    newComments = "device " + Device + "\n" + "si JTAG\n" + "speed 4000\n" + "jtagconf -1,-1\n" + "connect\n" + "erase\n" + "JTAGConf 9 2" + "\n" + "connect" + "\n" + "erase\n" + "Exit\n";
+
+                }
+
+                if (DeviceNumber == 3)
+                {
+                    newComments = "device " + Device + "\n" + "si JTAG\n" + "speed 4000\n" + "jtagconf -1,-1\n" + "connect\n" + "erase\n" + "JTAGConf 9 2" + "\n" + "connect" + "\n" + "erase\n"  + "JTAGConf 18 4" + "\n" + "connect" + "\n" + "erase\n"  + "Exit\n";
+
+                }
+                if (DeviceNumber == 4)
+                {
+                    newComments = "device " + Device + "\n" + "si JTAG\n" + "speed 4000\n" + "jtagconf -1,-1\n" + "connect\n" + "erase\n"  + "JTAGConf 9 2" + "\n" + "connect" + "\n" + "erase\n"  + "JTAGConf 18 4" + "\n" + "connect" + "\n" + "erase\n" + "JTAGConf 27 6" + "\n" + "connect" + "\n" + "erase\n" + "Exit\n";
+
+                }
                 // Write only the new comments to the file
                 File.WriteAllText(jLinkCommandFilePath, newComments);
                 // Create process start information

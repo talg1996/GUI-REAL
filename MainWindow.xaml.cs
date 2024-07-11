@@ -684,6 +684,7 @@ namespace GUI_REAL
             {
                 JLINK test = new JLINK(jlink_uut_name_textBox.Text, "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", int.Parse(how_many_uut_combobox.Text), file_to_program_textBox.Text, "4000");
                 programere_output_textbox.Text = test.cmd_program();
+               // programere_output_textbox.Text = test.Program();
             }
             catch (Exception ex)
             {

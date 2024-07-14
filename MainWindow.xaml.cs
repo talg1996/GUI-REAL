@@ -730,7 +730,7 @@ namespace GUI_REAL
             {
                 programere_output_textbox.Text = ex.Message;
             }
-        }
+        }    
 
 
 

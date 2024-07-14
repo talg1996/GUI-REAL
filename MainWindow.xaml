@@ -178,7 +178,8 @@
                             Margin="19,31,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" SelectionChanged="productChooseCB_SelectionChanged" />
+                            SelectionChanged="productChooseCB_SelectionChanged"
+                            d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" />
                         <DataGrid
                             x:Name="dataGrid"
                             Grid.Row="5"
@@ -447,9 +448,15 @@
                             Height="22"
                             Margin="19,5,0,5"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Top" SelectionChanged="chooseDashCB_SelectionChanged"
-                            />
-                        <TextBox x:Name="precentToFinishTB" Margin="228,105,15,15" Grid.Row="6" TextWrapping="Wrap" Text="TextBox" Width="120"/>
+                            VerticalAlignment="Top"
+                            SelectionChanged="chooseDashCB_SelectionChanged" />
+                        <TextBox
+                            x:Name="precentToFinishTB"
+                            Grid.Row="6"
+                            Width="120"
+                            Margin="228,105,15,15"
+                            Text="TextBox"
+                            TextWrapping="Wrap" />
 
 
                     </Grid>
@@ -1011,13 +1018,14 @@
                         <TextBox
                             x:Name="programere_output_textbox"
                             Grid.Row="1"
+                            Grid.RowSpan="2"
                             Grid.Column="1"
                             Width="402"
                             Margin="150,0,0,73"
                             HorizontalAlignment="Left"
                             Text="Output"
                             TextChanged="programere_output_textbox_TextChanged"
-                            TextWrapping="Wrap" Grid.RowSpan="2" />
+                            TextWrapping="Wrap" />
                         <Button
                             x:Name="button5_Copy4"
                             Grid.Row="2"
@@ -1099,15 +1107,6 @@
                             Text="MCU name"
                             TextWrapping="Wrap"
                             Visibility="Hidden" />
-                        <TextBox
-                            x:Name="jlink_uut_name_textBox"
-                            Grid.Row="2"
-                            Margin="94,185,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Text="TextBox"
-                            TextWrapping="Wrap"
-                            Visibility="Hidden" />
                         <TextBlock
                             x:Name="Programing_choose_hardware_textBlock"
                             Grid.Row="2"
@@ -1118,6 +1117,13 @@
                             Text="Hardware"
                             TextWrapping="Wrap"
                             d:LayoutOverrides="VerticalAlignment" />
+                        <ComboBox
+                            x:Name="chooseMCU"
+                            Grid.Row="2"
+                            Margin="108,189,81,105"
+                            SelectionChanged="chooseMCU_SelectionChanged"
+                            Visibility="Hidden"
+                            d:LayoutOverrides="HorizontalAlignment" />
                     </Grid>
                 </TabItem>
                 <TabItem Name="Realys_board_command_generate" Header="Realys board command generate">

@@ -1,31 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using GUI_REAL.Classes;
+using IAHAL;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
-using System;
-using System.IO;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Diagnostics;
-using System.Xml.Linq;
-using System.Printing;
-using System.Windows.Media;
-using System.Reflection.Emit;
-using System.Runtime.InteropServices;
-using Excel = Microsoft.Office.Interop.Excel;
+using System.IO;
 using System.Media;
-using GUI_REAL.Classes;
-using IAHAL;
-using System.ComponentModel.Design;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using Excel = Microsoft.Office.Interop.Excel;
 
 
 
@@ -57,7 +42,7 @@ namespace GUI_REAL
         Instrument flow_Instrument = new Instrument();
         FlowInstruction tempFlowInstruction = new FlowInstruction();
         List<FlowInstruction> FlowInstructions_List = new List<FlowInstruction>();
-        bool? stopFlow=false;
+        bool? stopFlow = false;
         //*********** handle flow *************//
 
         //*********** handle relay *************//
@@ -65,6 +50,10 @@ namespace GUI_REAL
         IADevices iadevs = new IADevices();
         IADevice chosenRelayBoard;
         //*********** handle relay *************//
+
+        //*********** MCU choose*************//
+        List<string> MCUProgramingList = new List<string>();
+        //*********** MCU choose*************//
 
         // Those strings are the content of the combo boxes any combo box in the
         string[] Programing_hardware = new string[] { "ST_Link", "JLINK" };
@@ -101,8 +90,8 @@ namespace GUI_REAL
             string filePath = commands_path_file;
 
             Microsoft.Office.Interop.Excel.Application excel = null;
-            Workbook wb=null;
-            Worksheet ws=null;
+            Workbook wb = null;
+            Worksheet ws = null;
 
             try
             {
@@ -167,6 +156,56 @@ namespace GUI_REAL
             Init_Programing();
             Init_Relay();
             Init_InstrumentsAndCommands();
+            InitMCUProgramming();
+        }
+
+        private void InitMCUProgramming()
+        {
+
+
+
+            string path = @"H:\Project\STM32MCUs.xlsx";
+
+            Microsoft.Office.Interop.Excel.Application excel = null;
+            Workbook wb = null;
+            Worksheet ws = null;
+
+            try
+            {
+                excel = new Microsoft.Office.Interop.Excel.Application();
+                wb = excel.Workbooks.Open(path);
+                ws = wb.Worksheets[1];
+
+                int lastRow = ws.Cells[ws.Rows.Count, 1].End[XlDirection.xlUp].Row;
+                int lastColumn = ws.Cells[1, ws.Columns.Count].End[XlDirection.xlToLeft].Column;
+
+                for (int row = 2; row <= lastRow; row++)
+                {
+                    for (int column = 1; column <= lastColumn; column++)
+                        MCUProgramingList.Add(ws.Cells[row, column].Value?.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                // Clean up resources
+                if (ws != null) Marshal.ReleaseComObject(ws);
+                if (wb != null)
+                {
+                    wb.Close(false); // Close the workbook without saving changes
+                    Marshal.ReleaseComObject(wb);
+                }
+                if (excel != null)
+                {
+                    excel.Quit(); // Quit the Excel application
+                    Marshal.ReleaseComObject(excel);
+                }
+            }
+            chooseMCU.ItemsSource = MCUProgramingList;
+            chooseMCU.SelectedIndex = 0;
         }
 
         private void InitATRFlow()
@@ -188,7 +227,7 @@ namespace GUI_REAL
                 MessageBox.Show("Directory not found!");
             }
         }
-        
+
 
 
 
@@ -247,13 +286,13 @@ namespace GUI_REAL
         public List<string> Excel_Row_read_by_index(string path)
         {
             string[] temp = new string[15];
-            
-            
-           
+
+
+
 
             Microsoft.Office.Interop.Excel.Application excel = null;
-            Workbook wb =null;
-            Worksheet ws =null;
+            Workbook wb = null;
+            Worksheet ws = null;
 
             try
             {
@@ -353,7 +392,7 @@ namespace GUI_REAL
             {
                 string address = adress_input_command.Text;
 
-                string command =  "!"+ address+"2";
+                string command = "!" + address + "2";
                 if (relays_options_comboBox.SelectedIndex == 0)
                 {
                     generated_command = command + get_realys_command48();
@@ -362,7 +401,7 @@ namespace GUI_REAL
                 {
                     generated_command = command + get_realys_command32();
                 }
-                relay_output_command.Text = generated_command ;
+                relay_output_command.Text = generated_command;
                 adress_input_command.Background = Brushes.White;
             }
             else
@@ -468,7 +507,7 @@ namespace GUI_REAL
                        (checkBox_relay2.IsChecked == true ? "1" : "0") +
                        (checkBox_relay1.IsChecked == true ? "1" : "0"));
 
-            return A + B + C + D + E + F + G+H + I + J + K + L;
+            return A + B + C + D + E + F + G + H + I + J + K + L;
         }
 
         /// <summary>
@@ -519,7 +558,7 @@ namespace GUI_REAL
                        (checkBox_relay2.IsChecked == true ? "1" : "0") +
                        (checkBox_relay1.IsChecked == true ? "1" : "0"));
 
-            return A + B + C + D + E + F +G+ H;
+            return A + B + C + D + E + F + G + H;
         }
 
 
@@ -576,8 +615,8 @@ namespace GUI_REAL
 
                 ///--- Hide JLINK CONTROL ---///
                 jlink_MCU_Name_textBlock.Visibility = Visibility.Hidden;
+                chooseMCU.Visibility = Visibility.Hidden;
                 JLINK_erase_button.Visibility = Visibility.Hidden;
-                jlink_uut_name_textBox.Visibility = Visibility.Hidden;
                 JLINK_program_button.Visibility = Visibility.Hidden;
                 how_many_uut_combobox.Visibility = Visibility.Hidden;
                 how_many_uut_textBlock.Visibility = Visibility.Hidden;
@@ -598,10 +637,11 @@ namespace GUI_REAL
                 ///--- Visible JLINK CONTROL ---///
                 jlink_MCU_Name_textBlock.Visibility = Visibility.Visible;
                 JLINK_erase_button.Visibility = Visibility.Visible;
-                jlink_uut_name_textBox.Visibility = Visibility.Visible;
                 JLINK_program_button.Visibility = Visibility.Visible;
                 how_many_uut_combobox.Visibility = Visibility.Visible;
                 how_many_uut_textBlock.Visibility = Visibility.Visible;
+                chooseMCU.Visibility = Visibility.Visible;
+
 
 
             }
@@ -655,11 +695,11 @@ namespace GUI_REAL
 
         private void JLINK_erase_button_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(jlink_uut_name_textBox.Text) && !string.IsNullOrEmpty(how_many_uut_combobox.Text))
+            if ( !string.IsNullOrEmpty(how_many_uut_combobox.Text))
             {
                 try
                 {
-                    JLINK test = new JLINK(jlink_uut_name_textBox.Text, "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", int.Parse(how_many_uut_combobox.Text), file_to_program_textBox.Text, "4000");
+                    JLINK test = new JLINK(chooseMCU.Text, "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", int.Parse(how_many_uut_combobox.Text), file_to_program_textBox.Text, "4000");
                     Trace.WriteLine(how_many_uut_combobox.Text);
                     programere_output_textbox.Text = test.cmd_erase();
 
@@ -682,9 +722,9 @@ namespace GUI_REAL
         {
             try
             {
-                JLINK test = new JLINK(jlink_uut_name_textBox.Text, "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", int.Parse(how_many_uut_combobox.Text), file_to_program_textBox.Text, "4000");
+                JLINK test = new JLINK(chooseMCU.Text, "C:\\Program Files\\SEGGER\\JLink_V794k\\JLink.exe", int.Parse(how_many_uut_combobox.Text), file_to_program_textBox.Text, "4000");
                 programere_output_textbox.Text = test.cmd_program();
-               // programere_output_textbox.Text = test.Program();
+                // programere_output_textbox.Text = test.Program();
             }
             catch (Exception ex)
             {
@@ -959,9 +999,9 @@ namespace GUI_REAL
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Command command_with_args = new Command(chosen_Command);
-           if(chosen_Command.SCPI_Command!=null)
+            if (chosen_Command.SCPI_Command != null)
                 command_with_args.SCPI_Command = chosen_Command.SCPI_Command.Replace("a1", textBox_arg1.Text).Replace("a2", textBox_arg2.Text).Replace("a3", textBox_arg3.Text);
-            
+
             SendCommand send_Command = new SendCommand(command_with_args, chosen_instrument);
             result_output_textBox.Text = send_Command.SendCommandToInstrument();
             result = result_output_textBox.Text;
@@ -983,7 +1023,7 @@ namespace GUI_REAL
 
 
 
-        
+
 
 
         private CancellationTokenSource cancellationTokenSource;
@@ -1003,18 +1043,18 @@ namespace GUI_REAL
                 upDateFlow(flowPath);
 
                 // Start excuteFlow asynchronously with CancellationToken
-                await excuteFlow(cancellationTokenSource.Token,project,dash,flow);
+                await excuteFlow(cancellationTokenSource.Token, project, dash, flow);
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show("cant find path");
             }
-        
-    }
-        
 
-        private async Task excuteFlow(CancellationToken cancellationToken , string project,string dash,string flow)
+        }
+
+
+        private async Task excuteFlow(CancellationToken cancellationToken, string project, string dash, string flow)
         {
             // Reset the pauseEvent when execution completes or is stopped
             pauseEvent.Reset();
@@ -1024,7 +1064,7 @@ namespace GUI_REAL
             try
             {
                 clearResultsArray();
-                
+
                 // Update UI from the UI thread
                 Dispatcher.Invoke(() => flow_output_textbox.Text = "");
                 int ExcuteRow = 0;// Mark the row that we cuu
@@ -1055,20 +1095,20 @@ namespace GUI_REAL
                     }
 
                     // Asynchronously update UI with the current instruction and all previous instructions
-                     Dispatcher.InvokeAsync(() =>
-                    {
-                        // Append the current instruction to the existing text in the textbox
+                    Dispatcher.InvokeAsync(() =>
+                   {
+                       // Append the current instruction to the existing text in the textbox
 
-                        flow_output_textbox.Text += ExcuteRow+": "+user_Instruction.Lable + " --> " + user_Instruction.SCPI_Command + "\n";
-                        precentToFinishTB.Text = (ExcuteRow * 100 / FlowInstructions_List.Count).ToString();
-                    });
+                       flow_output_textbox.Text += ExcuteRow + ": " + user_Instruction.Lable + " --> " + user_Instruction.SCPI_Command + "\n";
+                       precentToFinishTB.Text = (ExcuteRow * 100 / FlowInstructions_List.Count).ToString();
+                   });
 
                     switch (user_Instruction.Lable)
                     {
 
                         case "math":
-                           await math(user_Instruction);
-                             
+                            await math(user_Instruction);
+
 
                             break;
                         case "Delay":
@@ -1082,7 +1122,7 @@ namespace GUI_REAL
 
                             // Extract IP address and command
                             ipAdress = parts[0];
-                             command = parts[1];
+                            command = parts[1];
 
                             //send the command
                             string response = "";
@@ -1124,7 +1164,7 @@ namespace GUI_REAL
                             measureValue = results[int.Parse(index)].Value.Replace("\n", ""); ;
 
                             flowResult current = new flowResult(Type, measureValue, AcceptedValue, divP, divN);
-                            results[index_to_save].Value = testName+":"+divN+":"+measureValue+":"+divP+":"+current.isItPass();
+                            results[index_to_save].Value = testName + ":" + divN + ":" + measureValue + ":" + divP + ":" + current.isItPass();
                             results[index_to_save].Type = Type;
 
                             break;
@@ -1159,7 +1199,7 @@ namespace GUI_REAL
 
 
                     // Use Task.Delay instead of Thread.Sleep
-                     await Task.Delay(80, cancellationToken);
+                    await Task.Delay(80, cancellationToken);
                     // Write the result to the file
 
 
@@ -1167,7 +1207,7 @@ namespace GUI_REAL
                 }
                 printResults(logfilePath);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("An error occurred: " + ex.Message);
                 printResults(logfilePath);
@@ -1183,10 +1223,10 @@ namespace GUI_REAL
             float number1, number2;
             float result;
             string SCPIcommand = user_Instruction.SCPI_Command;
-            int indexToSave= int.Parse( user_Instruction.Index_To_Save);
+            int indexToSave = int.Parse(user_Instruction.Index_To_Save);
             try
             {
-                string[] arr = SCPIcommand.Split(',');                
+                string[] arr = SCPIcommand.Split(',');
                 if (arr.Length != 3)
                 {
                     // Display MessageBox for invalid SCPI command format
@@ -1209,7 +1249,7 @@ namespace GUI_REAL
                 results[indexToSave].Type = "Math";
                 results[indexToSave].Value = result.ToString();
 
-                flow_output_textbox.Text += $"{number1} " + operation + $" {number2}" +" = "+ results[indexToSave].Value;
+                flow_output_textbox.Text += $"{number1} " + operation + $" {number2}" + " = " + results[indexToSave].Value;
             }
             catch
             {
@@ -1218,7 +1258,7 @@ namespace GUI_REAL
             }
         }
 
-        private float calc(ref float number1, ref float number2,ref string operation)
+        private float calc(ref float number1, ref float number2, ref string operation)
         {
             switch (operation)
             {
@@ -1247,19 +1287,19 @@ namespace GUI_REAL
 
         private void findRelayBoard(string ipAdress)
         {
-             chosenRelayBoard = null;
+            chosenRelayBoard = null;
             foreach (IADevice board in iadevs)
             {
                 if (ipAdress == board.Address)
                 {
                     chosenRelayBoard = board;
-                    
+
                 }
             }
-         
+
         }
 
-        
+
 
         private void upDateFlowOutput(FlowInstruction user_Instruction)
         {
@@ -1267,7 +1307,8 @@ namespace GUI_REAL
         }
 
         private void printResults(string logFilePath)
-        { bool isTestPass = true;
+        {
+            bool isTestPass = true;
             if (string.IsNullOrEmpty(logFilePath))
             {
                 throw new ArgumentException("Log file path cannot be null or empty.");
@@ -1283,7 +1324,7 @@ namespace GUI_REAL
                 excel = new Microsoft.Office.Interop.Excel.Application();
                 excel.Visible = false;       // Hide Excel application
                 excel.DisplayAlerts = false; // Disable alerts
-                 
+
 
                 if (File.Exists(logFilePath))
                 {
@@ -1296,12 +1337,12 @@ namespace GUI_REAL
 
                 ws = wb.Worksheets[1];
 
-                
+
 
                 int excelRow = 1;
-                int excelCol=1;
-                
-                ws.Cells[excelRow, excelCol] = "Tested by "+ flowTesterName.Text;
+                int excelCol = 1;
+
+                ws.Cells[excelRow, excelCol] = "Tested by " + flowTesterName.Text;
                 ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Plum);
                 ws.Cells[excelRow, excelCol].Borders.LineStyle = Excel.XlLineStyle.xlContinuous; // Set border style
                 ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlThin; // Set border weight
@@ -1319,15 +1360,15 @@ namespace GUI_REAL
                 ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlThin; // Set border weight
                 excelRow++;
 
-                
-                foreach (flowResult result in results) 
+
+                foreach (flowResult result in results)
                 {
                     excelCol = 1;
-                    if (result.Type=="Test" || result.Type == "heading" || result.Type == "label")
+                    if (result.Type == "Test" || result.Type == "heading" || result.Type == "label")
                     {
                         if (result.Type == "Test")
                         {
-                            string[] labels = ["Value tested","Low","Measure","High","Result"];
+                            string[] labels = ["Value tested", "Low", "Measure", "High", "Result"];
                             foreach (string str in labels)
                             {
 
@@ -1357,7 +1398,7 @@ namespace GUI_REAL
                                     ws.Cells[excelRow, excelCol].Borders.Weight = Excel.XlBorderWeight.xlMedium; // Set border weight
                                     ws.Cells[excelRow, excelCol].Font.Bold = true;
                                 }
-                                else if(str == "Fail")
+                                else if (str == "Fail")
                                 {
                                     isTestPass = false;
                                     ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightSalmon);
@@ -1375,7 +1416,7 @@ namespace GUI_REAL
                         }
                         else if (result.Type == "heading")
                         {
-                            
+
                             ws.Cells[excelRow, excelCol] = result.Value; // Always write to first column
                             ws.Cells[excelRow, excelCol].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Yellow);
                             ws.Cells[excelRow, excelCol].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
@@ -1399,11 +1440,11 @@ namespace GUI_REAL
                         }
 
                     }
-                    
+
                 }
 
 
-               
+
 
                 // Select all cells in the worksheet
                 Excel.Range allCells = ws.Cells;
@@ -1479,7 +1520,7 @@ namespace GUI_REAL
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show("An error occurred. Please try again later.","Error");
+                MessageBox.Show("An error occurred. Please try again later.", "Error");
             }
         }
 
@@ -1497,8 +1538,8 @@ namespace GUI_REAL
             string[] temp = new string[10];
             string filePath = flowPath;
             Microsoft.Office.Interop.Excel.Application excel = null;
-            Workbook wb=null;
-            Worksheet ws=null;
+            Workbook wb = null;
+            Worksheet ws = null;
 
             try
             {
@@ -1548,13 +1589,13 @@ namespace GUI_REAL
                 {
                     excel.Quit(); // Quit the Excel application
                     Marshal.ReleaseComObject(excel);
-                   
+
                 }
             }
         }
 
-        
-        
+
+
         private void stopFlowBTNClick(object sender, RoutedEventArgs e)
         {
             // Cancel the CancellationTokenSource when the stop button is clicked
@@ -1593,9 +1634,9 @@ namespace GUI_REAL
         {
             chooseDashCB.Items.Clear();
             string? chosenProject = productChooseCB.SelectedItem as string;
-           if (chosenProject != null)
+            if (chosenProject != null)
             {
-                string directoryPath = @"H:\Project\Flows\Projects\"+chosenProject;
+                string directoryPath = @"H:\Project\Flows\Projects\" + chosenProject;
 
                 if (Directory.Exists(directoryPath))
                 {
@@ -1620,7 +1661,7 @@ namespace GUI_REAL
             chosenFlowCB.Items.Clear();
             string fileName;
 
-            string ? chosenDash= chooseDashCB.SelectedItem as string;
+            string? chosenDash = chooseDashCB.SelectedItem as string;
             if (chosenDash != null)
             {
                 string directoryPath = $@"H:\Project\Flows\Projects\{productChooseCB.SelectedItem}\{chosenDash}";
@@ -1641,6 +1682,13 @@ namespace GUI_REAL
                     MessageBox.Show("Directory not found!");
                 }
             }
+        }
+
+        private void chooseMCU_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string chosenMCU = (sender as ComboBox).SelectedItem as string;
+            Trace.WriteLine(chosenMCU);
+
         }
     }
 

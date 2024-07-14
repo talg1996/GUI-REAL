@@ -280,7 +280,8 @@ namespace GUI_REAL.Classes
 
                 // Match the pattern in the output string
                 Match match = Regex.Match(output, pattern);
-                Trace.WriteLine(match.Groups[1].Value);
+                int uutAmount = int.Parse(match.Groups[1].Value) / 2;
+                Trace.WriteLine(uutAmount);
 
                 // return the output
                 if (output.Contains("No valid device has been selected."))
